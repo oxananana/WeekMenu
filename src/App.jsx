@@ -7,6 +7,7 @@ import { Container } from "./components/Common/Container";
 import Navbar from "./components/Navbar/Navbar";
 import Menu from "./components/Menu/Menu";
 import Recipes from "./components/Recipes/Recipes.jsx";
+import RecipePage from "./components/Recipes/RecipePage";
 import menu from "./JSON/menu.json";
 
 const App = () => {
@@ -22,6 +23,9 @@ const App = () => {
       </Route>
       <Container>
         <Switch>
+          <Route path="/recipes/:categoryId/:recipeId">
+            <RecipePage />
+          </Route>
           <Route path="/recipes/:categoryId">
             <Recipes />
           </Route>

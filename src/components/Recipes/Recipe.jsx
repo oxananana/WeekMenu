@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import cn from "classnames";
 
@@ -10,26 +11,28 @@ const Recipe = (props) => {
 
   return (
     <StyledRecipe>
-      <RecipeImg style={{ backgroundImage: `url(${imgSrc})` }} />
-      <RecipeTitle>{title}</RecipeTitle>
-      <RecipeIngredients>
-        {ingredients.length > 0
-          ? ingredientsToString(ingredients)
-          : "Не заполнено"}
-      </RecipeIngredients>
+      <NavLink to={`/recipes/${categoryId}/${id}`}>
+        <RecipeImg style={{ backgroundImage: `url(${imgSrc})` }} />
+        <RecipeTitle>{title}</RecipeTitle>
+        <RecipeIngredients>
+          {ingredients.length > 0
+            ? ingredientsToString(ingredients)
+            : "Не заполнено"}
+        </RecipeIngredients>
 
-      <RecipeSchedule>
-        {schedule.map((day, index) => {
-          return (
-            <RecipeScheduleItem
-              key={index}
-              className={cn({ active: day.isActive })}
-            >
-              {day.name}
-            </RecipeScheduleItem>
-          );
-        })}
-      </RecipeSchedule>
+        <RecipeSchedule>
+          {schedule.map((day, index) => {
+            return (
+              <RecipeScheduleItem
+                key={index}
+                className={cn({ active: day.isActive })}
+              >
+                {day.name}
+              </RecipeScheduleItem>
+            );
+          })}
+        </RecipeSchedule>
+      </NavLink>
     </StyledRecipe>
   );
 };
