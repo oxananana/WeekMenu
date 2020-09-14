@@ -1,10 +1,12 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Redirect, Switch } from "react-router-dom";
 import GlobalStyle from "./theme/GlobalStyle";
 import "./App.css";
 
+import { Container } from "./components/Common/Container";
 import Navbar from "./components/Navbar/Navbar";
 import Menu from "./components/Menu/Menu";
+import Recipes from "./components/Recipes/Recipes.jsx";
 import menu from "./JSON/menu.json";
 
 const App = () => {
@@ -18,6 +20,16 @@ const App = () => {
       <Route path="/menu">
         <Menu menu={menu} />
       </Route>
+      <Container>
+        <Switch>
+          <Route path="/recipes/:categoryId">
+            <Recipes />
+          </Route>
+          <Route path="/recipes/">
+            <Redirect to="/recipes/soups" />
+          </Route>
+        </Switch>
+      </Container>
     </>
   );
 };
