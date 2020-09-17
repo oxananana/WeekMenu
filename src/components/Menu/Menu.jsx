@@ -1,43 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import cn from "classnames";
-import { bgColors } from "../../theme/variables";
-
+import { bgColors, textColors } from "../../theme/variables";
+import data from "../../data/menu";
 import Meal from "./Meal";
 
 const Menu = (props) => {
-  const menu = props.menu;
+  const [menu, setMenu] = useState(data);
+  const dates = Object.keys(menu);
   const nextDays = returnNextDays();
 
   return (
     <MenuBoard>
-      {nextDays.map((day, index) => {
-        let meals = [];
-
-        if (menu[day.dateString]) {
-          meals = Object.values(menu[day.dateString]);
-        } else {
-          alert("добавь день в menu.json");
-        }
+      {dates.map((date, index) => {
+        const day = formattingDay(date);
+        const meals = Object.values(menu[date]);
 
         return (
           <DayMenu key={index}>
-            <DayDate className={cn({ weekend: day.isWeekend })}>
+            <DayDate
+              className={cn({ weekend: day.isWeekend, today: day.isToday })}
+            >
               {day.weekDayName}, {day.date}
+              {day.isToday && " — Сегодня"}
             </DayDate>
 
-            <MealsList key={index}>
-              {meals.map((meal, index) => {
+            <Meals>
+              {meals.map((meal) => {
                 return (
-                  <Meal title={meal.title} dishes={meal.dishes} key={index} />
+                  <Meal title={meal.title} dishes={meal.dishes} key={meal.id} />
                 );
               })}
-            </MealsList>
+            </Meals>
           </DayMenu>
         );
       })}
     </MenuBoard>
   );
+};
+
+const formattingDay = (dateString) => {
+  const weekDaysNames = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
+  const date = new Date(dateString);
+  const today = new Date();
+
+  const day = {
+    date: date.getDate(),
+    weekDayName: weekDaysNames[date.getDay()],
+    isWeekend: date.getDay() === 0 || date.getDay() === 6,
+    isToday: today.toDateString() === date.toDateString(),
+  };
+
+  return day;
 };
 
 const returnNextDays = () => {
@@ -98,9 +112,13 @@ const DayDate = styled.div`
   &.weekend {
     color: red;
   }
+
+  &.today {
+    color: ${textColors.primary};
+  }
 `;
 
-const MealsList = styled.div`
+const Meals = styled.div`
   flex: 1;
   background-color: ${bgColors.base};
   padding: 16px;

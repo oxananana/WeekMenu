@@ -8,7 +8,6 @@ import Navbar from "./components/Navbar/Navbar";
 import Menu from "./components/Menu/Menu";
 import Recipes from "./components/Recipes/Recipes.jsx";
 import RecipePage from "./components/Recipes/RecipePage";
-import menu from "./JSON/menu.json";
 
 const App = () => {
   return (
@@ -19,7 +18,7 @@ const App = () => {
         <Redirect to="/menu" />
       </Route>
       <Route path="/menu">
-        <Menu menu={menu} />
+        <Menu />
       </Route>
       <Container>
         <Switch>

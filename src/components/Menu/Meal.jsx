@@ -11,8 +11,8 @@ const Meal = (props) => {
       <MealTitle>{title}</MealTitle>
       {dishes.length > 0 ? (
         <DishesList>
-          {dishes.map((dish, index) => {
-            return <Dish key={index} id={dish.id} isDone={dish.isDone} />;
+          {dishes.map((dish) => {
+            return <Dish key={dish.id} dish={dish} />;
           })}
         </DishesList>
       ) : (

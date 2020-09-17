@@ -1,5 +1,5 @@
-import dishes from "../JSON/dishes";
-import categories from "../JSON/categories";
+import dishes from "../data/dishes";
+import categories from "../data/categories";
 
 export const getDish = (id) => {
   return dishes[id];

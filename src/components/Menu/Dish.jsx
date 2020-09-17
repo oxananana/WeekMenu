@@ -1,16 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-
 import { shadow } from "../../theme/variables";
-import { getDish } from "../../selectors/selectors";
 
 const Dish = (props) => {
-  const dish = getDish(props.id);
+  const dish = props.dish;
+  const { id, title, isDone, imgSrc } = { ...dish };
 
   return (
     <StyledDish>
-      <DishImg style={{ backgroundImage: `url(${dish.imgSrc})` }} />
-      <DishTitle>{dish.title}</DishTitle>
+      <DishImg style={{ backgroundImage: `url(${imgSrc})` }} />
+      <DishTitle>{title}</DishTitle>
     </StyledDish>
   );
 };
@@ -42,7 +41,13 @@ const DishImg = styled.div`
 `;
 const DishTitle = styled.div`
   flex: 1;
-  padding: 8px 16px;
+  padding: 0 16px;
+  font-size: 14px;
+  max-height: 60px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 `;
 
 export default Dish;
