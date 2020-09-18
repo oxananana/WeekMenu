@@ -3,8 +3,14 @@ import styled from "styled-components";
 import { textColors } from "../../theme/variables";
 import Dish from "./Dish";
 
-const Meal = (props) => {
-  const { title, dishes } = { ...props };
+const areEqual = (prevProps, nextProps) => {
+  console.log(prevProps === nextProps);
+  return prevProps === nextProps;
+};
+
+const Meal = React.memo((props) => {
+  const { date, id, title, dishes, removeDish } = { ...props };
+  console.log("meal render");
 
   return (
     <StyledMeal>
@@ -12,7 +18,15 @@ const Meal = (props) => {
       {dishes.length > 0 ? (
         <DishesList>
           {dishes.map((dish) => {
-            return <Dish key={dish.id} dish={dish} />;
+            return (
+              <Dish
+                key={dish.id}
+                date={date}
+                mealId={id}
+                dish={dish}
+                removeDish={removeDish}
+              />
+            );
           })}
         </DishesList>
       ) : (
@@ -20,7 +34,7 @@ const Meal = (props) => {
       )}
     </StyledMeal>
   );
-};
+}, areEqual);
 
 const StyledMeal = styled.div`
   & + & {

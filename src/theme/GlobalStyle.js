@@ -18,9 +18,12 @@ const GlobalStyle = createGlobalStyle`
   }
 
   svg {
+    width: 100%;
+    height: 100%;
     fill: currentColor;
     fill-rule: evenodd;
-    clip-rule: evenodd
+    clip-rule: evenodd;
+
   }
 `;
 

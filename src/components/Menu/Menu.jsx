@@ -1,20 +1,32 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import cn from "classnames";
+import { getDishesForMeal, getMealById } from "../../selectors/selectors";
 import { bgColors, textColors } from "../../theme/variables";
 import data from "../../data/menu";
 import Meal from "./Meal";
 
 const Menu = (props) => {
-  const [menu, setMenu] = useState(data);
-  const dates = Object.keys(menu);
-  const nextDays = returnNextDays();
+  const dates = data.dates;
+  const menu = data.menu;
+  const [meals, setMeals] = useState(data.meals);
+  const [dishes, setDishes] = useState(data.dishes);
+  // const nextDays = returnNextDays();
+
+  const removeDish = (date, mealId, dishId) => {
+    let newMeals = { ...meals };
+    // debugger;
+    newMeals[mealId].dishes = newMeals[mealId].dishes.filter((id) => {
+      return id !== dishId;
+    });
+    setMeals({ ...newMeals });
+  };
 
   return (
     <MenuBoard>
       {dates.map((date, index) => {
         const day = formattingDay(date);
-        const meals = Object.values(menu[date]);
+        const mealsIds = menu[date].meals;
 
         return (
           <DayMenu key={index}>
@@ -26,9 +38,17 @@ const Menu = (props) => {
             </DayDate>
 
             <Meals>
-              {meals.map((meal) => {
+              {mealsIds.map((id) => {
+                const meal = getMealById(meals, id);
                 return (
-                  <Meal title={meal.title} dishes={meal.dishes} key={meal.id} />
+                  <Meal
+                    date={date}
+                    id={meal.id}
+                    title={meal.title}
+                    dishes={getDishesForMeal(dishes, meal.dishes)}
+                    key={meal.id}
+                    removeDish={removeDish}
+                  />
                 );
               })}
             </Meals>
@@ -90,7 +110,7 @@ const MenuBoard = styled.div`
 `;
 
 const DayMenu = styled.div`
-  min-width: 260px;
+  width: 260px;
   margin: 0 4px;
   display: flex;
   flex-direction: column;

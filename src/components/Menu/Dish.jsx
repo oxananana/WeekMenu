@@ -1,18 +1,36 @@
 import React from "react";
 import styled from "styled-components";
-import { shadow } from "../../theme/variables";
+import Icon from "../Common/Icon";
+import { shadow, textColors } from "../../theme/variables";
 
 const Dish = (props) => {
-  const dish = props.dish;
+  const { date, mealId, dish, removeDish } = { ...props };
   const { id, title, isDone, imgSrc } = { ...dish };
 
   return (
     <StyledDish>
+      <RemoveIcon onClick={() => removeDish(date, mealId, id)}>
+        <Icon name="delete" />
+      </RemoveIcon>
       <DishImg style={{ backgroundImage: `url(${imgSrc})` }} />
       <DishTitle>{title}</DishTitle>
     </StyledDish>
   );
 };
+
+const RemoveIcon = styled.span`
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  width: 16px;
+  height: 16px;
+  color: ${textColors.gray};
+  opacity: 0;
+
+  &:hover {
+    color: red;
+  }
+`;
 
 const StyledDish = styled.div`
   background-color: #fff;
@@ -28,6 +46,9 @@ const StyledDish = styled.div`
   &:hover {
     cursor: pointer;
     box-shadow: ${shadow};
+    ${RemoveIcon} {
+      opacity: 0.5;
+    }
   }
 `;
 
@@ -39,6 +60,7 @@ const DishImg = styled.div`
   background-color: #fff;
   border-radius: 4px 0 0 4px;
 `;
+
 const DishTitle = styled.div`
   flex: 1;
   padding: 0 16px;

@@ -3,8 +3,8 @@
     "id": "soups",
     "title": "Супы"
   },
-  "breakfost": {
-    "id": "breakfost",
+  "breakfast": {
+    "id": "breakfast",
     "title": "Завтраки"
   },
   "meat": {
