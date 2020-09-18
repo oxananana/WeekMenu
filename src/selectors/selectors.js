@@ -1,6 +1,3 @@
-import dishes from "../data/dishes";
-import categories from "../data/categories";
-
 export const getDishesForMeal = (dishes, dishesIds) => {
   return dishesIds.map((id) => {
     return dishes[id];
@@ -11,24 +8,12 @@ export const getMealById = (meals, mealId) => {
   return meals[mealId];
 };
 
-//old
-
-export const getDish = (id) => {
-  return dishes[id];
+export const getDishById = (dishes, dishId) => {
+  return dishes[dishId];
 };
 
-export const getDishes = () => {
-  return dishes;
-};
-
-export const getCategories = () => {
-  return categories;
-};
-
-export const getCategoryDishes = (categoryId) => {
-  const dishes = Object.values(getDishes());
-
-  return dishes.filter((dish) => {
+export const getCategoryDishes = (dishes, categoryId) => {
+  return Object.values(dishes).filter((dish) => {
     return dish.categoryId === categoryId;
   });
 };

@@ -7,18 +7,15 @@ import { ingredientsToString } from "../../helpers/helpers";
 import { textColors, shadow, bgColors } from "../../theme/variables";
 
 const Recipe = (props) => {
-  const { id, title, imgSrc, categoryId, schedule, ingredients } = { ...props };
+  const { id, title, imgSrc, categoryId, schedule, ingredients } = {
+    ...props.recipe,
+  };
 
   return (
     <StyledRecipe>
       <NavLink to={`/recipes/${categoryId}/${id}`}>
         <RecipeImg style={{ backgroundImage: `url(${imgSrc})` }} />
         <RecipeTitle>{title}</RecipeTitle>
-        <RecipeIngredients>
-          {ingredients.length > 0
-            ? ingredientsToString(ingredients)
-            : "Не заполнено"}
-        </RecipeIngredients>
 
         <RecipeSchedule>
           {schedule.map((day, index) => {
@@ -32,6 +29,11 @@ const Recipe = (props) => {
             );
           })}
         </RecipeSchedule>
+        <RecipeIngredients>
+          {ingredients.length > 0
+            ? ingredientsToString(ingredients)
+            : "Не заполнено"}
+        </RecipeIngredients>
       </NavLink>
     </StyledRecipe>
   );
@@ -41,6 +43,8 @@ const StyledRecipe = styled.div`
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
+  flex: auto;
+  width: 100%;
   box-shadow: ${shadow};
   transition: transform 0.2s ease-out;
 
@@ -69,7 +73,7 @@ const RecipeTitle = styled.div`
 
 const RecipeSchedule = styled.ul`
   display: flex;
-  margin: 0 -4px;
+  margin: 12px -4px;
 `;
 
 const RecipeScheduleItem = styled.li`
@@ -83,7 +87,6 @@ const RecipeScheduleItem = styled.li`
 
 const RecipeIngredients = styled.div`
   color: ${textColors.gray};
-  margin: 12px 0;
 `;
 
 export default Recipe;

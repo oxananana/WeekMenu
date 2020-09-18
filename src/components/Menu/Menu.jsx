@@ -3,14 +3,13 @@ import styled from "styled-components";
 import cn from "classnames";
 import { getDishesForMeal, getMealById } from "../../selectors/selectors";
 import { bgColors, textColors } from "../../theme/variables";
-import data from "../../data/menu";
 import Meal from "./Meal";
 
 const Menu = (props) => {
-  const dates = data.dates;
-  const menu = data.menu;
-  const [meals, setMeals] = useState(data.meals);
-  const [dishes, setDishes] = useState(data.dishes);
+  const dates = props.menu.dates;
+  const menu = props.menu.menu;
+  const [meals, setMeals] = useState(props.menu.meals);
+  const [dishes, setDishes] = useState(props.menu.dishes);
   // const nextDays = returnNextDays();
 
   const removeDish = (date, mealId, dishId) => {

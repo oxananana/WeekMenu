@@ -27,11 +27,12 @@ const dishes = {
       { name: "Вс", isActive: false },
     ],
     ingredients: [
-      "Капуста",
-      "Картошка",
+      "Горох",
+      "Картофель",
       "Мясо",
       "Лук",
       "Морковь",
+      "Колбаса",
       "Томатная паста",
       "Соль",
     ],
@@ -69,7 +70,7 @@ const dishes = {
       { name: "Сб", isActive: false },
       { name: "Вс", isActive: false },
     ],
-    ingredients: ["Рис", "Молоко", "Соль"],
+    ingredients: ["Овсянка", "Молоко", "Соль"],
     recipe: "Сварить кашу",
   },
   side1: {
@@ -86,7 +87,7 @@ const dishes = {
       { name: "Сб", isActive: false },
       { name: "Вс", isActive: false },
     ],
-    ingredients: ["Чай", "Лимон"],
+    ingredients: ["Гречка"],
     recipe: "Заварить чаечек",
   },
   side2: {
@@ -103,7 +104,7 @@ const dishes = {
       { name: "Сб", isActive: false },
       { name: "Вс", isActive: false },
     ],
-    ingredients: ["Чай", "Лимон"],
+    ingredients: ["Картофель", "Капуста", "Лук", "Томатная паста", "Специи"],
     recipe: "Заварить чаечек",
   },
   meat1: {
@@ -120,7 +121,7 @@ const dishes = {
       { name: "Сб", isActive: false },
       { name: "Вс", isActive: false },
     ],
-    ingredients: ["Чай", "Лимон"],
+    ingredients: ["Куриное филе", "Специи по вкусу"],
     recipe: "Заварить чаечек",
   },
   meat2: {
@@ -137,14 +138,14 @@ const dishes = {
       { name: "Сб", isActive: false },
       { name: "Вс", isActive: false },
     ],
-    ingredients: ["Чай", "Лимон"],
+    ingredients: ["Мясо или фарш", "Лук", "Специи"],
     recipe: "Заварить чаечек",
   },
   salad1: {
     id: "salad1",
     title: "Овощной салат из помидоров и огурцов",
     imgSrc: salad,
-    categoryId: "salad",
+    categoryId: "salads",
     schedule: [
       { name: "Пн", isActive: true },
       { name: "Вт", isActive: true },
@@ -154,7 +155,7 @@ const dishes = {
       { name: "Сб", isActive: false },
       { name: "Вс", isActive: false },
     ],
-    ingredients: ["Чай", "Лимон"],
+    ingredients: ["Помидоры", "Огурцы", "Салат"],
     recipe: "Заварить чаечек",
   },
   desert1: {

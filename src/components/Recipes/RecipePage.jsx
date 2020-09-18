@@ -3,14 +3,14 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import cn from "classnames";
 
-import { getDish } from "../../selectors/selectors";
+import { getDishById } from "../../selectors/selectors";
 import { ingredientsToString } from "../../helpers/helpers";
 import { textColors, bgColors } from "../../theme/variables";
 
 const RecipePage = (props) => {
   const { recipeId } = useParams();
   const { title, imgSrc, schedule, ingredients, recipe } = {
-    ...getDish(recipeId),
+    ...getDishById(props.dishes, recipeId),
   };
 
   return (

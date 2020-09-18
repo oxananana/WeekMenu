@@ -2,22 +2,21 @@ import React from "react";
 import styled from "styled-components";
 import { NavLink, useParams } from "react-router-dom";
 import cn from "classnames";
-
-import { getCategories, getCategoryDishes } from "../../selectors/selectors";
+import { getCategoryDishes } from "../../selectors/selectors";
 import { textColors } from "../../theme/variables";
 import Category from "./Category";
 
 const Recipes = (props) => {
-  const categories = getCategories();
+  const { categories, dishes } = { ...props };
   const { categoryId } = useParams();
 
   return (
     <>
       <CategoryNav>
-        {Object.values(categories).map((category, index) => {
+        {Object.values(categories).map((category) => {
           return (
             <CategoryNavItem
-              key={index}
+              key={category.id}
               id={category.id}
               className={cn({ active: category.id === categoryId })}
             >
@@ -28,7 +27,7 @@ const Recipes = (props) => {
       </CategoryNav>
       <Category
         title={categories[categoryId].title}
-        recipes={getCategoryDishes(categoryId)}
+        recipes={getCategoryDishes(dishes, categoryId)}
       />
     </>
   );

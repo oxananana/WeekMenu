@@ -14,15 +14,7 @@ const Category = (props) => {
           {recipes.map((recipe, index) => {
             return (
               <RecipeContainer key={index}>
-                <Recipe
-                  id={recipe.id}
-                  title={recipe.title}
-                  imgSrc={recipe.imgSrc}
-                  categoryId={recipe.categoryId}
-                  ingredients={recipe.ingredients}
-                  recipe={recipe.recipe}
-                  schedule={recipe.schedule}
-                />
+                <Recipe recipe={recipe} />
               </RecipeContainer>
             );
           })}
@@ -53,6 +45,7 @@ const RecipeList = styled.div`
 const RecipeContainer = styled.div`
   padding: 0 12px;
   width: 25%;
+  display: flex;
 `;
 
 export default Category;

@@ -8,6 +8,9 @@ import Navbar from "./components/Navbar/Navbar";
 import Menu from "./components/Menu/Menu";
 import Recipes from "./components/Recipes/Recipes.jsx";
 import RecipePage from "./components/Recipes/RecipePage";
+import menu from "./data/menu";
+import categories from "./data/categories";
+import dishes from "./data/dishes";
 
 const App = () => {
   return (
@@ -18,15 +21,15 @@ const App = () => {
         <Redirect to="/menu" />
       </Route>
       <Route path="/menu">
-        <Menu />
+        <Menu menu={menu} />
       </Route>
       <Container>
         <Switch>
           <Route path="/recipes/:categoryId/:recipeId">
-            <RecipePage />
+            <RecipePage dishes={dishes} />
           </Route>
           <Route path="/recipes/:categoryId">
-            <Recipes />
+            <Recipes categories={categories} dishes={dishes} />
           </Route>
           <Route path="/recipes/">
             <Redirect to="/recipes/soups" />
