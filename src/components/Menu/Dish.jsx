@@ -4,12 +4,12 @@ import Icon from "../Common/Icon";
 import { shadow, textColors } from "../../theme/variables";
 
 const Dish = (props) => {
-  const { date, mealId, dish, removeDish } = { ...props };
+  const { mealId, dish, removeDish } = { ...props };
   const { id, title, isDone, imgSrc } = { ...dish };
 
   return (
     <StyledDish>
-      <RemoveIcon onClick={() => removeDish(date, mealId, id)}>
+      <RemoveIcon onClick={() => removeDish(mealId, id)}>
         <Icon name="delete" />
       </RemoveIcon>
       <DishImg style={{ backgroundImage: `url(${imgSrc})` }} />

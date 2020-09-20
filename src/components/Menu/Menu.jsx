@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import cn from "classnames";
 import { getDishesForMeal, getMealById } from "../../selectors/selectors";
@@ -12,13 +12,12 @@ const Menu = (props) => {
   const [dishes, setDishes] = useState(props.menu.dishes);
   // const nextDays = returnNextDays();
 
-  const removeDish = (date, mealId, dishId) => {
+  const removeDish = (mealId, dishId) => {
     let newMeals = { ...meals };
-    // debugger;
     newMeals[mealId].dishes = newMeals[mealId].dishes.filter((id) => {
       return id !== dishId;
     });
-    setMeals({ ...newMeals });
+    setMeals(newMeals);
   };
 
   return (
@@ -41,7 +40,6 @@ const Menu = (props) => {
                 const meal = getMealById(meals, id);
                 return (
                   <Meal
-                    date={date}
                     id={meal.id}
                     title={meal.title}
                     dishes={getDishesForMeal(dishes, meal.dishes)}
@@ -110,6 +108,7 @@ const MenuBoard = styled.div`
 
 const DayMenu = styled.div`
   width: 260px;
+  min-width: 240px;
   margin: 0 4px;
   display: flex;
   flex-direction: column;

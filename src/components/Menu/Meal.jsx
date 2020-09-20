@@ -4,13 +4,17 @@ import { textColors } from "../../theme/variables";
 import Dish from "./Dish";
 
 const areEqual = (prevProps, nextProps) => {
-  console.log(prevProps === nextProps);
-  return prevProps === nextProps;
+  const { removeDish, ...prev } = prevProps;
+  for (const key of Object.keys(prev)) {
+    if (prev[key] !== nextProps[key]) {
+      return false;
+    }
+  }
+  return true;
 };
 
 const Meal = React.memo((props) => {
-  const { date, id, title, dishes, removeDish } = { ...props };
-  console.log("meal render");
+  const { id, title, dishes, removeDish } = { ...props };
 
   return (
     <StyledMeal>
@@ -21,7 +25,6 @@ const Meal = React.memo((props) => {
             return (
               <Dish
                 key={dish.id}
-                date={date}
                 mealId={id}
                 dish={dish}
                 removeDish={removeDish}
