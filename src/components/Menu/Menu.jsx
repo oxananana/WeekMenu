@@ -4,13 +4,23 @@ import cn from "classnames";
 import { getDishesForMeal, getMealById } from "../../selectors/selectors";
 import { bgColors, textColors } from "../../theme/variables";
 import Meal from "./Meal";
+import Modal from "../Common/Modal";
 
 const Menu = (props) => {
   const dates = props.menu.dates;
   const menu = props.menu.menu;
   const [meals, setMeals] = useState(props.menu.meals);
   const [dishes, setDishes] = useState(props.menu.dishes);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   // const nextDays = returnNextDays();
+
+  const handleOpenModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalIsOpen(false);
+  };
 
   const removeDish = (mealId, dishId) => {
     let newMeals = { ...meals };
@@ -21,38 +31,44 @@ const Menu = (props) => {
   };
 
   return (
-    <MenuBoard>
-      {dates.map((date, index) => {
-        const day = formattingDay(date);
-        const mealsIds = menu[date].meals;
+    <>
+      <button onClick={handleOpenModal}>открыть модалку</button>
+      <Modal isOpen={modalIsOpen} title="Заголовок" onClose={handleCloseModal}>
+        я - тело модалки
+      </Modal>
+      <MenuBoard>
+        {dates.map((date, index) => {
+          const day = formattingDay(date);
+          const mealsIds = menu[date].meals;
 
-        return (
-          <DayMenu key={index}>
-            <DayDate
-              className={cn({ weekend: day.isWeekend, today: day.isToday })}
-            >
-              {day.weekDayName}, {day.date}
-              {day.isToday && " — Сегодня"}
-            </DayDate>
+          return (
+            <DayMenu key={index}>
+              <DayDate
+                className={cn({ weekend: day.isWeekend, today: day.isToday })}
+              >
+                {day.weekDayName}, {day.date}
+                {day.isToday && " — Сегодня"}
+              </DayDate>
 
-            <Meals>
-              {mealsIds.map((id) => {
-                const meal = getMealById(meals, id);
-                return (
-                  <Meal
-                    id={meal.id}
-                    title={meal.title}
-                    dishes={getDishesForMeal(dishes, meal.dishes)}
-                    key={meal.id}
-                    removeDish={removeDish}
-                  />
-                );
-              })}
-            </Meals>
-          </DayMenu>
-        );
-      })}
-    </MenuBoard>
+              <Meals>
+                {mealsIds.map((id) => {
+                  const meal = getMealById(meals, id);
+                  return (
+                    <Meal
+                      id={meal.id}
+                      title={meal.title}
+                      dishes={getDishesForMeal(dishes, meal.dishes)}
+                      key={meal.id}
+                      removeDish={removeDish}
+                    />
+                  );
+                })}
+              </Meals>
+            </DayMenu>
+          );
+        })}
+      </MenuBoard>
+    </>
   );
 };
 

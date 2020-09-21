@@ -6,3 +6,6 @@ export const textColors = {
   gray: "#8E8E93",
   primary: primaryColor,
 };
+export const borderColors = {
+  base: "#efefef",
+};
