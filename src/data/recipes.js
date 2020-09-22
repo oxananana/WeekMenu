@@ -11,7 +11,7 @@ import meatballs from "../assets/img/meatballs.jpg";
 import coffee from "../assets/img/coffee.png";
 import chocolate from "../assets/img/chocolate.png";
 
-const dishes = {
+const recipes = {
   soup1: {
     id: "soup1",
     title: "Гороховый суп с копченостями",
@@ -228,4 +228,4 @@ const dishes = {
   },
 };
 
-export default dishes;
+export default recipes;

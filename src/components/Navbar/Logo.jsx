@@ -22,6 +22,11 @@ const Logo = () => {
   );
 };
 
-const StyledLogo = styled.div``;
+const StyledLogo = styled.div`
+  svg {
+    width: 32px;
+    height: auto;
+  }
+`;
 
 export default Logo;

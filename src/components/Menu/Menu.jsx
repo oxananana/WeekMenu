@@ -1,25 +1,28 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import cn from "classnames";
 import { getDishesForMeal, getMealById } from "../../selectors/selectors";
 import { bgColors, textColors } from "../../theme/variables";
 import Meal from "./Meal";
-import Modal from "../Common/Modal";
+import AddDishModal from "./AddDishModal/AddDishModal";
 
 const Menu = (props) => {
   const dates = props.menu.dates;
   const menu = props.menu.menu;
+  const recipes = Object.values(props.recipes);
+  const categories = props.categories;
+
   const [meals, setMeals] = useState(props.menu.meals);
   const [dishes, setDishes] = useState(props.menu.dishes);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   // const nextDays = returnNextDays();
 
-  const handleOpenModal = () => {
-    setModalIsOpen(true);
-  };
-
   const handleCloseModal = () => {
     setModalIsOpen(false);
+  };
+
+  const addDish = () => {
+    setModalIsOpen(true);
   };
 
   const removeDish = (mealId, dishId) => {
@@ -32,10 +35,13 @@ const Menu = (props) => {
 
   return (
     <>
-      <button onClick={handleOpenModal}>открыть модалку</button>
-      <Modal isOpen={modalIsOpen} title="Заголовок" onClose={handleCloseModal}>
-        я - тело модалки
-      </Modal>
+      <AddDishModal
+        isOpen={modalIsOpen}
+        onClose={handleCloseModal}
+        recipes={recipes}
+        categories={categories}
+      />
+
       <MenuBoard>
         {dates.map((date, index) => {
           const day = formattingDay(date);
@@ -59,6 +65,7 @@ const Menu = (props) => {
                       title={meal.title}
                       dishes={getDishesForMeal(dishes, meal.dishes)}
                       key={meal.id}
+                      addDish={addDish}
                       removeDish={removeDish}
                     />
                   );

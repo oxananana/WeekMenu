@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import dishes from "./dishes";
+import dishes from "./recipes";
 
 const id1 = uuidv4();
 const id2 = uuidv4();

@@ -10,7 +10,7 @@ import { textColors, bgColors } from "../../theme/variables";
 const RecipePage = (props) => {
   const { recipeId } = useParams();
   const { title, imgSrc, schedule, ingredients, recipe } = {
-    ...getDishById(props.dishes, recipeId),
+    ...getDishById(props.recipes, recipeId),
   };
 
   return (

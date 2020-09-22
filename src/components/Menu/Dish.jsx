@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Icon from "../Common/Icon";
-import { shadow, textColors } from "../../theme/variables";
+import { shadow, bgColors, textColors } from "../../theme/variables";
 
 const Dish = (props) => {
   const { mealId, dish, removeDish } = { ...props };
@@ -58,6 +58,7 @@ const DishImg = styled.div`
   background-size: cover;
   background-position: center;
   background-color: #fff;
+  border-right: 1px solid ${bgColors.base};
   border-radius: 4px 0 0 4px;
 `;
 

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { textColors } from "../../theme/variables";
 import Dish from "./Dish";
+import Icon from "../Common/Icon";
 
 const areEqual = (prevProps, nextProps) => {
   const { removeDish, ...prev } = prevProps;
@@ -14,11 +15,16 @@ const areEqual = (prevProps, nextProps) => {
 };
 
 const Meal = React.memo((props) => {
-  const { id, title, dishes, removeDish } = { ...props };
+  const { id, title, dishes, removeDish, addDish } = { ...props };
 
   return (
     <StyledMeal>
-      <MealTitle>{title}</MealTitle>
+      <MealTitle>
+        {title}
+        <AddIcon onClick={addDish}>
+          <Icon name="plus" />
+        </AddIcon>
+      </MealTitle>
       {dishes.length > 0 ? (
         <DishesList>
           {dishes.map((dish) => {
@@ -48,6 +54,18 @@ const StyledMeal = styled.div`
 const MealTitle = styled.div`
   font-weight: 600;
   margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const AddIcon = styled.span`
+  opacity: 0.3;
+
+  &:hover {
+    opacity: 0.6;
+    cursor: pointer;
+  }
 `;
 
 const DishesList = styled.div``;

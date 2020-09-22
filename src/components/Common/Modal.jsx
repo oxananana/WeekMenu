@@ -1,7 +1,7 @@
-import React, { useEffect, useLayoutEffect } from "react";
+import React, { useLayoutEffect } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { borderColors, textColors } from "../../theme/variables";
+import { borderColors, textColors, bgColors } from "../../theme/variables";
 import Portal from "./Portal";
 import Icon from "./Icon";
 
@@ -62,6 +62,7 @@ const ModalContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 24px;
   top: 0;
   left: 0;
   bottom: 0;
@@ -78,7 +79,7 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalDialog = styled.div`
-  background-color: #fff;
+  background-color: ${bgColors.base};
   flex: 1;
   max-width: 600px;
   position: relative;

@@ -10,7 +10,7 @@ import Recipes from "./components/Recipes/Recipes.jsx";
 import RecipePage from "./components/Recipes/RecipePage";
 import menu from "./data/menu";
 import categories from "./data/categories";
-import dishes from "./data/dishes";
+import recipes from "./data/recipes";
 
 const App = () => {
   return (
@@ -21,15 +21,15 @@ const App = () => {
         <Redirect to="/menu" />
       </Route>
       <Route path="/menu">
-        <Menu menu={menu} />
+        <Menu menu={menu} recipes={recipes} categories={categories} />
       </Route>
       <Container>
         <Switch>
           <Route path="/recipes/:categoryId/:recipeId">
-            <RecipePage dishes={dishes} />
+            <RecipePage recipes={recipes} />
           </Route>
           <Route path="/recipes/:categoryId">
-            <Recipes categories={categories} dishes={dishes} />
+            <Recipes categories={categories} recipes={recipes} />
           </Route>
           <Route path="/recipes/">
             <Redirect to="/recipes/soups" />

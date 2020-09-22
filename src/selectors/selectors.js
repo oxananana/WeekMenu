@@ -14,8 +14,8 @@ export const getDishById = (dishes, dishId) => {
   return dishes[dishId];
 };
 
-export const getCategoryDishes = (dishes, categoryId) => {
-  return Object.values(dishes).filter((dish) => {
-    return dish.categoryId === categoryId;
+export const getCategoryRecipes = (recipes, categoryId) => {
+  return Object.values(recipes).filter((recipe) => {
+    return recipe.categoryId === categoryId;
   });
 };

@@ -5,6 +5,16 @@ export const Icon = ({ name }) => {
 };
 
 const icons = {
+  check: (
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M9.70711 14.2929L19 5L20.4142 6.41421L9.70711 17.1213L4 11.4142L5.41421 10L9.70711 14.2929Z" />
+    </svg>
+  ),
+  plus: (
+    <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+      <path d="M9 7H14V9H9V14H7V9H2V7H7V2H9V7Z" />
+    </svg>
+  ),
   close: (
     <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
       <path d="M8.00001 9.41429L3.70712 13.7072L2.29291 12.293L6.5858 8.00008L2.29291 3.70718L3.70712 2.29297L8.00001 6.58586L12.2929 2.29297L13.7071 3.70718L9.41423 8.00008L13.7071 12.293L12.2929 13.7072L8.00001 9.41429Z" />
