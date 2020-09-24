@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import cn from "classnames";
-import { getDishesForMeal, getMealById } from "../../selectors/selectors";
-import { bgColors, textColors } from "../../theme/variables";
-import Meal from "./Meal";
+import { getDishById } from "../../selectors/selectors";
+import { textColors } from "../../theme/variables";
+import Meals from "./Meals";
 import AddDishModal from "./AddDishModal/AddDishModal";
 
 const Menu = (props) => {
@@ -15,31 +15,61 @@ const Menu = (props) => {
   const [meals, setMeals] = useState(props.menu.meals);
   const [dishes, setDishes] = useState(props.menu.dishes);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [editableDay, setEditableDay] = useState("");
+  const [editableMeal, setEditableMeal] = useState("");
+
   // const nextDays = returnNextDays();
 
   const handleCloseModal = () => {
     setModalIsOpen(false);
   };
 
-  const addDish = () => {
+  const addDish = (day, mealId) => {
     setModalIsOpen(true);
+    setEditableDay(day);
+    setEditableMeal(mealId);
   };
 
   const removeDish = (mealId, dishId) => {
-    let newMeals = { ...meals };
-    newMeals[mealId].dishes = newMeals[mealId].dishes.filter((id) => {
-      return id !== dishId;
-    });
+    let newMeals = {
+      ...meals,
+      [mealId]: {
+        ...meals[mealId],
+        dishes: meals[mealId].dishes.filter((id) => id !== dishId),
+      },
+    };
     setMeals(newMeals);
   };
+
+  const handleSubmit = (selectedDishesIds, mealId) => {
+    let newMeals = {
+      ...meals,
+      [mealId]: {
+        ...meals[mealId],
+        dishes: meals[mealId].dishes.concat(selectedDishesIds),
+      },
+    };
+    setMeals(newMeals);
+
+    let newDishes = { ...dishes };
+    selectedDishesIds.forEach((id) => {
+      newDishes[id] = { ...getDishById(props.recipes, id), isDone: false };
+    });
+    setDishes(newDishes);
+  };
+
+  console.log(dishes, meals);
 
   return (
     <>
       <AddDishModal
         isOpen={modalIsOpen}
         onClose={handleCloseModal}
+        onSubmit={handleSubmit}
         recipes={recipes}
         categories={categories}
+        day={editableDay}
+        mealId={editableMeal}
       />
 
       <MenuBoard>
@@ -56,21 +86,14 @@ const Menu = (props) => {
                 {day.isToday && " — Сегодня"}
               </DayDate>
 
-              <Meals>
-                {mealsIds.map((id) => {
-                  const meal = getMealById(meals, id);
-                  return (
-                    <Meal
-                      id={meal.id}
-                      title={meal.title}
-                      dishes={getDishesForMeal(dishes, meal.dishes)}
-                      key={meal.id}
-                      addDish={addDish}
-                      removeDish={removeDish}
-                    />
-                  );
-                })}
-              </Meals>
+              <Meals
+                mealsIds={mealsIds}
+                dishes={dishes}
+                meals={meals}
+                addDish={addDish}
+                removeDish={removeDish}
+                day={`${day.weekDayName}, ${day.date}`}
+              />
             </DayMenu>
           );
         })}
@@ -157,13 +180,6 @@ const DayDate = styled.div`
   &.today {
     color: ${textColors.primary};
   }
-`;
-
-const Meals = styled.div`
-  flex: 1;
-  background-color: ${bgColors.base};
-  padding: 16px;
-  border-radius: 4px;
 `;
 
 export default Menu;

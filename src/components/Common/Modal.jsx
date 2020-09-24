@@ -4,15 +4,20 @@ import styled from "styled-components";
 import { borderColors, textColors, bgColors } from "../../theme/variables";
 import Portal from "./Portal";
 import Icon from "./Icon";
+import Button from "./Button";
 
 const Modal = (props) => {
-  const { title, isOpen, onClose, children } = { ...props };
+  const { title, isOpen, onClose, children, onSubmit } = { ...props };
 
-  const handleClick = () => {
+  const handleClose = () => {
     document.documentElement.style.overflow = null;
     document.body.style.overflow = null;
-
     onClose();
+  };
+
+  const handleSubmit = () => {
+    handleClose();
+    onSubmit();
   };
 
   useLayoutEffect(() => {
@@ -29,14 +34,22 @@ const Modal = (props) => {
           <ModalDialog>
             <ModalHeader>
               {title}
-              <CloseIcon onClick={onClose}>
+              <CloseIcon onClick={handleClose}>
                 <Icon name="close" />
               </CloseIcon>
             </ModalHeader>
 
             <ModalBody>{children}</ModalBody>
+            <ModalFooter>
+              <Button invert onClick={handleClose}>
+                Отмена
+              </Button>
+              <Button type="submit" onClick={handleSubmit}>
+                Добавить
+              </Button>
+            </ModalFooter>
           </ModalDialog>
-          <ModalOverlay onClick={handleClick} />
+          <ModalOverlay onClick={handleClose} />
         </ModalContainer>
       </Portal>
     )
@@ -69,6 +82,7 @@ const ModalContainer = styled.div`
   right: 0;
   z-index: 1000;
 `;
+
 const ModalOverlay = styled.div`
   background-color: rgba(0, 0, 0, 0.7);
   position: absolute;
@@ -96,6 +110,13 @@ const ModalHeader = styled.div`
 
 const ModalBody = styled.div`
   padding: 24px;
+`;
+
+const ModalFooter = styled.div`
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid ${borderColors.base};
 `;
 
 const CloseIcon = styled.span`

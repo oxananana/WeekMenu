@@ -1,17 +1,17 @@
 import { v4 as uuidv4 } from "uuid";
 import dishes from "./recipes";
 
-const id1 = uuidv4();
-const id2 = uuidv4();
-const id3 = uuidv4();
-const id4 = uuidv4();
-const id5 = uuidv4();
+let ids = [];
+
+for (let i = 0; i < 10; i++) {
+  ids.push(uuidv4());
+}
 
 const data = {
   "2020-09-17": {
     meals: {
-      [id1]: {
-        id: id1,
+      [ids[0]]: {
+        id: ids[0],
         title: "Завтрак",
         type: "breakfast",
         dishes: [
@@ -21,8 +21,8 @@ const data = {
         ],
       },
 
-      [id2]: {
-        id: id2,
+      [ids[1]]: {
+        id: ids[1],
         title: "Обед",
         type: "lunch",
         dishes: [
@@ -31,8 +31,8 @@ const data = {
           { id: "salad1", isDone: false, ...dishes["salad1"] },
         ],
       },
-      [id3]: {
-        id: id3,
+      [ids[2]]: {
+        id: ids[2],
         title: "Ужин",
         type: "dinner",
         dishes: [
@@ -44,8 +44,8 @@ const data = {
   },
   "2020-09-18": {
     meals: {
-      [id4]: {
-        id: id4,
+      [ids[3]]: {
+        id: ids[3],
         title: "Завтрак",
         type: "breakfast",
         dishes: [
@@ -55,8 +55,8 @@ const data = {
         ],
       },
 
-      [id5]: {
-        id: id5,
+      [ids[4]]: {
+        id: ids[4],
         title: "Обед",
         type: "lunch",
         dishes: [
@@ -64,8 +64,8 @@ const data = {
           { id: "meat2", isDone: false, ...dishes["meat2"] },
         ],
       },
-      [id3]: {
-        id: id3,
+      [ids[5]]: {
+        id: ids[5],
         title: "Ужин",
         type: "dinner",
         dishes: [

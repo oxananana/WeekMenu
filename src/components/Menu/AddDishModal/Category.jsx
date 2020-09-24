@@ -3,12 +3,12 @@ import styled from "styled-components";
 import Dish from "./Dish";
 
 const Category = (props) => {
-  const { dishes, selectDish, selectedDishes } = { ...props };
+  const { dishes, selectDish, selectedDishesIds } = { ...props };
 
   return (
     <StyledCategory>
       {dishes.length > 0 ? (
-        <DishesList>
+        <Dishes>
           {dishes.map((dish) => {
             return (
               <Dish
@@ -17,11 +17,11 @@ const Category = (props) => {
                 title={dish.title}
                 imgSrc={dish.imgSrc}
                 selectDish={selectDish}
-                isActive={selectedDishes.includes(dish.id)}
+                isActive={selectedDishesIds.includes(dish.id)}
               />
             );
           })}
-        </DishesList>
+        </Dishes>
       ) : (
         <div>Здесь пока нет рецептов</div>
       )}
@@ -36,6 +36,6 @@ const StyledCategory = styled.div`
   }
 `;
 
-const DishesList = styled.div``;
+const Dishes = styled.div``;
 
 export default Category;

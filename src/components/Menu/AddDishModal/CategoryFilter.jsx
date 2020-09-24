@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import cn from "classnames";
-import { textColors, bgColors } from "../../../theme/variables";
+import { textColors } from "../../../theme/variables";
 
 const CategoryFilter = (props) => {
   const { categories, activeCategoryId, changeFilter } = { ...props };

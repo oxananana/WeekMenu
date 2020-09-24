@@ -5,7 +5,7 @@ import Dish from "./Dish";
 import Icon from "../Common/Icon";
 
 const areEqual = (prevProps, nextProps) => {
-  const { removeDish, ...prev } = prevProps;
+  const { removeDish, addDish, ...prev } = prevProps;
   for (const key of Object.keys(prev)) {
     if (prev[key] !== nextProps[key]) {
       return false;
@@ -16,7 +16,6 @@ const areEqual = (prevProps, nextProps) => {
 
 const Meal = React.memo((props) => {
   const { id, title, dishes, removeDish, addDish } = { ...props };
-
   return (
     <StyledMeal>
       <MealTitle>
@@ -26,7 +25,7 @@ const Meal = React.memo((props) => {
         </AddIcon>
       </MealTitle>
       {dishes.length > 0 ? (
-        <DishesList>
+        <Dishes>
           {dishes.map((dish) => {
             return (
               <Dish
@@ -37,7 +36,7 @@ const Meal = React.memo((props) => {
               />
             );
           })}
-        </DishesList>
+        </Dishes>
       ) : (
         <NoDishes>Пока пусто</NoDishes>
       )}
@@ -68,7 +67,7 @@ const AddIcon = styled.span`
   }
 `;
 
-const DishesList = styled.div``;
+const Dishes = styled.div``;
 
 const NoDishes = styled.div`
   color: ${textColors.gray};

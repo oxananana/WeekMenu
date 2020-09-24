@@ -27,6 +27,10 @@ const data = {
     id: "drinks",
     title: "Напитки",
   },
+  desert: {
+    id: "desert",
+    title: "Десерт",
+  },
 };
 
 export default data;

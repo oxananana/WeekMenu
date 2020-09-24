@@ -1,35 +1,46 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { bgColors, textColors } from "../../../theme/variables";
 import Modal from "../../Common/Modal";
 import CategoryFilter from "./CategoryFilter";
 import Category from "./Category";
 import { getCategoryRecipes } from "../../../selectors/selectors";
 
 const AddDishModal = (props) => {
-  const { isOpen, onClose, categories } = { ...props };
+  const { isOpen, onClose, onSubmit, categories, day, mealId } = { ...props };
   const dishes = props.recipes;
   const [activeCategoryId, setActiveCategoryId] = useState("soups");
-  const [selectedDishes, setSelectedDishes] = useState([]);
+  const [selectedDishesIds, setDelectedDishesIds] = useState([]);
 
   const handleChangeFilter = (categoryId) => {
     setActiveCategoryId(categoryId);
   };
 
   const handleSelectDish = (dishId) => {
-    if (selectedDishes.includes(dishId)) {
-      setSelectedDishes(
-        selectedDishes.filter((id) => {
+    if (selectedDishesIds.includes(dishId)) {
+      setDelectedDishesIds(
+        selectedDishesIds.filter((id) => {
           return id !== dishId;
         })
       );
     } else {
-      setSelectedDishes([...selectedDishes, dishId]);
+      setDelectedDishesIds([...selectedDishesIds, dishId]);
     }
   };
 
+  const handleSubmit = () => {
+    setDelectedDishesIds([]);
+    setActiveCategoryId("soups");
+    onSubmit(selectedDishesIds, mealId);
+    onClose();
+  };
+
   return (
-    <Modal isOpen={isOpen} title="Добавление блюда" onClose={onClose}>
+    <Modal
+      isOpen={isOpen}
+      title={`Добавление блюда — ${day}`}
+      onClose={onClose}
+      onSubmit={handleSubmit}
+    >
       <Form>
         <CategoryFilter
           categories={categories}
@@ -41,7 +52,7 @@ const AddDishModal = (props) => {
           activeCategoryId={activeCategoryId}
           dishes={getCategoryRecipes(dishes, activeCategoryId)}
           selectDish={handleSelectDish}
-          selectedDishes={selectedDishes}
+          selectedDishesIds={selectedDishesIds}
         />
       </Form>
       <SelectedDishes></SelectedDishes>
