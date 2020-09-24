@@ -16,6 +16,7 @@ const Category = (props) => {
                 key={dish.id}
                 title={dish.title}
                 imgSrc={dish.imgSrc}
+                schedule={dish.schedule}
                 selectDish={selectDish}
                 isActive={selectedDishesIds.includes(dish.id)}
               />

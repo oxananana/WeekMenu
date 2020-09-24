@@ -5,7 +5,7 @@ import Icon from "../../Common/Icon";
 import { shadow, bgColors, textColors } from "../../../theme/variables";
 
 const Dish = (props) => {
-  const { id, title, imgSrc, isActive, selectDish } = { ...props };
+  const { id, title, imgSrc, schedule, isActive, selectDish } = { ...props };
 
   return (
     <StyledDish
@@ -15,7 +15,21 @@ const Dish = (props) => {
       }}
     >
       <DishImg style={{ backgroundImage: `url(${imgSrc})` }} />
-      <DishTitle>{title}</DishTitle>
+      <div>
+        <DishTitle>{title}</DishTitle>
+        <RecipeSchedule>
+          {schedule.map((day, index) => {
+            return (
+              <RecipeScheduleItem
+                key={index}
+                className={cn({ active: day.isActive })}
+              >
+                {day.name}
+              </RecipeScheduleItem>
+            );
+          })}
+        </RecipeSchedule>
+      </div>
       {isActive && (
         <CheckedIcon>
           <Icon name="check" />
@@ -57,7 +71,27 @@ const DishImg = styled.div`
   margin-right: 16px;
 `;
 
-const DishTitle = styled.div``;
+const DishTitle = styled.div`
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+`;
+
+const RecipeSchedule = styled.ul`
+  display: flex;
+  margin: 8px -4px 0;
+  font-size: 12px;
+`;
+
+const RecipeScheduleItem = styled.li`
+  margin: 0 4px;
+  color: ${textColors.gray};
+
+  &.active {
+    color: ${textColors.base};
+  }
+`;
 
 const CheckedIcon = styled.div`
   position: absolute;

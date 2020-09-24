@@ -42,11 +42,14 @@ const Menu = (props) => {
   };
 
   const handleSubmit = (selectedDishesIds, mealId) => {
+    let unduplicatedDishesId = selectedDishesIds.filter((id) => {
+      return !meals[mealId].dishes.includes(id);
+    });
     let newMeals = {
       ...meals,
       [mealId]: {
         ...meals[mealId],
-        dishes: meals[mealId].dishes.concat(selectedDishesIds),
+        dishes: meals[mealId].dishes.concat(unduplicatedDishesId),
       },
     };
     setMeals(newMeals);
@@ -57,8 +60,6 @@ const Menu = (props) => {
     });
     setDishes(newDishes);
   };
-
-  console.log(dishes, meals);
 
   return (
     <>
