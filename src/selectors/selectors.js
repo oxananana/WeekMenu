@@ -1,10 +1,10 @@
-import memoize from "memoizee";
+// import memoize from "memoizee";
 
-export const getDishesForMeal = memoize((dishes, dishesIds) => {
+export const getDishesForMeal = (dishes, dishesIds) => {
   return dishesIds.map((id) => {
     return dishes[id];
   });
-});
+};
 
 export const getMealById = (meals, mealId) => {
   return meals[mealId];

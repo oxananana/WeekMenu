@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Dish from "./Dish";
 
 const Category = (props) => {
-  const { dishes, selectDish, selectedDishesIds } = { ...props };
+  const { dishes, selectDish, selectedDishesIds } = props;
 
   return (
     <StyledCategory>

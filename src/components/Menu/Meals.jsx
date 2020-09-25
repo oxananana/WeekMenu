@@ -5,12 +5,13 @@ import { bgColors } from "../../theme/variables";
 import Meal from "./Meal";
 
 const Meals = (props) => {
-  const { mealsIds, dishes, meals, addDish, removeDish, day } = { ...props };
+  const { mealsIds, dishes, meals, addDish, removeDish, day } = props;
 
   return (
     <StyledMeals>
       {mealsIds.map((id) => {
         const meal = getMealById(meals, id);
+
         return (
           <Meal
             id={meal.id}

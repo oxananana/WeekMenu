@@ -7,7 +7,7 @@ import Icon from "./Icon";
 import Button from "./Button";
 
 const Modal = (props) => {
-  const { title, isOpen, onClose, children, onSubmit } = { ...props };
+  const { title, isOpen, onClose, children, onSubmit } = props;
 
   const handleClose = () => {
     document.documentElement.style.overflow = null;
@@ -73,9 +73,9 @@ Modal.defaultProps = {
 const ModalContainer = styled.div`
   position: fixed;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: 24px;
+  padding: 60px 24px;
   top: 0;
   left: 0;
   bottom: 0;

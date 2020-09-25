@@ -5,9 +5,7 @@ import styled from "styled-components";
 import { textColors, bgColors } from "../../theme/variables";
 
 const Button = (props) => {
-  const { children, onClick, disabled, active, invert, ...attrs } = {
-    ...props,
-  };
+  const { children, onClick, disabled, active, invert, ...attrs } = props;
   const handleOnClick = (e) => {
     if (disabled) {
       e.preventDefault();

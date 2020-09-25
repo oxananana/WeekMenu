@@ -4,7 +4,7 @@ import cn from "classnames";
 import { textColors } from "../../../theme/variables";
 
 const CategoryFilter = (props) => {
-  const { categories, activeCategoryId, changeFilter } = { ...props };
+  const { categories, activeCategoryId, changeFilter } = props;
 
   return (
     <FilterNav>

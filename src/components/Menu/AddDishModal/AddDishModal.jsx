@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { arrayToEnumString } from "../../../helpers/helpers";
+import { textColors } from "../../../theme/variables";
+import { getCategoryRecipes } from "../../../selectors/selectors";
 import Modal from "../../Common/Modal";
 import CategoryFilter from "./CategoryFilter";
 import Category from "./Category";
-import { getCategoryRecipes } from "../../../selectors/selectors";
 
 const AddDishModal = (props) => {
-  const { isOpen, onClose, onSubmit, categories, day, mealId } = { ...props };
+  const { isOpen, onClose, onSubmit, categories, day, mealId } = props;
   const dishes = props.recipes;
   const [activeCategoryId, setActiveCategoryId] = useState("soups");
   const [selectedDishesIds, setDelectedDishesIds] = useState([]);
@@ -41,7 +43,7 @@ const AddDishModal = (props) => {
       onClose={onClose}
       onSubmit={handleSubmit}
     >
-      <Form>
+      <Dishes>
         <CategoryFilter
           categories={categories}
           activeCategoryId={activeCategoryId}
@@ -50,20 +52,38 @@ const AddDishModal = (props) => {
         <Category
           title={categories[activeCategoryId].title}
           activeCategoryId={activeCategoryId}
-          dishes={getCategoryRecipes(dishes, activeCategoryId)}
+          dishes={getCategoryRecipes(Object.values(dishes), activeCategoryId)}
           selectDish={handleSelectDish}
           selectedDishesIds={selectedDishesIds}
         />
-      </Form>
-      <SelectedDishes></SelectedDishes>
+      </Dishes>
+      {selectedDishesIds.length > 0 && (
+        <SelectedDishes>
+          <SelectedDishesTitle>Выбранные блюда: </SelectedDishesTitle>
+          <div>
+            {arrayToEnumString(
+              selectedDishesIds.map((id) => {
+                return dishes[id].title;
+              })
+            )}
+          </div>
+        </SelectedDishes>
+      )}
     </Modal>
   );
 };
 
-const Form = styled.div`
+const Dishes = styled.div`
   display: flex;
 `;
 
-const SelectedDishes = styled.div``;
+const SelectedDishes = styled.div`
+  margin-top: 16px;
+`;
+
+const SelectedDishesTitle = styled.div`
+  color: ${textColors.gray};
+  margin-bottom: 8px;
+`;
 
 export default AddDishModal;

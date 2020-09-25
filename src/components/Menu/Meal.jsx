@@ -4,18 +4,9 @@ import { textColors } from "../../theme/variables";
 import Dish from "./Dish";
 import Icon from "../Common/Icon";
 
-const areEqual = (prevProps, nextProps) => {
-  const { removeDish, addDish, ...prev } = prevProps;
-  for (const key of Object.keys(prev)) {
-    if (prev[key] !== nextProps[key]) {
-      return false;
-    }
-  }
-  return true;
-};
+const Meal = (props) => {
+  const { id, title, dishes, removeDish, addDish, meals } = props;
 
-const Meal = React.memo((props) => {
-  const { id, title, dishes, removeDish, addDish } = { ...props };
   return (
     <StyledMeal>
       <MealTitle>
@@ -42,7 +33,7 @@ const Meal = React.memo((props) => {
       )}
     </StyledMeal>
   );
-}, areEqual);
+};
 
 const StyledMeal = styled.div`
   & + & {

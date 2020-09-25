@@ -4,7 +4,7 @@ import styled from "styled-components";
 import cn from "classnames";
 
 import { getDishById } from "../../selectors/selectors";
-import { ingredientsToString } from "../../helpers/helpers";
+import { arrayToEnumString } from "../../helpers/helpers";
 import { textColors, bgColors } from "../../theme/variables";
 
 const RecipePage = (props) => {
@@ -38,7 +38,7 @@ const RecipePage = (props) => {
           <dd>
             <RecipeIngredients>
               {ingredients.length > 0
-                ? ingredientsToString(ingredients)
+                ? arrayToEnumString(ingredients)
                 : "Не заполнено"}
             </RecipeIngredients>
           </dd>

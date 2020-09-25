@@ -4,8 +4,8 @@ import Icon from "../Common/Icon";
 import { shadow, bgColors, textColors } from "../../theme/variables";
 
 const Dish = (props) => {
-  const { mealId, dish, removeDish } = { ...props };
-  const { id, title, isDone, imgSrc } = { ...dish };
+  const { mealId, dish, removeDish } = props;
+  const { id, title, isDone, imgSrc } = dish;
 
   return (
     <StyledDish>

@@ -9,7 +9,7 @@ import AddDishModal from "./AddDishModal/AddDishModal";
 const Menu = (props) => {
   const dates = props.menu.dates;
   const menu = props.menu.menu;
-  const recipes = Object.values(props.recipes);
+  const recipes = props.recipes;
   const categories = props.categories;
 
   const [meals, setMeals] = useState(props.menu.meals);
@@ -56,7 +56,7 @@ const Menu = (props) => {
 
     let newDishes = { ...dishes };
     selectedDishesIds.forEach((id) => {
-      newDishes[id] = { ...getDishById(props.recipes, id), isDone: false };
+      newDishes[id] = { ...getDishById(recipes, id), isDone: false };
     });
     setDishes(newDishes);
   };
@@ -77,6 +77,7 @@ const Menu = (props) => {
         {dates.map((date, index) => {
           const day = formattingDay(date);
           const mealsIds = menu[date].meals;
+          console.log(meals);
 
           return (
             <DayMenu key={index}>

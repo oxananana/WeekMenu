@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import cn from "classnames";
 
-import { ingredientsToString } from "../../helpers/helpers";
+import { arrayToEnumString } from "../../helpers/helpers";
 import { textColors, shadow, bgColors } from "../../theme/variables";
 
 const Recipe = (props) => {
@@ -31,7 +31,7 @@ const Recipe = (props) => {
         </RecipeSchedule>
         <RecipeIngredients>
           {ingredients.length > 0
-            ? ingredientsToString(ingredients)
+            ? arrayToEnumString(ingredients)
             : "Не заполнено"}
         </RecipeIngredients>
       </NavLink>

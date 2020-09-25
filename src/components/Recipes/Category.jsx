@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Recipe from "./Recipe";
 
 const Category = (props) => {
-  const { title, recipes } = { ...props };
+  const { title, recipes } = props;
 
   return (
     <StyledCategory>

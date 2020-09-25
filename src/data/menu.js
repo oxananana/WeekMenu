@@ -36,8 +36,8 @@ const data = {
         title: "Ужин",
         type: "dinner",
         dishes: [
-          { id: "side1", isDone: false, ...dishes["side1"] },
-          { id: "meat1", isDone: false, ...dishes["meat1"] },
+          { id: "side2", isDone: false, ...dishes["side2"] },
+          { id: "meat2", isDone: false, ...dishes["meat2"] },
         ],
       },
     },
@@ -61,7 +61,7 @@ const data = {
         type: "lunch",
         dishes: [
           { id: "side1", isDone: false, ...dishes["side1"] },
-          { id: "meat2", isDone: false, ...dishes["meat2"] },
+          { id: "meat1", isDone: false, ...dishes["meat1"] },
         ],
       },
       [ids[5]]: {

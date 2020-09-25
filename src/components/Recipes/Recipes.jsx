@@ -7,7 +7,7 @@ import { textColors } from "../../theme/variables";
 import Category from "./Category";
 
 const Recipes = (props) => {
-  const { categories, recipes } = { ...props };
+  const { categories, recipes } = props;
   const activeCategoryId = useParams()["categoryId"];
 
   return (
