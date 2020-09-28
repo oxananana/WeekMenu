@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import cn from "classnames";
+import useDocumentTitle from "../../../hooks/useDocumentTitle";
 import { getDishById } from "../../../selectors/selectors";
 import { arrayToEnumString } from "../../../helpers/helpers";
 import { textColors, bgColors } from "../../../theme/variables";
@@ -14,6 +15,7 @@ const RecipePage = (props) => {
   const { title, imgSrc, schedule, ingredients, recipe } = {
     ...getDishById(props.recipes, recipeId),
   };
+  useDocumentTitle(title);
   const [editMode, setEditMode] = useState(false);
   const [state, setState] = useState({
     imgSrc: imgSrc,

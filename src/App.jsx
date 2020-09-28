@@ -21,7 +21,12 @@ const App = () => {
         <Redirect to="/menu" />
       </Route>
       <Route path="/menu">
-        <Menu menu={menu} recipes={recipes} categories={categories} />
+        <Menu
+          menu={menu}
+          recipes={recipes}
+          categories={categories}
+          docTitle="Меню на неделю"
+        />
       </Route>
       <Container>
         <Switch>

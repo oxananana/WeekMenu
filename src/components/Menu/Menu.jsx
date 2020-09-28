@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import cn from "classnames";
 import { getDishById } from "../../selectors/selectors";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 import { textColors } from "../../theme/variables";
 import Meals from "./Meals";
 import AddDishModal from "./AddDishModal/AddDishModal";
 
 const Menu = (props) => {
+  useDocumentTitle(props.docTitle);
   const dates = props.menu.dates;
   const menu = props.menu.menu;
   const recipes = props.recipes;
@@ -77,7 +79,6 @@ const Menu = (props) => {
         {dates.map((date, index) => {
           const day = formattingDay(date);
           const mealsIds = menu[date].meals;
-          console.log(meals);
 
           return (
             <DayMenu key={index}>

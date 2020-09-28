@@ -11,7 +11,9 @@ const Navbar = () => {
     <NavbarContainer>
       <Container>
         <StyledNavbar>
-          <Logo />
+          <NavLink to="/">
+            <Logo />
+          </NavLink>
           <Nav>
             <NavItem>
               <NavLink to="/menu">Меню</NavLink>

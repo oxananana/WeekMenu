@@ -3,17 +3,20 @@ import styled from "styled-components";
 import { NavLink, useParams } from "react-router-dom";
 import cn from "classnames";
 import { getCategoryRecipes } from "../../selectors/selectors";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 import { textColors } from "../../theme/variables";
 import Category from "./Category";
 
 const Recipes = (props) => {
-  const { categories, recipes } = props;
   const activeCategoryId = useParams()["categoryId"];
+  const title = props.categories[activeCategoryId].title;
+  const recipes = getCategoryRecipes(props.recipes, activeCategoryId);
+  useDocumentTitle(title);
 
   return (
     <>
       <CategoryNav>
-        {Object.values(categories).map((category) => {
+        {Object.values(props.categories).map((category) => {
           return (
             <CategoryNavItem
               key={category.id}
@@ -25,10 +28,7 @@ const Recipes = (props) => {
           );
         })}
       </CategoryNav>
-      <Category
-        title={categories[activeCategoryId].title}
-        recipes={getCategoryRecipes(recipes, activeCategoryId)}
-      />
+      <Category title={title} recipes={recipes} />
     </>
   );
 };
