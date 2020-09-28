@@ -55,10 +55,10 @@ const RecipeEditForm = (props) => {
   return (
     <Form onSubmit={handleSubmit}>
       <RecipeImgContainer>
-        <RecipeImg src={imgSrc} />
+        {imgSrc && <RecipeImg src={imgSrc} />}
         <Overlay>
           <label htmlFor="img">
-            <Icon name="photo" />
+            <Icon name="camera_plus" />
             <InputFile
               type="file"
               name="img"

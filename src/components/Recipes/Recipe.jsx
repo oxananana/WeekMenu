@@ -2,16 +2,22 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import cn from "classnames";
-
 import { arrayToEnumString } from "../../helpers/helpers";
 import { textColors, shadow, bgColors } from "../../theme/variables";
+import Icon from "../Common/Icon";
 
 const Recipe = (props) => {
   const { id, title, imgSrc, categoryId, schedule, ingredients } = props.recipe;
 
   return (
     <RecipeLink to={`/recipes/${categoryId}/${id}`}>
-      <RecipeImg style={{ backgroundImage: `url(${imgSrc})` }} />
+      {imgSrc ? (
+        <RecipeImg style={{ backgroundImage: `url(${imgSrc})` }} />
+      ) : (
+        <RecipeImgPlaceholder>
+          <Icon name="camera"></Icon>
+        </RecipeImgPlaceholder>
+      )}
       <RecipeInfo>
         <RecipeTitle>{title}</RecipeTitle>
         <RecipeSchedule>
@@ -53,12 +59,29 @@ const RecipeLink = styled(NavLink)`
   }
 `;
 
-const RecipeImg = styled.div`
+const imgContainerCss = `
   height: 200px;
-  background-size: cover;
-  background-position: center;
   border-bottom: 1px solid ${bgColors.base};
   border-radius: 8px 8px 0 0;
+`;
+
+const RecipeImg = styled.div`
+  ${imgContainerCss};
+  background-size: cover;
+  background-position: center;
+`;
+
+const RecipeImgPlaceholder = styled.div`
+  ${imgContainerCss};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${bgColors.base};
+
+  svg {
+    width: 48px;
+    height: 48px;
+  }
 `;
 
 const RecipeInfo = styled.div`

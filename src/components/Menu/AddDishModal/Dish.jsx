@@ -14,7 +14,13 @@ const Dish = (props) => {
         selectDish(id);
       }}
     >
-      <DishImg style={{ backgroundImage: `url(${imgSrc})` }} />
+      {imgSrc ? (
+        <DishImg style={{ backgroundImage: `url(${imgSrc})` }} />
+      ) : (
+        <ImgPlaceholder>
+          <Icon name="camera" />
+        </ImgPlaceholder>
+      )}
       <div>
         <DishTitle>{title}</DishTitle>
         <RecipeSchedule>
@@ -61,14 +67,31 @@ const StyledDish = styled.div`
   }
 `;
 
-const DishImg = styled.div`
-  height: 60px;
-  width: 60px;
-  background-size: cover;
-  background-position: center;
+const imgContainerCss = `
   border-right: 1px solid ${bgColors.base};
   border-radius: 4px 0 0 4px;
+  height: 60px;
+  width: 60px;
   margin-right: 16px;
+`;
+
+const DishImg = styled.div`
+  ${imgContainerCss};
+  background-size: cover;
+  background-position: center;
+  background-color: #fff;
+`;
+
+const ImgPlaceholder = styled.div`
+  ${imgContainerCss};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${bgColors.base};
+  svg {
+    width: 32px;
+    height: 32px;
+  }
 `;
 
 const DishTitle = styled.div`

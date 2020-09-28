@@ -6,6 +6,7 @@ import { getDishById } from "../../../selectors/selectors";
 import { arrayToEnumString } from "../../../helpers/helpers";
 import { textColors, bgColors } from "../../../theme/variables";
 import Button from "../../Common/Button";
+import Icon from "../../Common/Icon";
 import RecipeEditForm from "./RecipeEditForm";
 
 const RecipePage = (props) => {
@@ -38,7 +39,13 @@ const RecipePage = (props) => {
         />
       ) : (
         <>
-          <RecipeImg style={{ backgroundImage: `url(${state.imgSrc})` }} />
+          {state.imgSrc ? (
+            <RecipeImg style={{ backgroundImage: `url(${state.imgSrc})` }} />
+          ) : (
+            <RecipeImgPlaceholder>
+              <Icon name="camera"></Icon>
+            </RecipeImgPlaceholder>
+          )}
           <ResipeDescription>
             <RecipeTitle>{state.title}</RecipeTitle>
             <Dl>
@@ -92,20 +99,39 @@ const StyledRecipe = styled.div`
   margin: 32px auto;
   display: flex;
   max-width: 1200px;
+  padding: 32px;
+  border-radius: 4px;
+  background-color: #fff;
 `;
 
 const ResipeDescription = styled.div`
   flex: 1;
 `;
 
-const RecipeImg = styled.div`
+const imgContainerCss = `
   width: 400px;
   height: 400px;
-  background-size: cover;
-  background-position: center;
-  background-color: ${bgColors.base};
   border-radius: 8px;
   margin-right: 32px;
+`;
+
+const RecipeImg = styled.div`
+  ${imgContainerCss};
+  background-size: cover;
+  background-position: center;
+`;
+
+const RecipeImgPlaceholder = styled.div`
+  ${imgContainerCss};
+  border: 2px solid ${bgColors.base};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${bgColors.base};
+  svg {
+    width: 48px;
+    height: 48px;
+  }
 `;
 
 const RecipeTitle = styled.div`

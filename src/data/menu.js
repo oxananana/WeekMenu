@@ -60,6 +60,7 @@ const data = {
         title: "Обед",
         type: "lunch",
         dishes: [
+          { id: "soup2", isDone: false, ...dishes["soup2"] },
           { id: "side1", isDone: false, ...dishes["side1"] },
           { id: "meat1", isDone: false, ...dishes["meat1"] },
         ],

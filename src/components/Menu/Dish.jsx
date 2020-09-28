@@ -12,7 +12,13 @@ const Dish = (props) => {
       <RemoveIcon onClick={() => removeDish(mealId, id)}>
         <Icon name="delete" />
       </RemoveIcon>
-      <DishImg style={{ backgroundImage: `url(${imgSrc})` }} />
+      {imgSrc ? (
+        <DishImg style={{ backgroundImage: `url(${imgSrc})` }} />
+      ) : (
+        <ImgPlaceholder>
+          <Icon name="camera" />
+        </ImgPlaceholder>
+      )}
       <DishTitle>{title}</DishTitle>
     </StyledDish>
   );
@@ -52,14 +58,30 @@ const StyledDish = styled.div`
   }
 `;
 
-const DishImg = styled.div`
+const imgContainerCss = `
+  border-right: 1px solid ${bgColors.base};
+  border-radius: 4px 0 0 4px;
   height: 60px;
   width: 60px;
+`;
+
+const DishImg = styled.div`
+  ${imgContainerCss};
   background-size: cover;
   background-position: center;
   background-color: #fff;
-  border-right: 1px solid ${bgColors.base};
-  border-radius: 4px 0 0 4px;
+`;
+
+const ImgPlaceholder = styled.div`
+  ${imgContainerCss};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${bgColors.base};
+  svg {
+    width: 32px;
+    height: 32px;
+  }
 `;
 
 const DishTitle = styled.div`
