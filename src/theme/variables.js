@@ -8,4 +8,5 @@ export const textColors = {
 };
 export const borderColors = {
   base: "#efefef",
+  input: "#ececec",
 };

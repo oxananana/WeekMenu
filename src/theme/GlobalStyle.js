@@ -17,6 +17,10 @@ const GlobalStyle = createGlobalStyle`
     margin: 12px 0;
   }
 
+  img {
+    max-width: 100%;
+  }
+
   svg {
     display: block;
     width: 16px;

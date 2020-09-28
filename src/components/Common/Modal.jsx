@@ -96,6 +96,7 @@ const ModalDialog = styled.div`
   background-color: ${bgColors.base};
   flex: 1;
   max-width: 600px;
+  width: 100%;
   position: relative;
   border-radius: 4px;
   z-index: 1;

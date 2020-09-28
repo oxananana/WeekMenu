@@ -7,7 +7,7 @@ import { Container } from "./components/Common/Container";
 import Navbar from "./components/Navbar/Navbar";
 import Menu from "./components/Menu/Menu";
 import Recipes from "./components/Recipes/Recipes.jsx";
-import RecipePage from "./components/Recipes/RecipePage";
+import RecipePage from "./components/Recipes/RecipePage/RecipePage";
 import menu from "./data/menu";
 import categories from "./data/categories";
 import recipes from "./data/recipes";

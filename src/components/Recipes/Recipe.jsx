@@ -7,16 +7,13 @@ import { arrayToEnumString } from "../../helpers/helpers";
 import { textColors, shadow, bgColors } from "../../theme/variables";
 
 const Recipe = (props) => {
-  const { id, title, imgSrc, categoryId, schedule, ingredients } = {
-    ...props.recipe,
-  };
+  const { id, title, imgSrc, categoryId, schedule, ingredients } = props.recipe;
 
   return (
-    <StyledRecipe>
-      <NavLink to={`/recipes/${categoryId}/${id}`}>
-        <RecipeImg style={{ backgroundImage: `url(${imgSrc})` }} />
+    <RecipeLink to={`/recipes/${categoryId}/${id}`}>
+      <RecipeImg style={{ backgroundImage: `url(${imgSrc})` }} />
+      <RecipeInfo>
         <RecipeTitle>{title}</RecipeTitle>
-
         <RecipeSchedule>
           {schedule.map((day, index) => {
             return (
@@ -34,14 +31,13 @@ const Recipe = (props) => {
             ? arrayToEnumString(ingredients)
             : "Не заполнено"}
         </RecipeIngredients>
-      </NavLink>
-    </StyledRecipe>
+      </RecipeInfo>
+    </RecipeLink>
   );
 };
 
-const StyledRecipe = styled.div`
+const RecipeLink = styled(NavLink)`
   background-color: #fff;
-  padding: 20px;
   border-radius: 8px;
   flex: auto;
   width: 100%;
@@ -61,9 +57,12 @@ const RecipeImg = styled.div`
   height: 200px;
   background-size: cover;
   background-position: center;
-  background-color: ${bgColors.base};
-  margin-bottom: 16px;
-  border-radius: 8px;
+  border-bottom: 1px solid ${bgColors.base};
+  border-radius: 8px 8px 0 0;
+`;
+
+const RecipeInfo = styled.div`
+  padding: 20px;
 `;
 
 const RecipeTitle = styled.div`

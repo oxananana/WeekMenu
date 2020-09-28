@@ -5,7 +5,7 @@ import Dish from "./Dish";
 import Icon from "../Common/Icon";
 
 const Meal = (props) => {
-  const { id, title, dishes, removeDish, addDish, meals } = props;
+  const { id, title, dishes, removeDish, addDish } = props;
 
   return (
     <StyledMeal>

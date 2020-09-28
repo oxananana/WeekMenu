@@ -35,6 +35,7 @@ const Recipes = (props) => {
 
 const CategoryNav = styled.ul`
   display: flex;
+  flex-wrap: wrap;
   background-color: #fff;
   list-style: none;
   margin: 32px 0;

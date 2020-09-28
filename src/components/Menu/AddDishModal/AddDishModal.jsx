@@ -61,11 +61,12 @@ const AddDishModal = (props) => {
         <SelectedDishes>
           <SelectedDishesTitle>Выбранные блюда: </SelectedDishesTitle>
           <div>
-            {arrayToEnumString(
-              selectedDishesIds.map((id) => {
-                return dishes[id].title;
-              })
-            )}
+            {selectedDishesIds &&
+              arrayToEnumString(
+                selectedDishesIds.map((id) => {
+                  return dishes[id].title;
+                })
+              )}
           </div>
         </SelectedDishes>
       )}

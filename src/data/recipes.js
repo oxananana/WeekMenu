@@ -88,7 +88,7 @@ const recipes = {
       { name: "Вс", isActive: false },
     ],
     ingredients: ["Гречка"],
-    recipe: "Заварить чаечек",
+    recipe: "Сварить гречку",
   },
   side2: {
     id: "side2",
@@ -105,7 +105,7 @@ const recipes = {
       { name: "Вс", isActive: false },
     ],
     ingredients: ["Картофель", "Капуста", "Лук", "Томатная паста", "Специи"],
-    recipe: "Заварить чаечек",
+    recipe: "Потушить картошечку с капусточкой",
   },
   meat1: {
     id: "meat1",
@@ -122,7 +122,7 @@ const recipes = {
       { name: "Вс", isActive: false },
     ],
     ingredients: ["Куриное филе", "Специи по вкусу"],
-    recipe: "Заварить чаечек",
+    recipe: "КУриную грудку помыть, нарезить и приготовить на гриле.",
   },
   meat2: {
     id: "meat2",
@@ -139,7 +139,7 @@ const recipes = {
       { name: "Вс", isActive: false },
     ],
     ingredients: ["Мясо или фарш", "Лук", "Специи"],
-    recipe: "Заварить чаечек",
+    recipe: "Замутить фарш, скатать тефтели и потушить в томатном соусе.",
   },
   salad1: {
     id: "salad1",
@@ -156,7 +156,8 @@ const recipes = {
       { name: "Вс", isActive: false },
     ],
     ingredients: ["Помидоры", "Огурцы", "Салат"],
-    recipe: "Заварить чаечек",
+    recipe:
+      "Помидорчики, огурчики, салатик порезать. Заправить маслом и лимонным соком.",
   },
   desert1: {
     id: "desert1",
@@ -173,7 +174,7 @@ const recipes = {
       { name: "Вс", isActive: false },
     ],
     ingredients: ["Чай", "Лимон"],
-    recipe: "Заварить чаечек",
+    recipe: "Купить в магазинчике",
   },
   desert2: {
     id: "desert2",
@@ -190,7 +191,7 @@ const recipes = {
       { name: "Вс", isActive: false },
     ],
     ingredients: ["Чай", "Лимон"],
-    recipe: "Заварить чаечек",
+    recipe: "Купить в магазинчике",
   },
   drink1: {
     id: "drink1",
@@ -224,7 +225,7 @@ const recipes = {
       { name: "Вс", isActive: false },
     ],
     ingredients: ["Кофе", "Молоко"],
-    recipe: "Заварить чаечек",
+    recipe: "Кофеек заварить, молочка добавить",
   },
 };
 
