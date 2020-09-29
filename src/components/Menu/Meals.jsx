@@ -5,7 +5,15 @@ import { bgColors } from "../../theme/variables";
 import Meal from "./Meal";
 
 const Meals = (props) => {
-  const { mealsIds, dishes, meals, addDish, removeDish, day } = props;
+  const {
+    mealsIds,
+    dishes,
+    meals,
+    addDish,
+    removeDish,
+    toggleDishIsDone,
+    day,
+  } = props;
 
   return (
     <StyledMeals>
@@ -22,6 +30,7 @@ const Meals = (props) => {
               addDish(`${meal.title}, ${day}`, meal.id);
             }}
             removeDish={removeDish}
+            toggleDishIsDone={toggleDishIsDone}
           />
         );
       })}

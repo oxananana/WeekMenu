@@ -1,8 +1,8 @@
 // import memoize from "memoizee";
 
-export const getDishesForMeal = (dishes, dishesIds) => {
-  return dishesIds.map((id) => {
-    return dishes[id];
+export const getDishesForMeal = (dishes, mealDishes) => {
+  return mealDishes.map((dish) => {
+    return { ...dish, ...dishes[dish.id] };
   });
 };
 

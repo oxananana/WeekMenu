@@ -1,17 +1,24 @@
 import React from "react";
 import styled from "styled-components";
+import cn from "classnames";
 import Icon from "../Common/Icon";
 import { shadow, bgColors, textColors } from "../../theme/variables";
 
 const Dish = (props) => {
-  const { mealId, dish, removeDish } = props;
+  const { mealId, dish, removeDish, toggleDishIsDone } = props;
   const { id, title, isDone, imgSrc } = dish;
 
   return (
     <StyledDish>
-      <RemoveIcon onClick={() => removeDish(mealId, id)}>
+      <RemoveIcon onClick={() => removeDish(id, mealId)}>
         <Icon name="delete" />
       </RemoveIcon>
+      <CoockingStatus
+        isDone={isDone}
+        onClick={() => toggleDishIsDone(id, mealId)}
+      >
+        <Icon name="check" />
+      </CoockingStatus>
       {imgSrc ? (
         <DishImg style={{ backgroundImage: `url(${imgSrc})` }} />
       ) : (
@@ -23,6 +30,24 @@ const Dish = (props) => {
     </StyledDish>
   );
 };
+
+const CoockingStatus = styled.span`
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 16px;
+  height: 16px;
+  color: ${(props) => (props.isDone ? textColors.primary : textColors.base)};
+  opacity: ${(props) => (props.isDone ? 1 : 0.2)};
+
+  &:hover {
+    cursor: pointer;
+    opacity: ${(props) => (props.isDone ? 0.8 : 0.6)};
+  }
+
+  &.complete {
+  }
+`;
 
 const RemoveIcon = styled.span`
   position: absolute;
@@ -46,7 +71,7 @@ const StyledDish = styled.div`
   position: relative;
 
   & + & {
-    margin-top: 12px;
+    margin-top: 4px;
   }
 
   &:hover {

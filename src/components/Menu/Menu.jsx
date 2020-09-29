@@ -20,8 +20,6 @@ const Menu = (props) => {
   const [editableDay, setEditableDay] = useState("");
   const [editableMeal, setEditableMeal] = useState("");
 
-  // const nextDays = returnNextDays();
-
   const handleCloseModal = () => {
     setModalIsOpen(false);
   };
@@ -32,33 +30,52 @@ const Menu = (props) => {
     setEditableMeal(mealId);
   };
 
-  const removeDish = (mealId, dishId) => {
-    let newMeals = {
+  const removeDish = (dishId, mealId) => {
+    const newMeals = {
       ...meals,
       [mealId]: {
         ...meals[mealId],
-        dishes: meals[mealId].dishes.filter((id) => id !== dishId),
+        dishes: meals[mealId].dishes.filter((dish) => dish.id !== dishId),
+      },
+    };
+    setMeals(newMeals);
+  };
+
+  const toggleDishIsDone = (dishId, mealId) => {
+    const newMeals = {
+      ...meals,
+      [mealId]: {
+        ...meals[mealId],
+        dishes: meals[mealId].dishes.map((dish) => {
+          if (dish.id === dishId) {
+            return { ...dish, isDone: !dish.isDone };
+          }
+          return dish;
+        }),
       },
     };
     setMeals(newMeals);
   };
 
   const handleSubmit = (selectedDishesIds, mealId) => {
-    let unduplicatedDishesId = selectedDishesIds.filter((id) => {
-      return !meals[mealId].dishes.includes(id);
+    const unduplicatedDishesIds = selectedDishesIds.filter((id) => {
+      return !meals[mealId].dishes.some((dish) => dish.id === id);
     });
-    let newMeals = {
+    const unduplicatedDishes = unduplicatedDishesIds.map((id) => {
+      return { id: id, isDone: false };
+    });
+    const newMeals = {
       ...meals,
       [mealId]: {
         ...meals[mealId],
-        dishes: meals[mealId].dishes.concat(unduplicatedDishesId),
+        dishes: meals[mealId].dishes.concat(unduplicatedDishes),
       },
     };
     setMeals(newMeals);
 
-    let newDishes = { ...dishes };
+    const newDishes = { ...dishes };
     selectedDishesIds.forEach((id) => {
-      newDishes[id] = { ...getDishById(recipes, id), isDone: false };
+      newDishes[id] = { ...getDishById(recipes, id) };
     });
     setDishes(newDishes);
   };
@@ -95,6 +112,7 @@ const Menu = (props) => {
                 meals={meals}
                 addDish={addDish}
                 removeDish={removeDish}
+                toggleDishIsDone={toggleDishIsDone}
                 day={`${day.weekDayName}, ${day.date}`}
               />
             </DayMenu>

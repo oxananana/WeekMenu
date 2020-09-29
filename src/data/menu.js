@@ -15,9 +15,9 @@ const data = {
         title: "Завтрак",
         type: "breakfast",
         dishes: [
-          { id: "breakfast1", isDone: false, ...dishes["breakfast1"] },
-          { id: "drink1", isDone: false, ...dishes["drink1"] },
-          { id: "desert1", isDone: false, ...dishes["desert1"] },
+          { isDone: false, ...dishes["breakfast1"] },
+          { isDone: true, ...dishes["drink1"] },
+          { isDone: true, ...dishes["desert1"] },
         ],
       },
 
@@ -26,9 +26,9 @@ const data = {
         title: "Обед",
         type: "lunch",
         dishes: [
-          { id: "side2", isDone: false, ...dishes["side2"] },
-          { id: "meat2", isDone: false, ...dishes["meat2"] },
-          { id: "salad1", isDone: false, ...dishes["salad1"] },
+          { isDone: false, ...dishes["side2"] },
+          { isDone: true, ...dishes["meat2"] },
+          { isDone: false, ...dishes["salad1"] },
         ],
       },
       [ids[2]]: {
@@ -36,8 +36,8 @@ const data = {
         title: "Ужин",
         type: "dinner",
         dishes: [
-          { id: "side2", isDone: false, ...dishes["side2"] },
-          { id: "meat2", isDone: false, ...dishes["meat2"] },
+          { isDone: false, ...dishes["side2"] },
+          { isDone: false, ...dishes["meat2"] },
         ],
       },
     },
@@ -49,9 +49,9 @@ const data = {
         title: "Завтрак",
         type: "breakfast",
         dishes: [
-          { id: "breakfast2", isDone: false, ...dishes["breakfast2"] },
-          { id: "drink2", isDone: false, ...dishes["drink2"] },
-          { id: "desert2", isDone: false, ...dishes["desert2"] },
+          { isDone: false, ...dishes["breakfast2"] },
+          { isDone: true, ...dishes["drink2"] },
+          { isDone: false, ...dishes["desert2"] },
         ],
       },
 
@@ -60,9 +60,9 @@ const data = {
         title: "Обед",
         type: "lunch",
         dishes: [
-          { id: "soup2", isDone: false, ...dishes["soup2"] },
-          { id: "side1", isDone: false, ...dishes["side1"] },
-          { id: "meat1", isDone: false, ...dishes["meat1"] },
+          { isDone: false, ...dishes["soup2"] },
+          { isDone: false, ...dishes["side1"] },
+          { isDone: false, ...dishes["meat1"] },
         ],
       },
       [ids[5]]: {
@@ -70,8 +70,8 @@ const data = {
         title: "Ужин",
         type: "dinner",
         dishes: [
-          { id: "side1", isDone: false, ...dishes["side1"] },
-          { id: "meat1", isDone: false, ...dishes["meat1"] },
+          { isDone: false, ...dishes["side1"] },
+          { isDone: false, ...dishes["meat1"] },
         ],
       },
     },
@@ -211,8 +211,9 @@ const normalize = (data) => {
     menu[key].meals = Object.values(value.meals).map((meal) => {
       meals[meal.id] = meal;
       meal.dishes = meal.dishes.map((dish) => {
-        dishes[dish.id] = dish;
-        return dish.id;
+        const { isDone, ...rest } = dish;
+        dishes[dish.id] = rest;
+        return { id: dish.id, isDone: dish.isDone };
       });
 
       return meal.id;
