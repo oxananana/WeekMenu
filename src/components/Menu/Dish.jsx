@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import cn from "classnames";
 import Icon from "../Common/Icon";
 import { shadow, bgColors, textColors } from "../../theme/variables";
 
@@ -37,15 +36,12 @@ const CoockingStatus = styled.span`
   right: 4px;
   width: 16px;
   height: 16px;
-  color: ${(props) => (props.isDone ? textColors.primary : textColors.base)};
-  opacity: ${(props) => (props.isDone ? 1 : 0.2)};
+  color: ${(props) =>
+    props.isDone ? textColors.primary : textColors.grayLight};
 
   &:hover {
     cursor: pointer;
-    opacity: ${(props) => (props.isDone ? 0.8 : 0.6)};
-  }
-
-  &.complete {
+    color: ${textColors.primaryHover};
   }
 `;
 
@@ -55,7 +51,7 @@ const RemoveIcon = styled.span`
   bottom: 4px;
   width: 16px;
   height: 16px;
-  color: ${textColors.gray};
+  color: ${textColors.grayLight};
   opacity: 0;
 
   &:hover {
@@ -78,7 +74,7 @@ const StyledDish = styled.div`
     cursor: pointer;
     box-shadow: ${shadow};
     ${RemoveIcon} {
-      opacity: 0.5;
+      opacity: 1;
     }
   }
 `;

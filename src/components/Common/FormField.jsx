@@ -11,11 +11,13 @@ const Control = (props) => {
 };
 
 const FormField = (props) => {
-  const { label, ...rest } = props;
+  const { label, children, ...rest } = props;
   return (
     <Field>
       {label && <Label htmlFor={props.name}>{label}</Label>}
-      <Control {...rest} className={cn({ error: props.error })}></Control>
+      <Control {...rest} className={cn({ error: props.error })}>
+        {props.children}
+      </Control>
       {props.error && <ErrorMessage>{props.error}</ErrorMessage>}
     </Field>
   );
@@ -28,20 +30,35 @@ const Field = styled.div`
   }
 
   input[type="text"],
-  textarea {
+  textarea,
+  select {
     border: 1px solid ${borderColors.input};
     border-radius: 4px;
     width: 100%;
     color: inherit;
 
+    &:hover {
+      border-color: ${textColors.grayLight};
+    }
+
     &.error {
       border-color: red;
     }
+
+    &:-webkit-autofill {
+      background-color: #fff !important;
+    }
   }
 
-  input[type="text"] {
+  input[type="text"],
+  select {
     height: 40px;
     padding: 0 16px;
+  }
+
+  select {
+    /* -webkit-appearance: none;
+    -moz-appearance: none; */
   }
 
   textarea {

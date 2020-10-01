@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { NavLink } from "react-router-dom";
 import cn from "classnames";
 import styled from "styled-components";
 import { textColors, bgColors } from "../../theme/variables";
@@ -15,7 +16,16 @@ const Button = (props) => {
   };
   const classes = cn({ active }, { invert });
 
-  return (
+  return attrs.to ? (
+    <StyledLink
+      className={classes}
+      disabled={disabled}
+      onClick={handleOnClick}
+      {...attrs}
+    >
+      {children}
+    </StyledLink>
+  ) : (
     <StyledButton
       className={classes}
       disabled={disabled}
@@ -41,7 +51,7 @@ Button.defaultProps = {
   active: false,
 };
 
-const StyledButton = styled.button`
+const buttonCss = `
   padding: 0 24px;
   border-radius: 4px;
   height: 40px;
@@ -58,6 +68,14 @@ const StyledButton = styled.button`
     color: ${textColors.primary};
     background-color: transparent;
   }
+`;
+
+const StyledButton = styled.button`
+  ${buttonCss}
+`;
+
+const StyledLink = styled(NavLink)`
+  ${buttonCss}
 `;
 
 export default Button;

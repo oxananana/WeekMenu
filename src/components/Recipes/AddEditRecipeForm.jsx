@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { arrayToEnumString, stringToArray } from "../../../helpers/helpers";
-import { required } from "../../../helpers/validate";
-import { bgColors } from "../../../theme/variables";
-import FormField from "../../Common/FormField";
-import Button from "../../Common/Button";
-import Icon from "../../Common/Icon";
+import { arrayToEnumString, stringToArray } from "../../helpers/helpers";
+import { required } from "../../helpers/validate";
+import { bgColors } from "../../theme/variables";
+import FormField from "../Common/FormField";
+import Icon from "../Common/Icon";
 
-const RecipeEditForm = (props) => {
-  const { onSubmit, toggleEditMode } = props;
+const AddEditRecipeForm = (props) => {
   const [imgSrc, setImgSrc] = useState(props.imgSrc);
   const imgFileInput = React.createRef();
   const [state, setState] = useState({
+    categoryId: props.categoryId,
     title: props.title,
     recipe: props.recipe,
     ingredients: arrayToEnumString(props.ingredients),
@@ -45,7 +44,8 @@ const RecipeEditForm = (props) => {
       setState({ ...state, isError: true });
     } else {
       setState({ ...state, isError: false });
-      onSubmit({
+      props.onSubmit({
+        categoryId: state.categoryId,
         title: state.title,
         recipe: state.recipe,
         ingredients: stringToArray(state.ingredients),
@@ -73,6 +73,22 @@ const RecipeEditForm = (props) => {
       </RecipeImgContainer>
       <Fields>
         <FormField
+          fieldType="select"
+          value={state.categoryId}
+          name="categoryId"
+          label="Категория"
+          onChange={handleInputChange}
+          error={state.isError ? required(state.categoryId) : undefined}
+        >
+          {props.categories.map((category) => {
+            return (
+              <option value={category.id} key={category.id}>
+                {category.title}
+              </option>
+            );
+          })}
+        </FormField>
+        <FormField
           fieldType="input"
           value={state.title}
           type="text"
@@ -97,12 +113,7 @@ const RecipeEditForm = (props) => {
           label="Рецепт"
           onChange={handleInputChange}
         />
-        <ButtonContainer>
-          <Button type="submit">Сохранить</Button>
-          <Button invert onClick={toggleEditMode}>
-            Отмена
-          </Button>
-        </ButtonContainer>
+        <ButtonContainer>{props.buttons}</ButtonContainer>
       </Fields>
     </Form>
   );
@@ -110,7 +121,12 @@ const RecipeEditForm = (props) => {
 
 const Form = styled.form`
   display: flex;
-  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  max-width: 1200px;
+  padding: 32px;
+  border-radius: 4px;
+  background-color: #fff;
 `;
 
 const RecipeImgContainer = styled.div`
@@ -165,4 +181,4 @@ const ButtonContainer = styled.div`
   margin-top: 16px;
 `;
 
-export default RecipeEditForm;
+export default AddEditRecipeForm;

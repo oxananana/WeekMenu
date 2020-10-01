@@ -34,7 +34,7 @@ const StyledCategory = styled.div`
 const CategoryTitle = styled.div`
   font-weight: bold;
   font-size: 20px;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 `;
 
 const RecipeList = styled.div`

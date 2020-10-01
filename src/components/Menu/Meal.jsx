@@ -51,10 +51,10 @@ const MealTitle = styled.div`
 `;
 
 const AddIcon = styled.span`
-  opacity: 0.3;
+  color: ${textColors.grayLight};
 
   &:hover {
-    opacity: 0.6;
+    color: ${textColors.gray};
     cursor: pointer;
   }
 `;

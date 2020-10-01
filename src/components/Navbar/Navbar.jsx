@@ -31,6 +31,7 @@ const Navbar = () => {
 
 const NavbarContainer = styled.div`
   background-color: ${bgColors.primary};
+  margin-bottom: 32px;
 `;
 
 const StyledNavbar = styled.nav`
