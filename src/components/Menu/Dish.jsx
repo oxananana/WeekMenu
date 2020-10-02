@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import Icon from "../Common/Icon";
-import { shadow, bgColors, textColors } from "../../theme/variables";
 
 const Dish = (props) => {
   const { mealId, dish, removeDish, toggleDishIsDone } = props;
@@ -36,12 +35,11 @@ const CoockingStatus = styled.span`
   right: 4px;
   width: 16px;
   height: 16px;
-  color: ${(props) =>
-    props.isDone ? textColors.primary : textColors.grayLight};
-
+  color: ${({ isDone, theme }) =>
+    isDone ? theme.text.primary : theme.text.grayLight};
   &:hover {
     cursor: pointer;
-    color: ${textColors.primaryHover};
+    color: ${({ theme }) => theme.text.primaryHover};
   }
 `;
 
@@ -51,7 +49,7 @@ const RemoveIcon = styled.span`
   bottom: 4px;
   width: 16px;
   height: 16px;
-  color: ${textColors.grayLight};
+  color: ${({ theme }) => theme.text.grayLight};
   opacity: 0;
 
   &:hover {
@@ -60,7 +58,7 @@ const RemoveIcon = styled.span`
 `;
 
 const StyledDish = styled.div`
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.bg.baseLight};
   display: flex;
   align-items: center;
   border-radius: 4px;
@@ -72,7 +70,7 @@ const StyledDish = styled.div`
 
   &:hover {
     cursor: pointer;
-    box-shadow: ${shadow};
+    box-shadow: ${({ theme }) => theme.shadow.base};
     ${RemoveIcon} {
       opacity: 1;
     }
@@ -80,25 +78,26 @@ const StyledDish = styled.div`
 `;
 
 const imgContainerCss = `
-  border-right: 1px solid ${bgColors.base};
-  border-radius: 4px 0 0 4px;
-  height: 60px;
-  width: 60px;
+border-radius: 4px 0 0 4px;
+height: 60px;
+width: 60px;
 `;
 
 const DishImg = styled.div`
   ${imgContainerCss};
+  border-right: 1px solid ${({ theme }) => theme.bg.base};
   background-size: cover;
   background-position: center;
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.bg.baseLight};
 `;
 
 const ImgPlaceholder = styled.div`
   ${imgContainerCss};
+  border-right: 1px solid ${({ theme }) => theme.bg.base};
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${bgColors.base};
+  color: ${({ theme }) => theme.bg.base};
   svg {
     width: 32px;
     height: 32px;

@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
-import GlobalStyle from "./theme/GlobalStyle";
+import { ThemeProvider } from "styled-components";
 import "./App.css";
-import { Container } from "./components/Common/Container";
+import GlobalStyle from "./theme/GlobalStyle";
+import { lightTheme, darkTheme } from "./theme/themes";
+import InnerPage from "./components/Common/InnerPage";
 import Navbar from "./components/Navbar/Navbar";
 import Menu from "./components/Menu/Menu";
 import Recipes from "./components/Recipes/Recipes.jsx";
@@ -15,15 +17,20 @@ import recipesData from "./data/recipes";
 
 const App = () => {
   const [recipes, setRecipes] = useState(recipesData);
+  const [theme, setTheme] = useState("light");
+
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
 
   const addRecipe = (newRecipe) => {
     setRecipes({ ...recipes, [newRecipe.id]: newRecipe });
   };
 
   return (
-    <>
+    <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <GlobalStyle />
-      <Navbar />
+      <Navbar toggleTheme={toggleTheme} theme={theme} />
       <Route path="/" exact>
         <Redirect to="/menu" />
       </Route>
@@ -35,29 +42,33 @@ const App = () => {
           docTitle="Меню на неделю"
         />
       </Route>
-      <Container>
-        <Switch>
-          <Route path="/recipes/new-recipe" exact>
+      <Switch>
+        <Route path="/recipes/new-recipe" exact>
+          <InnerPage>
             <AddRecipe
               categoryValues={getCategoryValues(categories)}
               addRecipe={addRecipe}
             />
-          </Route>
-          <Route path="/recipes/:categoryId/:recipeId">
+          </InnerPage>
+        </Route>
+        <Route path="/recipes/:categoryId/:recipeId">
+          <InnerPage>
             <RecipePage
               recipes={recipes}
               categoryValues={getCategoryValues(categories)}
             />
-          </Route>
-          <Route path="/recipes/:categoryId">
+          </InnerPage>
+        </Route>
+        <Route path="/recipes/:categoryId">
+          <InnerPage>
             <Recipes categories={categories} recipes={recipes} />
-          </Route>
-          <Route path="/recipes/">
-            <Redirect to="/recipes/soups" />
-          </Route>
-        </Switch>
-      </Container>
-    </>
+          </InnerPage>
+        </Route>
+        <Route path="/recipes/">
+          <Redirect to="/recipes/soups" />
+        </Route>
+      </Switch>
+    </ThemeProvider>
   );
 };
 

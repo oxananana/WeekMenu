@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { textColors } from "../../theme/variables";
 import Dish from "./Dish";
 import Icon from "../Common/Icon";
 
@@ -51,10 +50,10 @@ const MealTitle = styled.div`
 `;
 
 const AddIcon = styled.span`
-  color: ${textColors.grayLight};
+  color: ${({ theme }) => theme.text.grayLight};
 
   &:hover {
-    color: ${textColors.gray};
+    color: ${({ theme }) => theme.text.gray};
     cursor: pointer;
   }
 `;
@@ -62,7 +61,7 @@ const AddIcon = styled.span`
 const Dishes = styled.div``;
 
 const NoDishes = styled.div`
-  color: ${textColors.gray};
+  color: ${({ theme }) => theme.text.gray};
 `;
 
 export default Meal;

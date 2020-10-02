@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { arrayToEnumString } from "../../../helpers/helpers";
-import { textColors } from "../../../theme/variables";
 import { getCategoryRecipes } from "../../../selectors/selectors";
 import Modal from "../../Common/Modal";
 import CategoryFilter from "./CategoryFilter";
@@ -83,7 +82,7 @@ const SelectedDishes = styled.div`
 `;
 
 const SelectedDishesTitle = styled.div`
-  color: ${textColors.gray};
+  color: ${({ theme }) => theme.text.gray};
   margin-bottom: 8px;
 `;
 

@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { getDishesForMeal, getMealById } from "../../selectors/selectors";
-import { bgColors } from "../../theme/variables";
 import Meal from "./Meal";
 
 const Meals = (props) => {
@@ -40,7 +39,7 @@ const Meals = (props) => {
 
 const StyledMeals = styled.div`
   flex: 1;
-  background-color: ${bgColors.base};
+  background-color: ${({ theme }) => theme.bg.base};
   padding: 16px;
   border-radius: 4px;
 `;

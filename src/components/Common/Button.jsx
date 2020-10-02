@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import cn from "classnames";
 import styled from "styled-components";
-import { textColors, bgColors } from "../../theme/variables";
 
 const Button = (props) => {
   const { children, onClick, disabled, active, invert, ...attrs } = props;
@@ -55,27 +54,38 @@ const buttonCss = `
   padding: 0 24px;
   border-radius: 4px;
   height: 40px;
-  color: #fff;
   line-height: 38px;
-  background-color: ${bgColors.primary};
-  border: 1px solid ${bgColors.primary};
+ 
 
   &:hover {
     opacity: 0.8;
   }
 
   &.invert {
-    color: ${textColors.primary};
     background-color: transparent;
   }
 `;
 
 const StyledButton = styled.button`
   ${buttonCss}
+  color: ${({ theme }) => theme.text.baseInvert};
+  background-color: ${({ theme }) => theme.bg.primary};
+  border: 1px solid ${({ theme }) => theme.bg.primary};
+
+  &.invert {
+    color: ${({ theme }) => theme.text.primary};
+  }
 `;
 
 const StyledLink = styled(NavLink)`
   ${buttonCss}
+  color: ${({ theme }) => theme.text.baseInvert};
+  background-color: ${({ theme }) => theme.bg.primary};
+  border: 1px solid ${({ theme }) => theme.bg.primary};
+
+  &.invert {
+    color: ${({ theme }) => theme.text.primary};
+  }
 `;
 
 export default Button;

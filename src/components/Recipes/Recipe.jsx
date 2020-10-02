@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import cn from "classnames";
 import { arrayToEnumString } from "../../helpers/helpers";
-import { textColors, shadow, bgColors } from "../../theme/variables";
 import Icon from "../Common/Icon";
 
 const Recipe = (props) => {
@@ -43,11 +42,11 @@ const Recipe = (props) => {
 };
 
 const RecipeLink = styled(NavLink)`
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.bg.baseLight};
   border-radius: 8px;
   flex: auto;
   width: 100%;
-  box-shadow: ${shadow};
+  box-shadow: ${({ theme }) => theme.shadow.base}
   transition: transform 0.2s ease-out;
 
   & + & {
@@ -61,22 +60,24 @@ const RecipeLink = styled(NavLink)`
 
 const imgContainerCss = `
   height: 200px;
-  border-bottom: 1px solid ${bgColors.base};
+  
   border-radius: 8px 8px 0 0;
 `;
 
 const RecipeImg = styled.div`
   ${imgContainerCss};
+  border-bottom: 1px solid ${({ theme }) => theme.bg.base};
   background-size: cover;
   background-position: center;
 `;
 
 const RecipeImgPlaceholder = styled.div`
   ${imgContainerCss};
+  border-bottom: 1px solid ${({ theme }) => theme.bg.base};
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${bgColors.base};
+  color: ${({ theme }) => theme.bg.base};
 
   svg {
     width: 48px;
@@ -100,15 +101,15 @@ const RecipeSchedule = styled.ul`
 
 const RecipeScheduleItem = styled.li`
   margin: 0 4px;
-  color: ${textColors.gray};
+  color: ${({ theme }) => theme.text.gray};
 
   &.active {
-    color: ${textColors.base};
+    color: ${({ theme }) => theme.text.base};
   }
 `;
 
 const RecipeIngredients = styled.div`
-  color: ${textColors.gray};
+  color: ${({ theme }) => theme.text.gray};
 `;
 
 export default Recipe;

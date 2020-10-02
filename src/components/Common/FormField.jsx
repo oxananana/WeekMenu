@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import cn from "classnames";
-import { textColors, borderColors } from "../../theme/variables";
 
 const Control = (props) => {
   const { fieldType, ...rest } = props;
@@ -32,13 +31,14 @@ const Field = styled.div`
   input[type="text"],
   textarea,
   select {
-    border: 1px solid ${borderColors.input};
+    background-color: ${({ theme }) => theme.bg.baseLight};
+    border: 1px solid ${({ theme }) => theme.border.input};
     border-radius: 4px;
     width: 100%;
     color: inherit;
 
     &:hover {
-      border-color: ${textColors.grayLight};
+      border-color: ${({ theme }) => theme.text.grayLight};
     }
 
     &.error {
@@ -46,7 +46,6 @@ const Field = styled.div`
     }
 
     &:-webkit-autofill {
-      background-color: #fff !important;
     }
   }
 
@@ -71,7 +70,7 @@ const Field = styled.div`
 const Label = styled.label`
   display: block;
   margin-bottom: 8px;
-  color: ${textColors.gray};
+  color: ${({ theme }) => theme.text.gray};
 `;
 const ErrorMessage = styled.div`
   color: red;

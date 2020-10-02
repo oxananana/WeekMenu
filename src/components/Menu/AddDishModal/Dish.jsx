@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import cn from "classnames";
 import Icon from "../../Common/Icon";
-import { shadow, bgColors, textColors } from "../../../theme/variables";
 
 const Dish = (props) => {
   const { id, title, imgSrc, schedule, isActive, selectDish } = props;
@@ -48,7 +47,7 @@ const Dish = (props) => {
 const StyledDish = styled.div`
   display: flex;
   align-items: center;
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.bg.baseLight};
   position: relative;
   padding-right: 48px;
   border-radius: 4px;
@@ -56,19 +55,19 @@ const StyledDish = styled.div`
   & + & {
     margin-top: 12px;
   }
+
   &:hover {
     cursor: pointer;
-    box-shadow: ${shadow};
+    box-shadow: ${({ theme }) => theme.shadow.base};
   }
 
   &.active {
-    color: ${textColors.primary};
-    /* outline: 2px solid ${bgColors.primary}; */
+    color: ${({ theme }) => theme.text.primary};
+    /* outline: 2px solid ${({ theme }) => theme.bg.primary}; */
   }
 `;
 
 const imgContainerCss = `
-  border-right: 1px solid ${bgColors.base};
   border-radius: 4px 0 0 4px;
   height: 60px;
   width: 60px;
@@ -77,17 +76,19 @@ const imgContainerCss = `
 
 const DishImg = styled.div`
   ${imgContainerCss};
+  border-right: 1px solid ${({ theme }) => theme.bg.base};
   background-size: cover;
   background-position: center;
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.bg.baseLight};
 `;
 
 const ImgPlaceholder = styled.div`
   ${imgContainerCss};
+  border-right: 1px solid ${({ theme }) => theme.bg.base};
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${bgColors.base};
+  color: ${({ theme }) => theme.bg.base};
   svg {
     width: 32px;
     height: 32px;
@@ -109,10 +110,10 @@ const RecipeSchedule = styled.ul`
 
 const RecipeScheduleItem = styled.li`
   margin: 0 4px;
-  color: ${textColors.gray};
+  color: ${({ theme }) => theme.text.gray};
 
   &.active {
-    color: ${textColors.base};
+    color: ${({ theme }) => theme.text.base};
   }
 `;
 
@@ -120,7 +121,7 @@ const CheckedIcon = styled.div`
   position: absolute;
   right: 12px;
   top: 18px;
-  color: ${bgColors.primary};
+  color: ${({ theme }) => theme.bg.primary};
 
   svg {
     height: 24px;

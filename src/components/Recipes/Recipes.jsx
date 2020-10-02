@@ -4,7 +4,6 @@ import { NavLink, useParams } from "react-router-dom";
 import cn from "classnames";
 import { getCategoryRecipes } from "../../selectors/selectors";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
-import { textColors, borderColors } from "../../theme/variables";
 import Icon from "../Common/Icon";
 import Category from "./Category";
 
@@ -45,7 +44,7 @@ const RecipesNavbar = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.bg.baseLight};
   margin-bottom: 32px;
   border-radius: 8px;
   border-radius: 8px;
@@ -67,23 +66,23 @@ const CategoryNavItem = styled.li`
 
   a:hover,
   a.active {
-    color: ${textColors.primaryHover};
+    color: ${({ theme }) => theme.text.primaryHover};
   }
 
   a.active {
-    color: ${textColors.primary};
-    border-color: ${borderColors.primary};
+    color: ${({ theme }) => theme.text.primary};
+    border-color: ${({ theme }) => theme.border.primary};
   }
 `;
 
 const AddRecipeLink = styled(NavLink)`
-  color: ${textColors.primary};
+  color: ${({ theme }) => theme.text.primary};
   padding: 12px 16px;
   display: inline-flex;
   align-items: center;
 
   &:hover {
-    color: ${textColors.primaryHover};
+    color: ${({ theme }) => theme.text.primaryHover};
   }
 
   svg {

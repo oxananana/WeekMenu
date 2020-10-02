@@ -1,7 +1,6 @@
 import React, { useLayoutEffect } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { borderColors, textColors, bgColors } from "../../theme/variables";
 import Portal from "./Portal";
 import Icon from "./Icon";
 import Button from "./Button";
@@ -93,7 +92,7 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalDialog = styled.div`
-  background-color: ${bgColors.base};
+  background-color: ${({ theme }) => theme.bg.base};
   flex: 1;
   max-width: 600px;
   width: 100%;
@@ -106,7 +105,7 @@ const ModalHeader = styled.div`
   padding: 16px 24px;
   font-weight: bold;
   font-size: 18px;
-  border-bottom: 1px solid ${borderColors.base};
+  border-bottom: 1px solid ${({ theme }) => theme.border.base};
 `;
 
 const ModalBody = styled.div`
@@ -117,7 +116,7 @@ const ModalFooter = styled.div`
   padding: 16px 24px;
   display: flex;
   justify-content: space-between;
-  border-top: 1px solid ${borderColors.base};
+  border-top: 1px solid ${({ theme }) => theme.border.base};
 `;
 
 const CloseIcon = styled.span`
@@ -125,7 +124,7 @@ const CloseIcon = styled.span`
   position: absolute;
   right: 12px;
   top: 16px;
-  color: ${textColors.base};
+  color: ${({ theme }) => theme.text.base};
   opacity: 0.5;
 
   &:hover {

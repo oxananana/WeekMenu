@@ -3,7 +3,6 @@ import styled from "styled-components";
 import cn from "classnames";
 import { getDishById } from "../../selectors/selectors";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
-import { textColors } from "../../theme/variables";
 import Meals from "./Meals";
 import AddDishModal from "./AddDishModal/AddDishModal";
 
@@ -81,7 +80,7 @@ const Menu = (props) => {
   };
 
   return (
-    <>
+    <MenuPage>
       <AddDishModal
         isOpen={modalIsOpen}
         onClose={handleCloseModal}
@@ -119,7 +118,7 @@ const Menu = (props) => {
           );
         })}
       </MenuBoard>
-    </>
+    </MenuPage>
   );
 };
 
@@ -166,10 +165,14 @@ const returnNextDays = () => {
   return nextDays;
 };
 
-const MenuBoard = styled.div`
-  background-color: #fff;
-  display: flex;
+const MenuPage = styled.div`
   padding: 24px 0;
+  flex: 1;
+  background-color: ${({ theme }) => theme.bg.baseLight};
+`;
+
+const MenuBoard = styled.div`
+  display: flex;
   overflow: auto;
 `;
 
@@ -199,7 +202,7 @@ const DayDate = styled.div`
   }
 
   &.today {
-    color: ${textColors.primary};
+    color: ${({ theme }) => theme.text.primary};
   }
 `;
 

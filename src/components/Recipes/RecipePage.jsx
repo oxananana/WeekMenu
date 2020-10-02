@@ -5,7 +5,6 @@ import cn from "classnames";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import { getDishById } from "../../selectors/selectors";
 import { arrayToEnumString } from "../../helpers/helpers";
-import { textColors, bgColors } from "../../theme/variables";
 import Button from "../Common/Button";
 import Icon from "../Common/Icon";
 import AddEditRecipeForm from "./AddEditRecipeForm";
@@ -105,12 +104,12 @@ const formattingRecipeText = (text) => {
 };
 
 const StyledRecipe = styled.div`
-  margin: 32px auto;
+  margin: 0 auto;
   display: flex;
   max-width: 1200px;
   padding: 32px;
   border-radius: 4px;
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.bg.baseLight};
 `;
 
 const ResipeDescription = styled.div`
@@ -132,11 +131,11 @@ const RecipeImg = styled.div`
 
 const RecipeImgPlaceholder = styled.div`
   ${imgContainerCss};
-  border: 2px solid ${bgColors.base};
+  border: 2px solid ${({ theme }) => theme.bg.base};
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${bgColors.base};
+  color: ${({ theme }) => theme.bg.base};
   svg {
     width: 48px;
     height: 48px;
@@ -150,7 +149,7 @@ const RecipeTitle = styled.div`
 
 const Dl = styled.dl`
   dt {
-    color: ${textColors.gray};
+    color: ${({ theme }) => theme.text.gray};
     margin-bottom: 8px;
 
     &:not(:first-child) {
@@ -166,10 +165,10 @@ const RecipeSchedule = styled.ul`
 
 const RecipeScheduleItem = styled.li`
   margin: 0 4px;
-  color: ${textColors.gray};
+  color: ${({ theme }) => theme.text.gray};
 
   &.active {
-    color: ${textColors.base};
+    color: ${({ theme }) => theme.text.base};
   }
 `;
 

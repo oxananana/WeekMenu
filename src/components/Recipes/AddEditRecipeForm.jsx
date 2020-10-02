@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { arrayToEnumString, stringToArray } from "../../helpers/helpers";
 import { required } from "../../helpers/validate";
-import { bgColors } from "../../theme/variables";
 import FormField from "../Common/FormField";
 import Icon from "../Common/Icon";
 
@@ -126,14 +125,14 @@ const Form = styled.form`
   max-width: 1200px;
   padding: 32px;
   border-radius: 4px;
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.bg.baseLight};
 `;
 
 const RecipeImgContainer = styled.div`
   position: relative;
   width: 400px;
   height: 400px;
-  background-color: ${bgColors.base};
+  background-color: ${({ theme }) => theme.bg.base};
   border-radius: 8px;
   margin-right: 32px;
   overflow: hidden;

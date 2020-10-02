@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import cn from "classnames";
-import { textColors } from "../../../theme/variables";
 
 const CategoryFilter = (props) => {
   const { categories, activeCategoryId, changeFilter } = props;
@@ -26,9 +25,10 @@ const CategoryFilter = (props) => {
 };
 
 const FilterNav = styled.ul`
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.bg.baseLight};
   list-style: none;
-  border-radius: 8px;
+  border-radius: 4px;
+  padding: 4px 0;
   margin-right: 24px;
   min-width: 120px;
 `;
@@ -36,14 +36,17 @@ const FilterNav = styled.ul`
 const FilterNavItem = styled.li`
   padding: 12px 16px;
   display: block;
+  border-left: 2px solid transparent;
 
-  &:hover {
+  &:hover,
+  &.active {
     cursor: pointer;
-    background-color: #f2e9fd;
+    color: ${({ theme }) => theme.text.primaryHover};
   }
 
   &.active {
-    color: ${textColors.primary};
+    color: ${({ theme }) => theme.text.primary};
+    border-color: ${({ theme }) => theme.border.primary};
   }
 `;
 
