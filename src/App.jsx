@@ -5,6 +5,7 @@ import "./App.css";
 import GlobalStyle from "./theme/GlobalStyle";
 import { lightTheme, darkTheme } from "./theme/themes";
 import InnerPage from "./components/Common/InnerPage";
+import NoMatch from "./components/Common/NoMatch";
 import Navbar from "./components/Navbar/Navbar";
 import Menu from "./components/Menu/Menu";
 import Recipes from "./components/Recipes/Recipes.jsx";
@@ -66,6 +67,11 @@ const App = () => {
         </Route>
         <Route path="/recipes/">
           <Redirect to="/recipes/soups" />
+        </Route>
+        <Route path="*">
+          <InnerPage>
+            <NoMatch />
+          </InnerPage>
         </Route>
       </Switch>
     </ThemeProvider>
