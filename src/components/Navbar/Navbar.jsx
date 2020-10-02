@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 import { Container } from "../Common/Container";
 import Logo from "./Logo";
 import Icon from "../Common/Icon";
@@ -37,9 +38,16 @@ const Navbar = (props) => {
   );
 };
 
+Navbar.propTypes = {
+  toggleTheme: PropTypes.func,
+};
+
+Navbar.defaultProps = {
+  toggleTheme: () => {},
+};
+
 const NavbarContainer = styled.div`
   background-color: ${({ theme }) => theme.bg.primary};
-  /* margin-bottom: 32px; */
 `;
 
 const StyledNavbar = styled.nav`

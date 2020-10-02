@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import cn from "classnames";
 
@@ -20,6 +21,21 @@ const FormField = (props) => {
       {props.error && <ErrorMessage>{props.error}</ErrorMessage>}
     </Field>
   );
+};
+
+Control.propTypes = {
+  fieldType: PropTypes.string,
+};
+
+Control.defaultProps = {
+  fieldType: "input",
+};
+
+FormField.propTypes = {
+  label: PropTypes.string,
+  name: PropTypes.string,
+  error: PropTypes.string,
+  children: PropTypes.node,
 };
 
 const Field = styled.div`

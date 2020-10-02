@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { dishPropTypes, dishDefaultProps } from "./prop-types";
 import styled from "styled-components";
 import Icon from "../Common/Icon";
 
@@ -28,6 +30,19 @@ const Dish = (props) => {
     </StyledDish>
   );
 };
+
+// Dish.propTypes = {
+//   dish: dishPropTypes,
+//   mealId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+//   removeDish: PropTypes.func,
+//   toggleDishIsDone: PropTypes.func,
+// };
+
+// Dish.defaultProps = {
+//   // ...dishDefaultProps,
+//   // removeDish: () => {},
+//   // toggleDishIsDone: () => {},
+// };
 
 const CoockingStatus = styled.span`
   position: absolute;

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 import { arrayToEnumString } from "../../../helpers/helpers";
 import { getCategoryRecipes } from "../../../selectors/selectors";
 import Modal from "../../Common/Modal";
@@ -72,6 +73,22 @@ const AddDishModal = (props) => {
     </Modal>
   );
 };
+
+// AddDishModal.propTypes = {
+//   isOpen: PropTypes.bool,
+//   onClose: PropTypes.func,
+//   categories: PropTypes.exact(),
+//   day: PropTypes.string,
+//   mealId: PropTypes.string,
+//   recipes: PropTypes.exact(),
+// };
+
+// AddDishModal.defaultProps = {
+//   isOpen: false,
+//   onClose: () => {},
+//   categories: [],
+//   recipes: [],
+// };
 
 const Dishes = styled.div`
   display: flex;

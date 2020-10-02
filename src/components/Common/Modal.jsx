@@ -58,8 +58,9 @@ const Modal = (props) => {
 Modal.propTypes = {
   title: PropTypes.string,
   isOpen: PropTypes.bool,
-  onCancel: PropTypes.func,
   children: PropTypes.node,
+  onCancel: PropTypes.func,
+  onSubmit: PropTypes.func,
 };
 
 Modal.defaultProps = {
