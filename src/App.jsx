@@ -32,18 +32,18 @@ const App = () => {
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <GlobalStyle />
       <Navbar toggleTheme={toggleTheme} theme={theme} />
-      <Route path="/" exact>
-        <Redirect to="/menu" />
-      </Route>
-      <Route path="/menu">
-        <Menu
-          menu={menu}
-          recipes={recipes}
-          categories={categories}
-          docTitle="Меню на неделю"
-        />
-      </Route>
       <Switch>
+        <Route path="/" exact>
+          <Redirect to="/menu" />
+        </Route>
+        <Route path="/menu">
+          <Menu
+            menu={menu}
+            recipes={recipes}
+            categories={categories}
+            docTitle="Меню на неделю"
+          />
+        </Route>
         <Route path="/recipes/new-recipe" exact>
           <InnerPage>
             <AddRecipe

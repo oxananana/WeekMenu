@@ -32,8 +32,8 @@ const AddEditRecipeForm = (props) => {
     if (imgFileInput.current.files.length) {
       const file = imgFileInput.current.files[0];
       setImgSrc(window.URL.createObjectURL(file));
+      window.URL.revokeObjectURL(file);
     }
-    // window.URL.revokeObjectURL(file);
   };
   const handleSubmit = (e) => {
     e.preventDefault();

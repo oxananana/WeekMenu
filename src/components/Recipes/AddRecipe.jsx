@@ -17,7 +17,7 @@ const AddRecipe = (props) => {
   };
 
   return (
-    <>
+    <AddRecipeContainer>
       <Heading>Добавление нового рецепта</Heading>
       <AddEditRecipeForm
         action="add"
@@ -35,9 +35,14 @@ const AddRecipe = (props) => {
           </>
         }
       />
-    </>
+    </AddRecipeContainer>
   );
 };
+
+const AddRecipeContainer = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+`;
 
 const Heading = styled.div`
   font-size: 20px;

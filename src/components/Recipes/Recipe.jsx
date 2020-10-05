@@ -46,7 +46,7 @@ const RecipeLink = styled(NavLink)`
   border-radius: 8px;
   flex: auto;
   width: 100%;
-  box-shadow: ${({ theme }) => theme.shadow.base}
+  box-shadow: ${({ theme }) => theme.shadow.base};
   transition: transform 0.2s ease-out;
 
   & + & {
@@ -60,7 +60,6 @@ const RecipeLink = styled(NavLink)`
 
 const imgContainerCss = `
   height: 200px;
-  
   border-radius: 8px 8px 0 0;
 `;
 
@@ -80,8 +79,8 @@ const RecipeImgPlaceholder = styled.div`
   color: ${({ theme }) => theme.bg.base};
 
   svg {
-    width: 48px;
-    height: 48px;
+    width: 68px;
+    height: 68px;
   }
 `;
 

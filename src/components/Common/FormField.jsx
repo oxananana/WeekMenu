@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import cn from "classnames";
+import { iconForBg } from "./Icon";
 
 const Control = (props) => {
   const { fieldType, ...rest } = props;
@@ -72,8 +73,11 @@ const Field = styled.div`
   }
 
   select {
-    /* -webkit-appearance: none;
-    -moz-appearance: none; */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: ${iconForBg("chevron_bottom")} no-repeat calc(100% - 10px)
+      center;
+    background-size: 16px;
   }
 
   textarea {
