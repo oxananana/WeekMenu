@@ -23,7 +23,11 @@ const Navbar = (props) => {
             </NavItem>
           </Nav>
           <NavbarRight>
-            <Account>Аккаунт</Account>
+            {props.isAuth ? (
+              <NavLink to="/account">Аккаунт</NavLink>
+            ) : (
+              <NavLink to="/login">Войти</NavLink>
+            )}
             <ThemeSwitch onClick={props.toggleTheme}>
               {props.theme === "light" ? (
                 <Icon name="sun" />
@@ -101,7 +105,5 @@ const ThemeSwitch = styled.span`
     height: 24px;
   }
 `;
-
-const Account = styled.a``;
 
 export default Navbar;

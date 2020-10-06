@@ -30,6 +30,7 @@ Control.propTypes = {
 
 Control.defaultProps = {
   fieldType: "input",
+  type: "text",
 };
 
 FormField.propTypes = {
@@ -46,6 +47,7 @@ const Field = styled.div`
   }
 
   input[type="text"],
+  input[type="password"],
   textarea,
   select {
     background-color: ${({ theme }) => theme.bg.baseLight};
@@ -67,6 +69,7 @@ const Field = styled.div`
   }
 
   input[type="text"],
+  input[type="password"],
   select {
     height: 40px;
     padding: 0 16px;

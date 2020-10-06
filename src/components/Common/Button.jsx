@@ -41,6 +41,7 @@ Button.propTypes = {
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
   active: PropTypes.bool,
+  full: PropTypes.bool,
 };
 
 Button.defaultProps = {
@@ -71,6 +72,7 @@ const StyledButton = styled.button`
   color: ${({ theme }) => theme.text.baseInvert};
   background-color: ${({ theme }) => theme.bg.primary};
   border: 1px solid ${({ theme }) => theme.bg.primary};
+  width: ${(props) => props.full && "100%"};
 
   &.invert {
     color: ${({ theme }) => theme.text.primary};
