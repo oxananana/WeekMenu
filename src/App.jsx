@@ -37,12 +37,7 @@ const App = () => {
           <Redirect to="/menu" />
         </Route>
         <Route path="/menu">
-          <Menu
-            menu={menu}
-            recipes={recipes}
-            categories={categories}
-            docTitle="Меню на неделю"
-          />
+          <Menu menu={menu} recipes={recipes} categories={categories} />
         </Route>
         <Route path="/recipes/new-recipe" exact>
           <InnerPage>

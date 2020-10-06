@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 const useDocumentTitle = (title) => {
-  const defaultTitle = "Week Menu";
+  const defaultTitle = "WeekMenu — меню на неделю";
 
   useEffect(() => {
     document.title = title || defaultTitle;
