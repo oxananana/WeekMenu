@@ -10,6 +10,9 @@ export const stringToArray = (str) => {
   if (!str.length) {
     return [];
   }
-  let arr = str.split(",");
+  if (str.endsWith(".")) {
+    str = str.slice(0, -1);
+  }
+  let arr = str.split(",").map((item) => item.trim());
   return arr;
 };

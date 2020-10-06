@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Container } from "./Container";
 
 const InnerPage = (props) => {
+  console.log("inner");
   return (
     <Inner>
       <Container>{props.children}</Container>

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import cn from "classnames";
+import DOMPurify from "dompurify";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import { getDishById } from "../../selectors/selectors";
 import { arrayToEnumString } from "../../helpers/helpers";
@@ -11,10 +12,10 @@ import AddEditRecipeForm from "./AddEditRecipeForm";
 
 const RecipePage = (props) => {
   const { recipeId } = useParams();
+  let history = useHistory();
   const { categoryId, title, imgSrc, schedule, ingredients, recipe } = {
     ...getDishById(props.recipes, recipeId),
   };
-  useDocumentTitle(title);
   const [editMode, setEditMode] = useState(false);
   const [state, setState] = useState({
     categoryId: categoryId,
@@ -23,12 +24,18 @@ const RecipePage = (props) => {
     recipe: recipe,
     ingredients: ingredients,
   });
+
+  useDocumentTitle(state.title);
+
   const toggleEditMode = () => {
     setEditMode(!editMode);
   };
   const handleSubmit = (formData) => {
     setState({ ...state, ...formData });
     setEditMode(false);
+    if (categoryId !== formData.categoryId) {
+      history.push(`/recipes/${formData.categoryId}/${recipeId}`);
+    }
   };
 
   return editMode ? (
@@ -98,8 +105,9 @@ const RecipePage = (props) => {
 };
 
 const formattingRecipeText = (text) => {
+  const cleanText = DOMPurify.sanitize(text);
   return {
-    __html: `<p>${text.replace(/(?:\r\n|\r|\n)/g, "</p><p>")}</p>`,
+    __html: `<p>${cleanText.replace(/(?:\r\n|\r|\n)/g, "</p><p>")}</p>`,
   };
 };
 
