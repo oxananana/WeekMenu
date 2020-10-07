@@ -137,33 +137,33 @@ const formattingDay = (dateString) => {
   return day;
 };
 
-const returnNextDays = () => {
-  const weekDaysNames = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
+// const returnNextDays = () => {
+//   const weekDaysNames = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
 
-  const today = new Date();
-  let nextDays = [];
+//   const today = new Date();
+//   let nextDays = [];
 
-  for (let i = 0; i < 7; i++) {
-    let newDayDate = new Date();
-    newDayDate.setDate(today.getDate() + i);
+//   for (let i = 0; i < 7; i++) {
+//     let newDayDate = new Date();
+//     newDayDate.setDate(today.getDate() + i);
 
-    let newDayMonth = newDayDate.getMonth() + 1;
-    if (newDayMonth < 10) {
-      newDayMonth = "0" + newDayMonth;
-    }
+//     let newDayMonth = newDayDate.getMonth() + 1;
+//     if (newDayMonth < 10) {
+//       newDayMonth = "0" + newDayMonth;
+//     }
 
-    const newDay = {
-      date: newDayDate.getDate(),
-      weekDayName: weekDaysNames[newDayDate.getDay()],
-      dateString: `${newDayDate.getFullYear()}-${newDayMonth}-${newDayDate.getDate()}`,
-      isWeekend: newDayDate.getDay() === 0 || newDayDate.getDay() === 6,
-    };
+//     const newDay = {
+//       date: newDayDate.getDate(),
+//       weekDayName: weekDaysNames[newDayDate.getDay()],
+//       dateString: `${newDayDate.getFullYear()}-${newDayMonth}-${newDayDate.getDate()}`,
+//       isWeekend: newDayDate.getDay() === 0 || newDayDate.getDay() === 6,
+//     };
 
-    nextDays.push(newDay);
-  }
+//     nextDays.push(newDay);
+//   }
 
-  return nextDays;
-};
+//   return nextDays;
+// };
 
 const MenuPage = styled.div`
   padding: 24px 0;
@@ -179,16 +179,16 @@ const MenuBoard = styled.div`
 const DayMenu = styled.div`
   width: 260px;
   min-width: 240px;
-  margin: 0 4px;
+  padding: 0 4px;
   display: flex;
   flex-direction: column;
 
   &:first-child {
-    margin-left: 8px;
+    padding-left: 8px;
   }
 
   &:last-child {
-    margin-right: 8px;
+    padding-right: 8px;
   }
 `;
 const DayDate = styled.div`

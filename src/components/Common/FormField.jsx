@@ -26,6 +26,7 @@ const FormField = (props) => {
 
 Control.propTypes = {
   fieldType: PropTypes.string,
+  autoFocus: PropTypes.bool,
 };
 
 Control.defaultProps = {
@@ -37,6 +38,7 @@ FormField.propTypes = {
   label: PropTypes.string,
   name: PropTypes.string,
   error: PropTypes.string,
+  autoFocus: PropTypes.bool,
   children: PropTypes.node,
 };
 
@@ -95,8 +97,9 @@ const Label = styled.label`
   margin-bottom: 8px;
   color: ${({ theme }) => theme.text.gray};
 `;
+
 const ErrorMessage = styled.div`
-  color: red;
+  color: ${({ theme }) => theme.text.error};
   margin-top: 4px;
   font-size: 12px;
 `;

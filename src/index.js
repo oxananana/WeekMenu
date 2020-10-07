@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
-import * as firebase from "firebase";
+import * as firebase from "firebase/app";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 

@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
+import * as firebase from "firebase/app";
+import "firebase/auth";
 import "./App.css";
 import GlobalStyle from "./theme/GlobalStyle";
 import { lightTheme, darkTheme } from "./theme/themes";
@@ -21,7 +23,18 @@ import recipesData from "./data/recipes";
 const App = () => {
   const [recipes, setRecipes] = useState(recipesData);
   const [theme, setTheme] = useState("light");
-  const [isAuth, setIsAuth] = useState(false);
+  const [user, setUser] = useState({ isAuth: false });
+
+  useEffect(() => {
+    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        setUser({ ...user, isAuth: true });
+      } else {
+        setUser({ isAuth: false });
+      }
+    });
+    return () => unsubscribe();
+  }, []);
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
@@ -34,7 +47,7 @@ const App = () => {
   return (
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <GlobalStyle />
-      <Navbar toggleTheme={toggleTheme} theme={theme} />
+      <Navbar toggleTheme={toggleTheme} theme={theme} isAuth={user.isAuth} />
       <Switch>
         <Route path="/" exact>
           <Redirect to="/menu" />
@@ -44,12 +57,12 @@ const App = () => {
         </Route>
         <Route path="/login">
           <InnerPage>
-            <Login isAuth={isAuth} />
+            <Login isAuth={user.isAuth} />
           </InnerPage>
         </Route>
         <Route path="/account">
           <InnerPage>
-            <Account />
+            <Account user={user} />
           </InnerPage>
         </Route>
         <Route path="/recipes/new-recipe" exact>

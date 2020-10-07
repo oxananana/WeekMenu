@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
 import { arrayToEnumString } from "../../../helpers/helpers";
 import { getCategoryRecipes } from "../../../selectors/selectors";
 import Modal from "../../Common/Modal";

@@ -18,6 +18,7 @@ export const lightTheme = {
     grayLight: `rgba(${light.baseTextRgba}, .4)`,
     primary: light.primary,
     primaryHover: light.primaryHover,
+    error: "red",
   },
   border: {
     base: "#efefef",
@@ -49,6 +50,7 @@ export const darkTheme = {
     grayLight: `rgba(${dark.baseTextRgba}, .5)`,
     primary: dark.primary,
     primaryHover: dark.primaryHover,
+    error: "red",
   },
   border: {
     base: "rgba(255, 255, 255, 0.05)",

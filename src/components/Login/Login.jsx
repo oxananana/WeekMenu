@@ -1,13 +1,18 @@
 import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
 import styled from "styled-components";
-import PropTypes from "prop-types";
+import * as firebase from "firebase/app";
+import "firebase/auth";
+import { required } from "../../helpers/validate";
 import Button from "../Common/Button";
 import FormField from "../Common/FormField";
 
 const Login = (props) => {
   const [state, setState] = useState({
-    login: "",
+    email: "",
     password: "",
+    required: ["email", "password"],
+    isError: false,
   });
 
   const handleChange = (e) => {
@@ -15,16 +20,42 @@ const Login = (props) => {
     setState({ ...state, [name]: value });
   };
 
-  return (
-    <LoginForm>
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const requiredFields = state.required;
+
+    if (requiredFields.some((field) => !state[field].length)) {
+      setState({ ...state, isError: true });
+    } else {
+      setState({ ...state, isError: false });
+      login(state.email, state.password);
+    }
+  };
+
+  const login = (email, password) => {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .catch((error) => {
+        setState({ ...state, isError: true });
+      });
+  };
+
+  return props.isAuth ? (
+    <Redirect to="/account" />
+  ) : (
+    <LoginForm onSubmit={handleSubmit}>
       <Title>Войти</Title>
+      {state.isCommonError && <ErrorMessage></ErrorMessage>}
       <FormField
         fieldType="input"
         type="text"
-        value={state.login}
-        name="login"
-        label="Логин"
+        value={state.email}
+        name="email"
+        label="E-mail"
         onChange={handleChange}
+        error={state.isError ? required(state.email) : undefined}
+        autoFocus
       />
       <FormField
         fieldType="input"
@@ -33,6 +64,7 @@ const Login = (props) => {
         name="password"
         label="Пароль"
         onChange={handleChange}
+        error={state.isError ? required(state.password) : undefined}
       />
       <Button full>Войти</Button>
     </LoginForm>
@@ -50,7 +82,12 @@ const LoginForm = styled.form`
 const Title = styled.div`
   font-size: 20px;
   font-weight: bold;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
+`;
+
+const ErrorMessage = styled.div`
+  color: ${({ theme }) => theme.text.error};
+  font-size: 12px;
 `;
 
 export default Login;
