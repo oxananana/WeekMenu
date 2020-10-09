@@ -4,8 +4,8 @@ import { arrayToEnumString, stringToArray } from "../../helpers/helpers";
 import { defaultCategoryId } from "../../constants";
 import { required } from "../../helpers/validate";
 import { getCategoryValues } from "../../selectors/selectors";
-import FormField from "../Common/FormField";
-import Form from "../Common/Form";
+import Form from "../Common/Form/Form";
+import FormField from "../Common/Form/FormField";
 import Icon from "../Common/Icon";
 
 const AddEditRecipeForm = (props) => {

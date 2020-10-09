@@ -3,10 +3,10 @@ import { Redirect } from "react-router-dom";
 import styled from "styled-components";
 import * as firebase from "firebase/app";
 import "firebase/auth";
-import { required } from "../../helpers/validate";
+import { required, minLength } from "../../helpers/validate";
 import Button from "../Common/Button";
-import FormField from "../Common/FormField";
-import Form from "../Common/Form";
+import FormField from "../Common/Form/FormField";
+import Form from "../Common/Form/Form";
 
 const errorFromCode = {
   "auth/invalid-email": {
@@ -30,7 +30,7 @@ const errorFromCode = {
 
 const Login = (props) => {
   const [errors, setErrors] = useState({
-    fieldErrors: "null",
+    fieldErrors: null,
     commonError: null,
   });
 
@@ -77,7 +77,7 @@ const Login = (props) => {
         type="text"
         name="email"
         label="E-mail"
-        validators={[required]}
+        validators={[required, minLength]}
         autoFocus
       />
       <FormField
@@ -104,11 +104,6 @@ const Title = styled.div`
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 20px;
-`;
-
-const ErrorMessage = styled.div`
-  color: ${({ theme }) => theme.text.error};
-  font-size: 12px;
 `;
 
 export default Login;
