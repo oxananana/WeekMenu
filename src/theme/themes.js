@@ -50,7 +50,7 @@ export const darkTheme = {
     grayLight: `rgba(${dark.baseTextRgba}, .5)`,
     primary: dark.primary,
     primaryHover: dark.primaryHover,
-    error: "red",
+    error: "#ecbbbb",
   },
   border: {
     base: "rgba(255, 255, 255, 0.05)",

@@ -25,7 +25,7 @@ const AddRecipe = (props) => {
         title=""
         recipe=""
         ingredients=""
-        categories={props.categoryValues}
+        categories={props.categories}
         buttons={
           <>
             <Button type="submit">Добавить</Button>

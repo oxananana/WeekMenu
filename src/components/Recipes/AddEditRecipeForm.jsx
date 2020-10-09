@@ -1,30 +1,23 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { arrayToEnumString, stringToArray } from "../../helpers/helpers";
+import { defaultCategoryId } from "../../constants";
 import { required } from "../../helpers/validate";
+import { getCategoryValues } from "../../selectors/selectors";
 import FormField from "../Common/FormField";
+import Form from "../Common/Form";
 import Icon from "../Common/Icon";
 
 const AddEditRecipeForm = (props) => {
+  const { categories, categoryId, title, recipe, ingredients } = props;
+  const initialValues = {
+    categoryId: categoryId || categories[defaultCategoryId].id,
+    title,
+    recipe,
+    ingredients: arrayToEnumString(ingredients),
+  };
   const [imgSrc, setImgSrc] = useState(props.imgSrc);
   const imgFileInput = React.createRef();
-  const [state, setState] = useState({
-    categoryId: props.categoryId,
-    title: props.title,
-    recipe: props.recipe,
-    ingredients: arrayToEnumString(props.ingredients),
-    required: ["title"],
-    isError: false,
-  });
-
-  const handleInputChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setState({
-      ...state,
-      [name]: value,
-    });
-  };
 
   const handleImgFileChange = () => {
     window.URL = window.URL || window.webkitURL;
@@ -35,25 +28,15 @@ const AddEditRecipeForm = (props) => {
       window.URL.revokeObjectURL(file);
     }
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const requiredFields = state.required;
-
-    if (requiredFields.some((field) => !state[field].length)) {
-      setState({ ...state, isError: true });
-    } else {
-      setState({ ...state, isError: false });
-      props.onSubmit({
-        categoryId: state.categoryId,
-        title: state.title,
-        recipe: state.recipe,
-        ingredients: stringToArray(state.ingredients),
-        imgSrc: imgSrc,
-      });
-    }
+  const handleSubmit = (formData) => {
+    props.onSubmit({
+      ...formData,
+      ingredients: stringToArray(formData.ingredients),
+      imgSrc: imgSrc,
+    });
   };
   return (
-    <Form onSubmit={handleSubmit}>
+    <FormContainer onSubmit={handleSubmit} initialValues={initialValues}>
       <RecipeImgContainer>
         {imgSrc && <RecipeImg src={imgSrc} />}
         <Overlay>
@@ -72,14 +55,14 @@ const AddEditRecipeForm = (props) => {
       </RecipeImgContainer>
       <Fields>
         <FormField
-          fieldType="select"
-          value={state.categoryId}
-          name="categoryId"
-          label="Категория"
-          onChange={handleInputChange}
-          error={state.isError ? required(state.categoryId) : undefined}
-        >
-          {props.categories.map((category) => {
+          fieldType="input"
+          type="text"
+          name="title"
+          label="Заголовок"
+          validators={[required]}
+        />
+        <FormField fieldType="select" name="categoryId" label="Категория">
+          {getCategoryValues(categories).map((category) => {
             return (
               <option value={category.id} key={category.id}>
                 {category.title}
@@ -89,39 +72,25 @@ const AddEditRecipeForm = (props) => {
         </FormField>
         <FormField
           fieldType="input"
-          value={state.title}
-          type="text"
-          name="title"
-          label="Заголовок"
-          onChange={handleInputChange}
-          error={state.isError ? required(state.title) : undefined}
-        />
-        <FormField
-          fieldType="input"
-          value={state.ingredients}
           type="text"
           name="ingredients"
           label="Ингредиенты (через запятую)"
-          onChange={handleInputChange}
         />
         <FormField
           fieldType="textarea"
-          value={state.recipe}
           name="recipe"
           type="textarea"
           label="Рецепт"
-          onChange={handleInputChange}
         />
         <ButtonContainer>{props.buttons}</ButtonContainer>
       </Fields>
-    </Form>
+    </FormContainer>
   );
 };
 
-const Form = styled.form`
+const FormContainer = styled(Form)`
   display: flex;
   margin: 0 auto;
-  display: flex;
   max-width: 1200px;
   padding: 32px;
   border-radius: 4px;

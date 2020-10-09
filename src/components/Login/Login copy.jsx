@@ -29,13 +29,30 @@ const errorFromCode = {
 };
 
 const Login = (props) => {
-  const [errors, setErrors] = useState({
-    fieldErrors: "null",
+  const [state, setState] = useState({
+    // email: "",
+    // password: "",
+    // required: ["email", "password"],
+    errors: null,
     commonError: null,
   });
 
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setState({ ...state, [name]: value });
+  // };
+
   const handleSubmit = (formData) => {
     login(formData);
+
+    // const requiredFields = state.required;
+
+    // if (requiredFields.some((field) => !state[field].length)) {
+    //   setState({ ...state, isError: true });
+    // } else {
+    //   setState({ ...state, isError: false });
+    //   login(state.email, state.password);
+    // }
   };
 
   const login = ({ email, password }) => {
@@ -48,16 +65,18 @@ const Login = (props) => {
         const isCommonError = error ? error.isCommon : true;
 
         if (isCommonError) {
-          setErrors({
-            ...errors,
+          setState({
+            ...state,
             commonError: errorMessage,
-            fieldErrors: null,
+            // isError: true,
+            errors: null,
           });
         } else {
-          setErrors({
-            ...errors,
+          setState({
+            ...state,
+            // isError: true,
             commonError: null,
-            fieldErrors: { email: errorMessage },
+            errors: { email: errorMessage },
           });
         }
       });
@@ -66,33 +85,65 @@ const Login = (props) => {
   return props.isAuth ? (
     <Redirect to="/account" />
   ) : (
-    <LoginForm
-      onSubmit={handleSubmit}
-      commonError={errors.commonError}
-      fieldErrors={errors.fieldErrors}
-    >
+    <>
+      <Form
+        onSubmit={handleSubmit}
+        commonError={state.commonError}
+        fieldErrors={state.errors}
+      >
+        <FormField
+          fieldType="input"
+          type="text"
+          // value={state.email}
+          name="email"
+          label="E-mail"
+          // onChange={handleChange}
+          validator={[required]}
+          // error={state.isError ? required(state.email) : undefined}
+          autoFocus
+        />
+        <FormField
+          fieldType="input"
+          type="password"
+          // value={state.password}
+          name="password"
+          label="Пароль"
+          validator={[required]}
+          // onChange={handleChange}
+          // error={state.isError ? required(state.password) : undefined}
+        />
+        <Button full>Войти</Button>
+      </Form>
+      {/* <LoginForm onSubmit={handleSubmit}>
       <Title>Войти</Title>
+      {state.isCommonError && <ErrorMessage></ErrorMessage>}
       <FormField
         fieldType="input"
         type="text"
+        value={state.email}
         name="email"
         label="E-mail"
-        validators={[required]}
+        onChange={handleChange}
+        validate={[required, validateEmail]}
+        error={state.isError ? required(state.email) : undefined}
         autoFocus
       />
       <FormField
         fieldType="input"
         type="password"
+        value={state.password}
         name="password"
         label="Пароль"
-        validators={[required]}
+        onChange={handleChange}
+        error={state.isError ? required(state.password) : undefined}
       />
       <Button full>Войти</Button>
-    </LoginForm>
+    </LoginForm> */}
+    </>
   );
 };
 
-const LoginForm = styled(Form)`
+const LoginForm = styled.form`
   max-width: 400px;
   margin: 0 auto;
   background-color: ${({ theme }) => theme.bg.baseLight};

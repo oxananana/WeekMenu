@@ -44,7 +44,7 @@ const RecipePage = (props) => {
       onSubmit={handleSubmit}
       toggleEditMode={() => toggleEditMode()}
       action="edit"
-      categories={props.categoryValues}
+      categories={props.categories}
       buttons={
         <>
           <Button type="submit">Сохранить</Button>
@@ -54,6 +54,8 @@ const RecipePage = (props) => {
         </>
       }
     />
+  ) : !title ? (
+    <div>нет такого рецепта, кривой урл</div>
   ) : (
     <StyledRecipe>
       {state.imgSrc ? (
@@ -81,6 +83,8 @@ const RecipePage = (props) => {
               })}
             </RecipeSchedule>
           </dd>
+          <dt>Категория:</dt>
+          <dd>{props.categories[state.categoryId].title}</dd>
           <dt>Ингредиенты:</dt>
           <dd>
             <RecipeIngredients>

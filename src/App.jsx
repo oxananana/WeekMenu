@@ -15,7 +15,6 @@ import Account from "./components/Account/Account";
 import Recipes from "./components/Recipes/Recipes.jsx";
 import RecipePage from "./components/Recipes/RecipePage";
 import AddRecipe from "./components/Recipes/AddRecipe";
-import { getCategoryValues } from "./selectors/selectors";
 import menu from "./data/menu";
 import categories from "./data/categories";
 import recipesData from "./data/recipes";
@@ -67,18 +66,12 @@ const App = () => {
         </Route>
         <Route path="/recipes/new-recipe" exact>
           <InnerPage>
-            <AddRecipe
-              categoryValues={getCategoryValues(categories)}
-              addRecipe={addRecipe}
-            />
+            <AddRecipe categories={categories} addRecipe={addRecipe} />
           </InnerPage>
         </Route>
         <Route path="/recipes/:categoryId/:recipeId">
           <InnerPage>
-            <RecipePage
-              recipes={recipes}
-              categoryValues={getCategoryValues(categories)}
-            />
+            <RecipePage recipes={recipes} categories={categories} />
           </InnerPage>
         </Route>
         <Route path="/recipes/:categoryId">

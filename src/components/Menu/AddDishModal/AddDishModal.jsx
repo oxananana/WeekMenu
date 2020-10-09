@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { arrayToEnumString } from "../../../helpers/helpers";
 import { getCategoryRecipes } from "../../../selectors/selectors";
+import { defaultCategoryId } from "../../../constants";
 import Modal from "../../Common/Modal";
 import CategoryFilter from "./CategoryFilter";
 import Category from "./Category";
@@ -9,7 +10,7 @@ import Category from "./Category";
 const AddDishModal = (props) => {
   const { isOpen, onClose, onSubmit, categories, day, mealId } = props;
   const dishes = props.recipes;
-  const [activeCategoryId, setActiveCategoryId] = useState("soups");
+  const [activeCategoryId, setActiveCategoryId] = useState(defaultCategoryId);
   const [selectedDishesIds, setDelectedDishesIds] = useState([]);
 
   const handleChangeFilter = (categoryId) => {
@@ -30,7 +31,7 @@ const AddDishModal = (props) => {
 
   const handleSubmit = () => {
     setDelectedDishesIds([]);
-    setActiveCategoryId("soups");
+    setActiveCategoryId(defaultCategoryId);
     onSubmit(selectedDishesIds, mealId);
     onClose();
   };
