@@ -9,6 +9,7 @@ import { lightTheme, darkTheme } from "./theme/themes";
 import InnerPage from "./components/Common/InnerPage";
 import NoMatch from "./components/Common/NoMatch";
 import Navbar from "./components/Navbar/Navbar";
+import Loader from "./components/Common/Loader";
 import Menu from "./components/Menu/Menu";
 import Login from "./components/Login/Login";
 import Account from "./components/Account/Account";
