@@ -1,42 +1,88 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
 import styled from "styled-components";
+import PropTypes from "prop-types";
+import * as firebase from "firebase/app";
+import "firebase/database";
 import Button from "../Common/Button";
 import AddEditRecipeForm from "./AddEditRecipeForm";
 
 const AddRecipe = (props) => {
   let history = useHistory();
+  const { categories } = props;
+  // debugger;
+
   const handleSubmit = (formData) => {
-    const newId = uuidv4();
+    createNewRecipe(formData);
+  };
+
+  const createNewRecipe = (recipe) => {
+    const db = firebase.database();
+    const recipeId = db.ref().child("recipes").push().key;
     const schedule = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"].map((day) => {
       return { name: day, isActive: false };
     });
-    props.addRecipe({ ...formData, id: newId, schedule });
-    history.push(`/recipes/${formData.categoryId}/${newId}`);
+    const newRecipe = { ...recipe, id: recipeId, schedule };
+
+    db.ref("recipes/" + recipeId).set(newRecipe, (error) => {
+      if (error) {
+        console.log(error);
+      } else {
+        history.push(`/recipes/${recipe.categoryId}/${recipeId}`);
+        console.log("success");
+      }
+    });
+
+    addRecipeToCategory(db, recipeId, recipe.categoryId);
+  };
+  const addRecipeToCategory = (db, recipeId, categoryId) => {
+    debugger;
+    const currentRecipeIds = categories[categoryId].recipes || [];
+    db.ref(`categories/${categoryId}/recipes`).set(
+      [...currentRecipeIds, recipeId],
+      (error) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("success");
+        }
+      }
+    );
   };
 
   return (
     <AddRecipeContainer>
       <Heading>Добавление нового рецепта</Heading>
-      <AddEditRecipeForm
-        action="add"
-        onSubmit={handleSubmit}
-        title=""
-        recipe=""
-        ingredients=""
-        categories={props.categories}
-        buttons={
-          <>
-            <Button type="submit">Добавить</Button>
-            <Button invert to="/recipes">
-              Отмена
-            </Button>
-          </>
-        }
-      />
+      {categories ? (
+        <AddEditRecipeForm
+          action="add"
+          onSubmit={handleSubmit}
+          title=""
+          recipe=""
+          ingredients=""
+          categories={props.categories}
+          buttons={
+            <>
+              <Button type="submit">Добавить</Button>
+              <Button invert to="/recipes">
+                Отмена
+              </Button>
+            </>
+          }
+        />
+      ) : (
+        <div>Нет категорий - нет формы</div>
+      )}
     </AddRecipeContainer>
   );
+};
+
+AddRecipe.propTypes = {
+  categories: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.object]),
+};
+
+AddRecipe.defaultProps = {
+  categories: null,
 };
 
 const AddRecipeContainer = styled.div`

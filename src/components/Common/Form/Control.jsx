@@ -16,7 +16,7 @@ const Control = (props) => {
         return { ...prevValidators, [props.name]: validators };
       });
     }
-  }, []);
+  }, []); // eslint-disable-line
 
   const handleChange = (e) => {
     const { name, value } = e.target;

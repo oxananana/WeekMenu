@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { NavLink, useParams } from "react-router-dom";
 import cn from "classnames";
+import PropTypes from "prop-types";
 import { getCategoryRecipes } from "../../selectors/selectors";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import Icon from "../Common/Icon";
@@ -10,8 +11,18 @@ import Category from "./Category";
 const Recipes = (props) => {
   const activeCategoryId = useParams()["categoryId"];
   const title = props.categories[activeCategoryId].title;
-  const recipes = getCategoryRecipes(props.recipes, activeCategoryId);
   useDocumentTitle(title);
+
+  const recipesIds = props.categories[activeCategoryId].recipes || [];
+  const [recipes, setRecipes] = useState([]);
+
+  useEffect(() => {
+    if (recipesIds.length > 0) {
+      setRecipes(getCategoryRecipes(props.recipes, recipesIds));
+    } else {
+      setRecipes([]);
+    }
+  }, [props.recipes, activeCategoryId]);
 
   return (
     <>
@@ -38,6 +49,16 @@ const Recipes = (props) => {
       <Category title={title} recipes={recipes} />
     </>
   );
+};
+
+Recipes.propTypes = {
+  categories: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.object]),
+  recipes: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.object]),
+};
+
+Recipes.defaultProps = {
+  categories: null,
+  recipes: null,
 };
 
 const RecipesNavbar = styled.div`

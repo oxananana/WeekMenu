@@ -16,7 +16,7 @@ const AddEditRecipeForm = (props) => {
     recipe,
     ingredients: arrayToEnumString(ingredients),
   };
-  const [imgSrc, setImgSrc] = useState(props.imgSrc);
+  const [imgSrc, setImgSrc] = useState(props.imgSrc || null);
   const imgFileInput = React.createRef();
 
   const handleImgFileChange = () => {

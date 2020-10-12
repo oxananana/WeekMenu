@@ -1,12 +1,20 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 import cn from "classnames";
 import { arrayToEnumString } from "../../helpers/helpers";
 import Icon from "../Common/Icon";
 
 const Recipe = (props) => {
-  const { id, title, imgSrc, categoryId, schedule, ingredients } = props.recipe;
+  const {
+    id,
+    title,
+    imgSrc,
+    categoryId,
+    schedule,
+    ingredients = [],
+  } = props.recipe;
 
   return (
     <RecipeLink to={`/recipes/${categoryId}/${id}`}>
@@ -39,6 +47,31 @@ const Recipe = (props) => {
       </RecipeInfo>
     </RecipeLink>
   );
+};
+
+Recipe.propTypes = {
+  recipe: PropTypes.object,
+};
+
+// Recipe.propTypes = PropTypes.shape({
+//   id: PropTypes.string,
+//   title: PropTypes.string,
+//   imgSrc: PropTypes.string,
+//   categoryId: PropTypes.string,
+//   schedule: PropTypes.oneOfType(
+//     PropTypes.array,
+//     PropTypes.arrayOf(
+//       PropTypes.exact({ name: PropTypes.string, isActive: PropTypes.bool })
+//     )
+//   ),
+//   ingredients: PropTypes.arrayOf(PropTypes.string),
+// });
+
+Recipe.defaultProps = {
+  recipe: {
+    schedule: [],
+    ingredients: [],
+  },
 };
 
 const RecipeLink = styled(NavLink)`

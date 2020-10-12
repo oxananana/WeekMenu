@@ -3,6 +3,8 @@ import { useParams, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import cn from "classnames";
 import DOMPurify from "dompurify";
+import * as firebase from "firebase/app";
+import "firebase/database";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import { getDishById } from "../../selectors/selectors";
 import { arrayToEnumString } from "../../helpers/helpers";
@@ -13,6 +15,7 @@ import AddEditRecipeForm from "./AddEditRecipeForm";
 const RecipePage = (props) => {
   const { recipeId } = useParams();
   let history = useHistory();
+
   const { categoryId, title, imgSrc, schedule, ingredients, recipe } = {
     ...getDishById(props.recipes, recipeId),
   };

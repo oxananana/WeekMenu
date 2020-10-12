@@ -45,6 +45,7 @@ const RecipeList = styled.div`
 const RecipeContainer = styled.div`
   padding: 0 12px;
   width: 25%;
+  min-width: 280px;
   display: flex;
 `;
 

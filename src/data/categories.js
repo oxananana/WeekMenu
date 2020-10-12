@@ -2,6 +2,7 @@ const data = {
   soups: {
     id: "soups",
     title: "Супы",
+    recipes: ["soup1"],
   },
   breakfast: {
     id: "breakfast",
