@@ -20,9 +20,6 @@ import AddRecipe from "./components/Recipes/AddRecipe";
 import useBatchQueries from "./hooks/useBatchQueries";
 
 const App = () => {
-  // const [recipes, setRecipes] = useState(null);
-  // const [categories, setCategories] = useState(null);
-
   const [theme, setTheme] = useState("light");
   const [user, setUser] = useState({ isAuth: false });
 
@@ -35,7 +32,8 @@ const App = () => {
       .once(
         "value",
         (snapshot) => {
-          console.log("categories");
+          // debugger;
+          // console.log("categories");
           let obj = {};
           snapshot.forEach(function (child) {
             obj[child.key] = child.val();
@@ -47,10 +45,10 @@ const App = () => {
           newData.push(null);
         }
       );
-    let recipesPromise = db.ref("recipes").on(
+    let recipesPromise = db.ref("recipes").once(
       "value",
       (snapshot) => {
-        console.log("recipes", snapshot.val());
+        // console.log("recipes", snapshot.val());
         newData.push(snapshot.val());
       },
       (error) => {
@@ -58,10 +56,11 @@ const App = () => {
         newData.push(null);
       }
     );
-    let menuPromise = db.ref("menu").on(
+    let menuPromise = db.ref("menu").once(
       "value",
       (snapshot) => {
-        console.log("menu", snapshot.val());
+        // debugger;
+        // console.log("menu", snapshot.val());
         newData.push(snapshot.val());
       },
       (error) => {
@@ -72,7 +71,8 @@ const App = () => {
 
     return Promise.all([categoriesPromise, recipesPromise, menuPromise]).then(
       () => {
-        console.log("all");
+        // debugger;
+        // console.log("all");
         return newData;
       }
     );

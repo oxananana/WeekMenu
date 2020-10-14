@@ -14,6 +14,10 @@ export const getDishById = (dishes, dishId) => {
   return dishes[dishId];
 };
 
+export const getRecipeById = (recipes, recipeId) => {
+  return recipes[recipeId];
+};
+
 export const getCategoryValues = (categories) => {
   return Object.values(categories);
 };
@@ -22,7 +26,7 @@ export const getCategoryRecipes = (recipes, recipesIds) => {
   if (!recipes) {
     return [];
   }
-  return recipesIds.map((id) => {
+  return Object.keys(recipesIds).map((id) => {
     return recipes[id];
   });
 };

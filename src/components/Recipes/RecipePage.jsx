@@ -3,29 +3,29 @@ import { useParams, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import cn from "classnames";
 import DOMPurify from "dompurify";
-import * as firebase from "firebase/app";
-import "firebase/database";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
-import { getDishById } from "../../selectors/selectors";
+import { getRecipeById } from "../../selectors/selectors";
 import { arrayToEnumString } from "../../helpers/helpers";
 import Button from "../Common/Button";
 import Icon from "../Common/Icon";
-import AddEditRecipeForm from "./AddEditRecipeForm";
+import EditRecipe from "./EditRecipe";
 
 const RecipePage = (props) => {
   const { recipeId } = useParams();
-  let history = useHistory();
 
-  const { categoryId, title, imgSrc, schedule, ingredients, recipe } = {
-    ...getDishById(props.recipes, recipeId),
+  const categories = props.categories;
+  const { id, categoryId, title, imgSrc, schedule, ingredients, recipe } = {
+    ...getRecipeById(props.recipes, recipeId),
   };
   const [editMode, setEditMode] = useState(false);
   const [state, setState] = useState({
+    id: id,
     categoryId: categoryId,
     imgSrc: imgSrc,
     title: title,
     recipe: recipe,
-    ingredients: ingredients,
+    schedule: schedule || [],
+    ingredients: ingredients || [],
   });
 
   useDocumentTitle(state.title);
@@ -33,29 +33,14 @@ const RecipePage = (props) => {
   const toggleEditMode = () => {
     setEditMode(!editMode);
   };
-  const handleSubmit = (formData) => {
-    setState({ ...state, ...formData });
-    setEditMode(false);
-    if (categoryId !== formData.categoryId) {
-      history.push(`/recipes/${formData.categoryId}/${recipeId}`);
-    }
-  };
 
   return editMode ? (
-    <AddEditRecipeForm
-      {...state}
-      onSubmit={handleSubmit}
-      toggleEditMode={() => toggleEditMode()}
-      action="edit"
-      categories={props.categories}
-      buttons={
-        <>
-          <Button type="submit">Сохранить</Button>
-          <Button invert onClick={toggleEditMode}>
-            Отмена
-          </Button>
-        </>
-      }
+    <EditRecipe
+      state={state}
+      categoryId={categoryId}
+      categories={categories}
+      recipeId={recipeId}
+      toggleEditMode={toggleEditMode}
     />
   ) : !title ? (
     <div>нет такого рецепта, кривой урл</div>
@@ -74,7 +59,7 @@ const RecipePage = (props) => {
           <dt>Наличие в расписании:</dt>
           <dd>
             <RecipeSchedule>
-              {schedule.map((day, index) => {
+              {state.schedule.map((day, index) => {
                 return (
                   <RecipeScheduleItem
                     key={index}
@@ -87,7 +72,7 @@ const RecipePage = (props) => {
             </RecipeSchedule>
           </dd>
           <dt>Категория:</dt>
-          <dd>{props.categories[state.categoryId].title}</dd>
+          <dd>{categories[state.categoryId].title}</dd>
           <dt>Ингредиенты:</dt>
           <dd>
             <RecipeIngredients>

@@ -24,30 +24,21 @@ const AddRecipe = (props) => {
     });
     const newRecipe = { ...recipe, id: recipeId, schedule };
 
-    db.ref("recipes/" + recipeId).set(newRecipe, (error) => {
+    let updates = {};
+    updates[`recipes/${recipeId}`] = newRecipe;
+    updates[`categories/${recipe.categoryId}/recipes/${recipeId}`] = true;
+
+    console.log(updates);
+    debugger;
+
+    db.ref().update(updates, (error) => {
       if (error) {
         console.log(error);
       } else {
-        history.push(`/recipes/${recipe.categoryId}/${recipeId}`);
         console.log("success");
+        history.push(`/recipes/${recipe.categoryId}/${recipeId}`);
       }
     });
-
-    addRecipeToCategory(db, recipeId, recipe.categoryId);
-  };
-  const addRecipeToCategory = (db, recipeId, categoryId) => {
-    debugger;
-    const currentRecipeIds = categories[categoryId].recipes || [];
-    db.ref(`categories/${categoryId}/recipes`).set(
-      [...currentRecipeIds, recipeId],
-      (error) => {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log("success");
-        }
-      }
-    );
   };
 
   return (

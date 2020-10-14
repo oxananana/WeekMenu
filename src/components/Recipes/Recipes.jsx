@@ -13,16 +13,16 @@ const Recipes = (props) => {
   const title = props.categories[activeCategoryId].title;
   useDocumentTitle(title);
 
-  const recipesIds = props.categories[activeCategoryId].recipes || [];
+  const recipesIds = props.categories[activeCategoryId].recipes;
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-    if (recipesIds.length > 0) {
+    if (recipesIds) {
       setRecipes(getCategoryRecipes(props.recipes, recipesIds));
     } else {
       setRecipes([]);
     }
-  }, [props.recipes, activeCategoryId]);
+  }, [props.recipes, activeCategoryId, recipesIds]);
 
   return (
     <>
