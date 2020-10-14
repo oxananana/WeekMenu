@@ -1,15 +1,11 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import * as firebase from "firebase/app";
-import "firebase/auth";
+import authAPI from "../../api/authAPI";
 
 const Account = (props) => {
   const { isAuth, email } = props.user;
   const handleClick = () => {
-    firebase
-      .auth()
-      .signOut()
-      .catch((error) => console.log("error" + error));
+    authAPI.logout().catch((error) => console.log("error" + error));
   };
 
   return isAuth ? (

@@ -18,67 +18,17 @@ import Recipes from "./components/Recipes/Recipes.jsx";
 import RecipePage from "./components/Recipes/RecipePage";
 import AddRecipe from "./components/Recipes/AddRecipe";
 import useBatchQueries from "./hooks/useBatchQueries";
+import api from "./api/api";
 
 const App = () => {
   const [theme, setTheme] = useState("light");
   const [user, setUser] = useState({ isAuth: false });
 
   const [data, isLoading] = useBatchQueries(() => {
-    const db = firebase.database();
-    let newData = [];
-    let categoriesPromise = db
-      .ref("categories")
-      .orderByChild("priority")
-      .once(
-        "value",
-        (snapshot) => {
-          // debugger;
-          // console.log("categories");
-          let obj = {};
-          snapshot.forEach(function (child) {
-            obj[child.key] = child.val();
-          });
-          newData.push(obj);
-        },
-        (error) => {
-          console.log("get recipes error", error);
-          newData.push(null);
-        }
-      );
-    let recipesPromise = db.ref("recipes").once(
-      "value",
-      (snapshot) => {
-        // console.log("recipes", snapshot.val());
-        newData.push(snapshot.val());
-      },
-      (error) => {
-        console.log("get recipes error", error);
-        newData.push(null);
-      }
-    );
-    let menuPromise = db.ref("menu").once(
-      "value",
-      (snapshot) => {
-        // debugger;
-        // console.log("menu", snapshot.val());
-        newData.push(snapshot.val());
-      },
-      (error) => {
-        console.log("get menu error", error);
-        newData.push(null);
-      }
-    );
-
-    return Promise.all([categoriesPromise, recipesPromise, menuPromise]).then(
-      () => {
-        // debugger;
-        // console.log("all");
-        return newData;
-      }
-    );
+    return api.getInitialData();
   });
 
-  const [categories, recipes, menu] = data || [];
+  const { categories, recipes, menu } = data || {};
 
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {

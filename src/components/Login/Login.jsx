@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import styled from "styled-components";
-import * as firebase from "firebase/app";
-import "firebase/auth";
 import { required, minLength } from "../../helpers/validate";
 import Button from "../Common/Button";
 import FormField from "../Common/Form/FormField";
 import Form from "../Common/Form/Form";
+import authAPI from "../../api/authAPI";
 
 const errorFromCode = {
   "auth/invalid-email": {
@@ -39,28 +38,25 @@ const Login = (props) => {
   };
 
   const login = ({ email, password }) => {
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .catch((serverError) => {
-        const error = errorFromCode[serverError.code];
-        const errorMessage = error ? error.message : serverError.message;
-        const isCommonError = error ? error.isCommon : true;
+    authAPI.login(email, password).catch((serverError) => {
+      const error = errorFromCode[serverError.code];
+      const errorMessage = error ? error.message : serverError.message;
+      const isCommonError = error ? error.isCommon : true;
 
-        if (isCommonError) {
-          setErrors({
-            ...errors,
-            commonError: errorMessage,
-            fieldErrors: null,
-          });
-        } else {
-          setErrors({
-            ...errors,
-            commonError: null,
-            fieldErrors: { email: errorMessage },
-          });
-        }
-      });
+      if (isCommonError) {
+        setErrors({
+          ...errors,
+          commonError: errorMessage,
+          fieldErrors: null,
+        });
+      } else {
+        setErrors({
+          ...errors,
+          commonError: null,
+          fieldErrors: { email: errorMessage },
+        });
+      }
+    });
   };
 
   return props.isAuth ? (
