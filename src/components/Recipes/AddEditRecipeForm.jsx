@@ -12,12 +12,12 @@ import Icon from "../Common/Icon";
 import Loader from "../Common/Loader";
 
 const AddEditRecipeForm = (props) => {
-  const { categories, categoryId, title, recipe, ingredients } = props;
+  const { categories, categoryId, title, description, ingredients } = props;
   const initialValues = {
     categoryId: categoryId || categories[defaultCategoryId].id,
     title,
-    recipe,
-    ingredients: arrayToEnumString(ingredients),
+    description,
+    ingredients: arrayToEnumString(ingredients || []),
   };
   const [imgSrc, setImgSrc] = useState(props.imgSrc || null);
   const [imgIsLoading, setImgIsLoading] = useState(false);
@@ -102,7 +102,7 @@ const AddEditRecipeForm = (props) => {
         />
         <FormField
           fieldType="textarea"
-          name="recipe"
+          name="description"
           type="textarea"
           label="Рецепт"
         />

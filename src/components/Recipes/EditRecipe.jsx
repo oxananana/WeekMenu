@@ -1,52 +1,49 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import styled from "styled-components";
 import PropTypes from "prop-types";
 import * as firebase from "firebase/app";
 import "firebase/database";
+import { StateContext } from "../../App";
+import recipesAPI from "../../api/recipesAPI";
 import Button from "../Common/Button";
 import AddEditRecipeForm from "./AddEditRecipeForm";
 
 const EditRecipe = (props) => {
-  const { state, recipeId, categoryId, categories, toggleEditMode } = props;
-
-  let history = useHistory();
+  const { recipe, categories, toggleEditMode } = props;
+  const history = useHistory();
+  const { setRecipes } = useContext(StateContext);
 
   const handleSubmit = (formData) => {
-    updateRecipe({ ...state, ...formData });
+    updateRecipe({ ...recipe, ...formData });
   };
 
   const updateRecipe = (recipe) => {
     const db = firebase.database();
 
-    let updates = {};
-    updates[`recipes/${recipeId}`] = recipe;
-
-    if (categoryId !== recipe.categoryId) {
-      updates[`categories/${categoryId}/recipes/${recipeId}`] = null;
-      updates[`categories/${recipe.categoryId}/recipes/${recipeId}`] = true;
-    }
-    console.log(updates);
-    debugger;
-
-    db.ref().update(updates, (error) => {
+    db.ref(`recipes/${recipe.id}`).set(recipe, (error) => {
       if (error) {
         console.log(error);
       } else {
-        console.log("success");
-        if (categoryId !== recipe.categoryId) {
-          history.push(`/recipes/${recipe.categoryId}/${recipeId}`);
-          toggleEditMode();
-        } else {
-          toggleEditMode();
-        }
+        console.log("success edit recipe");
+        recipesAPI
+          .getRecipes()
+          .then((response) => {
+            setRecipes(response);
+          })
+          .then(() => {
+            history.push(`/recipes/${recipe.categoryId}/${recipe.id}`);
+            toggleEditMode();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
     });
   };
 
   return (
     <AddEditRecipeForm
-      {...state}
+      {...recipe}
       onSubmit={handleSubmit}
       action="edit"
       categories={categories}
@@ -63,17 +60,15 @@ const EditRecipe = (props) => {
 };
 
 EditRecipe.propTypes = {
-  state: PropTypes.exact({
+  recipe: PropTypes.exact({
     id: PropTypes.string.isRequired,
     categoryId: PropTypes.string.isRequired,
     imgSrc: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.string]),
     title: PropTypes.string.isRequired,
-    recipe: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
     schedule: PropTypes.array.isRequired,
-    ingredients: PropTypes.array.isRequired,
+    ingredients: PropTypes.array,
   }),
-  recipeId: PropTypes.string.isRequired,
-  categoryId: PropTypes.string.isRequired,
   toggleEditMode: PropTypes.func.isRequired,
   categories: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.object]),
 };

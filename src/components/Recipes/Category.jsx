@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-
+import PropTypes from "prop-types";
+import { getCategoryRecipes } from "../../selectors/selectors";
 import Recipe from "./Recipe";
 
 const Category = (props) => {
-  const { title, recipes } = props;
+  const { title, categoryId } = props;
+  const [recipes, setRecipes] = useState([]);
+
+  useEffect(() => {
+    setRecipes(getCategoryRecipes(props.recipes, categoryId));
+  }, [props.recipes, categoryId]);
 
   return (
     <StyledCategory>
@@ -24,6 +30,16 @@ const Category = (props) => {
       )}
     </StyledCategory>
   );
+};
+
+Category.propTypes = {
+  categoryId: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  recipes: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.object]),
+};
+
+Category.defaultProps = {
+  recipes: null,
 };
 
 const StyledCategory = styled.div`

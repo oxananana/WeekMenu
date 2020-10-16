@@ -22,11 +22,20 @@ export const getCategoryValues = (categories) => {
   return Object.values(categories);
 };
 
-export const getCategoryRecipes = (recipes, recipesIds) => {
+export const getCategoryRecipes = (recipes, categoryId) => {
   if (!recipes) {
     return [];
   }
-  return Object.keys(recipesIds).map((id) => {
-    return recipes[id];
+  return Object.values(recipes).filter((recipe) => {
+    return recipe.categoryId === categoryId;
   });
 };
+
+// export const getCategoryRecipes = (recipes, recipesIds) => {
+//   if (!recipes) {
+//     return [];
+//   }
+//   return Object.keys(recipesIds).map((id) => {
+//     return recipes[id];
+//   });
+// };

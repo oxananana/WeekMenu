@@ -1,34 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { NavLink, useParams } from "react-router-dom";
 import cn from "classnames";
 import PropTypes from "prop-types";
-import { getCategoryRecipes } from "../../selectors/selectors";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import Icon from "../Common/Icon";
 import Category from "./Category";
 
 const Recipes = (props) => {
+  const { categories, recipes } = props;
   const activeCategoryId = useParams()["categoryId"];
   const title = props.categories[activeCategoryId].title;
   useDocumentTitle(title);
-
-  const recipesIds = props.categories[activeCategoryId].recipes;
-  const [recipes, setRecipes] = useState([]);
-
-  useEffect(() => {
-    if (recipesIds) {
-      setRecipes(getCategoryRecipes(props.recipes, recipesIds));
-    } else {
-      setRecipes([]);
-    }
-  }, [props.recipes, activeCategoryId, recipesIds]);
 
   return (
     <>
       <RecipesNavbar>
         <CategoryNav>
-          {Object.values(props.categories).map((category) => {
+          {Object.values(categories).map((category) => {
             return (
               <CategoryNavItem
                 key={category.id}
@@ -46,7 +35,7 @@ const Recipes = (props) => {
           <Icon name="plus" /> Добавить рецепт
         </AddRecipeLink>
       </RecipesNavbar>
-      <Category title={title} recipes={recipes} />
+      <Category title={title} categoryId={activeCategoryId} recipes={recipes} />
     </>
   );
 };

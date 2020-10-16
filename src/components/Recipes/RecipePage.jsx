@@ -12,23 +12,22 @@ import EditRecipe from "./EditRecipe";
 
 const RecipePage = (props) => {
   const { recipeId } = useParams();
-
   const categories = props.categories;
-  const { id, categoryId, title, imgSrc, schedule, ingredients, recipe } = {
-    ...getRecipeById(props.recipes, recipeId),
+  const recipe = getRecipeById(props.recipes, recipeId);
+  const {
+    id,
+    categoryId,
+    title,
+    imgSrc,
+    schedule,
+    ingredients,
+    description,
+  } = {
+    ...recipe,
   };
   const [editMode, setEditMode] = useState(false);
-  const [state, setState] = useState({
-    id: id,
-    categoryId: categoryId,
-    imgSrc: imgSrc,
-    title: title,
-    recipe: recipe,
-    schedule: schedule || [],
-    ingredients: ingredients || [],
-  });
 
-  useDocumentTitle(state.title);
+  useDocumentTitle(title);
 
   const toggleEditMode = () => {
     setEditMode(!editMode);
@@ -36,30 +35,28 @@ const RecipePage = (props) => {
 
   return editMode ? (
     <EditRecipe
-      state={state}
-      categoryId={categoryId}
+      recipe={recipe}
       categories={categories}
-      recipeId={recipeId}
       toggleEditMode={toggleEditMode}
     />
   ) : !title ? (
     <div>нет такого рецепта, кривой урл</div>
   ) : (
     <StyledRecipe>
-      {state.imgSrc ? (
-        <RecipeImg style={{ backgroundImage: `url(${state.imgSrc})` }} />
+      {imgSrc ? (
+        <RecipeImg style={{ backgroundImage: `url(${imgSrc})` }} />
       ) : (
         <RecipeImgPlaceholder>
           <Icon name="camera"></Icon>
         </RecipeImgPlaceholder>
       )}
       <ResipeDescription>
-        <RecipeTitle>{state.title}</RecipeTitle>
+        <RecipeTitle>{title}</RecipeTitle>
         <Dl>
           <dt>Наличие в расписании:</dt>
           <dd>
             <RecipeSchedule>
-              {state.schedule.map((day, index) => {
+              {schedule.map((day, index) => {
                 return (
                   <RecipeScheduleItem
                     key={index}
@@ -72,17 +69,17 @@ const RecipePage = (props) => {
             </RecipeSchedule>
           </dd>
           <dt>Категория:</dt>
-          <dd>{categories[state.categoryId].title}</dd>
+          <dd>{categories[categoryId].title}</dd>
           <dt>Ингредиенты:</dt>
           <dd>
             <RecipeIngredients>
-              {arrayToEnumString(state.ingredients) || "Не заполнено"}
+              {ingredients ? arrayToEnumString(ingredients) : "Не заполнено"}
             </RecipeIngredients>
           </dd>
           <dt>Рецепт:</dt>
-          {state.recipe ? (
+          {description ? (
             <dd
-              dangerouslySetInnerHTML={formattingRecipeText(state.recipe)}
+              dangerouslySetInnerHTML={formattingRecipeText(description)}
             ></dd>
           ) : (
             <dd>Не заполнено</dd>

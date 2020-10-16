@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import * as firebase from "firebase/app";
 import "firebase/database";
+import { StateContext } from "../../App";
+import recipesAPI from "../../api/recipesAPI";
 import Button from "../Common/Button";
 import AddEditRecipeForm from "./AddEditRecipeForm";
 
 const AddRecipe = (props) => {
   let history = useHistory();
   const { categories } = props;
-  // debugger;
+
+  const { setRecipes } = useContext(StateContext);
 
   const handleSubmit = (formData) => {
     createNewRecipe(formData);
@@ -24,19 +27,22 @@ const AddRecipe = (props) => {
     });
     const newRecipe = { ...recipe, id: recipeId, schedule };
 
-    let updates = {};
-    updates[`recipes/${recipeId}`] = newRecipe;
-    updates[`categories/${recipe.categoryId}/recipes/${recipeId}`] = true;
-
-    console.log(updates);
-    debugger;
-
-    db.ref().update(updates, (error) => {
+    db.ref(`recipes/${recipeId}`).set(newRecipe, (error) => {
       if (error) {
         console.log(error);
       } else {
-        console.log("success");
-        history.push(`/recipes/${recipe.categoryId}/${recipeId}`);
+        console.log("success add recipe");
+        recipesAPI
+          .getRecipes()
+          .then((response) => {
+            setRecipes(response);
+          })
+          .then(() => {
+            history.push(`/recipes/${recipe.categoryId}/${recipeId}`);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
     });
   };
@@ -49,9 +55,9 @@ const AddRecipe = (props) => {
           action="add"
           onSubmit={handleSubmit}
           title=""
-          recipe=""
+          description=""
           ingredients=""
-          categories={props.categories}
+          categories={categories}
           buttons={
             <>
               <Button type="submit">Добавить</Button>
