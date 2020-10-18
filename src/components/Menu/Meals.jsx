@@ -1,32 +1,30 @@
 import React from "react";
 import styled from "styled-components";
-import { getDishesForMeal, getMealById } from "../../selectors/selectors";
+import PropTypes from "prop-types";
 import Meal from "./Meal";
 
 const Meals = (props) => {
-  const {
-    mealsIds,
-    dishes,
-    meals,
-    addDish,
-    removeDish,
-    toggleDishIsDone,
-    day,
-  } = props;
+  const { day, meals, addDish, removeDish, toggleDishIsDone } = props;
+  const orderedMeals = meals.sort((mealFirst, mealSecond) => {
+    if (mealFirst.order > mealSecond.order) {
+      return 1;
+    } else {
+      return -1;
+    }
+  });
 
   return (
     <StyledMeals>
-      {mealsIds.map((id) => {
-        const meal = getMealById(meals, id);
-
+      {orderedMeals.map((meal) => {
         return (
           <Meal
+            day={day}
             id={meal.id}
             title={meal.title}
-            dishes={getDishesForMeal(dishes, meal.dishes)}
+            dishes={meal.dishes}
             key={meal.id}
             addDish={() => {
-              addDish(`${meal.title}, ${day}`, meal.id);
+              addDish(day, meal.id, meal.title);
             }}
             removeDish={removeDish}
             toggleDishIsDone={toggleDishIsDone}
@@ -35,6 +33,14 @@ const Meals = (props) => {
       })}
     </StyledMeals>
   );
+};
+
+Meals.propTypes = {
+  day: PropTypes.string.isRequired,
+  meals: PropTypes.array.isRequired,
+  addDish: PropTypes.func.isRequired,
+  removeDish: PropTypes.func.isRequired,
+  toggleDishIsDone: PropTypes.func.isRequired,
 };
 
 const StyledMeals = styled.div`

@@ -66,7 +66,7 @@ const App = () => {
   // }
 
   return (
-    <StateContext.Provider value={{ recipes, setRecipes }}>
+    <StateContext.Provider value={{ categories, recipes, setRecipes }}>
       <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
         <GlobalStyle />
         <Navbar toggleTheme={toggleTheme} theme={theme} isAuth={user.isAuth} />
@@ -89,7 +89,13 @@ const App = () => {
             </Route>
             <Route path="/menu">
               {menu ? (
-                <Menu menu={menu} recipes={recipes} categories={categories} />
+                <Menu
+                  menu={menu}
+                  recipes={recipes}
+                  categories={categories}
+                  setMenu={setMenu}
+                  setRecipes={setRecipes}
+                />
               ) : (
                 <div>Меню пустое</div>
               )}

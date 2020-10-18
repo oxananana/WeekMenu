@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import cn from "classnames";
+import PropTypes from "prop-types";
 
 const CategoryFilter = (props) => {
   const { categories, activeCategoryId, changeFilter } = props;
@@ -22,6 +23,12 @@ const CategoryFilter = (props) => {
       })}
     </FilterNav>
   );
+};
+
+CategoryFilter.propTypes = {
+  categories: PropTypes.object,
+  activeCategoryId: PropTypes.string,
+  changeFilter: PropTypes.func,
 };
 
 const FilterNav = styled.ul`

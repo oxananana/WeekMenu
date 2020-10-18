@@ -1,5 +1,14 @@
 // import memoize from "memoizee";
 
+export const getDishesByIds = (recipes, dishesIds) => {
+  if (!dishesIds) {
+    return [];
+  }
+  return dishesIds.map((id) => {
+    return recipes[id];
+  });
+};
+
 export const getDishesForMeal = (dishes, mealDishes) => {
   return mealDishes.map((dish) => {
     return { ...dish, ...dishes[dish.id] };
@@ -12,6 +21,15 @@ export const getMealById = (meals, mealId) => {
 
 export const getDishById = (dishes, dishId) => {
   return dishes[dishId];
+};
+
+export const getCategoryDishes = (dishes, categoryId) => {
+  if (!dishes) {
+    return [];
+  }
+  return Object.values(dishes).filter((dish) => {
+    return dish.categoryId === categoryId;
+  });
 };
 
 export const getRecipeById = (recipes, recipeId) => {
@@ -30,12 +48,3 @@ export const getCategoryRecipes = (recipes, categoryId) => {
     return recipe.categoryId === categoryId;
   });
 };
-
-// export const getCategoryRecipes = (recipes, recipesIds) => {
-//   if (!recipes) {
-//     return [];
-//   }
-//   return Object.keys(recipesIds).map((id) => {
-//     return recipes[id];
-//   });
-// };

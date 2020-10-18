@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 import { arrayToEnumString } from "../../../helpers/helpers";
-import { getCategoryRecipes } from "../../../selectors/selectors";
-import { defaultCategoryId } from "../../../constants";
+import { defaultCategoryId, weekDaysNames } from "../../../constants";
+import { StateContext } from "../../../App";
 import Modal from "../../Common/Modal";
 import CategoryFilter from "./CategoryFilter";
 import Category from "./Category";
 
 const AddDishModal = (props) => {
-  const { isOpen, onClose, onSubmit, categories, day, mealId } = props;
-  const dishes = props.recipes;
+  const { isOpen, onClose, onSubmit, day, mealId, mealTitle } = props;
+
+  const { recipes, categories } = useContext(StateContext);
+  const dishes = recipes;
+
   const [activeCategoryId, setActiveCategoryId] = useState(defaultCategoryId);
   const [selectedDishesIds, setDelectedDishesIds] = useState([]);
 
@@ -32,14 +36,14 @@ const AddDishModal = (props) => {
   const handleSubmit = () => {
     setDelectedDishesIds([]);
     setActiveCategoryId(defaultCategoryId);
-    onSubmit(selectedDishesIds, mealId);
+    onSubmit(day, mealId, selectedDishesIds);
     onClose();
   };
 
   return (
     <Modal
       isOpen={isOpen}
-      title={`Добавление блюда — ${day}`}
+      title={`Добавление блюда — ${mealTitle}, ${formattingDay(day)}`}
       onClose={onClose}
       onSubmit={handleSubmit}
     >
@@ -50,9 +54,8 @@ const AddDishModal = (props) => {
           changeFilter={handleChangeFilter}
         />
         <Category
-          title={categories[activeCategoryId].title}
-          activeCategoryId={activeCategoryId}
-          dishes={getCategoryRecipes(Object.values(dishes), activeCategoryId)}
+          categoryId={activeCategoryId}
+          dishes={dishes}
           selectDish={handleSelectDish}
           selectedDishesIds={selectedDishesIds}
         />
@@ -74,21 +77,28 @@ const AddDishModal = (props) => {
   );
 };
 
-// AddDishModal.propTypes = {
-//   isOpen: PropTypes.bool,
-//   onClose: PropTypes.func,
-//   categories: PropTypes.exact(),
-//   day: PropTypes.string,
-//   mealId: PropTypes.string,
-//   recipes: PropTypes.exact(),
-// };
+const formattingDay = (day) => {
+  const date = new Date(day);
+  // const today = new Date();
 
-// AddDishModal.defaultProps = {
-//   isOpen: false,
-//   onClose: () => {},
-//   categories: [],
-//   recipes: [],
-// };
+  // const day = {
+  //   date: date.getDate(),
+  //   weekDayName: weekDaysNames[date.getDay()],
+  //   isWeekend: date.getDay() === 0 || date.getDay() === 6,
+  //   isToday: today.toDateString() === date.toDateString(),
+  // };
+
+  return `${weekDaysNames[date.getDay()]}, ${date.getDate()}`;
+};
+
+AddDishModal.propTypes = {
+  isOpen: PropTypes.bool,
+  onClose: PropTypes.func,
+  categories: PropTypes.object,
+  day: PropTypes.string,
+  mealId: PropTypes.string,
+  recipes: PropTypes.object,
+};
 
 const Dishes = styled.div`
   display: flex;

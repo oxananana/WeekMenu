@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import cn from "classnames";
 import DOMPurify from "dompurify";
@@ -14,15 +14,7 @@ const RecipePage = (props) => {
   const { recipeId } = useParams();
   const categories = props.categories;
   const recipe = getRecipeById(props.recipes, recipeId);
-  const {
-    id,
-    categoryId,
-    title,
-    imgSrc,
-    schedule,
-    ingredients,
-    description,
-  } = {
+  const { categoryId, title, imgSrc, schedule, ingredients, description } = {
     ...recipe,
   };
   const [editMode, setEditMode] = useState(false);

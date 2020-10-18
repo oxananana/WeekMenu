@@ -22,10 +22,7 @@ const AddRecipe = (props) => {
   const createNewRecipe = (recipe) => {
     const db = firebase.database();
     const recipeId = db.ref().child("recipes").push().key;
-    const schedule = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"].map((day) => {
-      return { name: day, isActive: false };
-    });
-    const newRecipe = { ...recipe, id: recipeId, schedule };
+    const newRecipe = { ...recipe, id: recipeId };
 
     db.ref(`recipes/${recipeId}`).set(newRecipe, (error) => {
       if (error) {

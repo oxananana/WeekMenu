@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import cn from "classnames";
+import { weekDaysNamesRU } from "../../../constants";
 import Icon from "../../Common/Icon";
 
 const Dish = (props) => {
@@ -23,13 +24,14 @@ const Dish = (props) => {
       <div>
         <DishTitle>{title}</DishTitle>
         <RecipeSchedule>
-          {schedule.map((day, index) => {
+          {weekDaysNamesRU.map((day, index) => {
+            const isActive = schedule && schedule[day];
             return (
               <RecipeScheduleItem
                 key={index}
-                className={cn({ active: day.isActive })}
+                className={cn({ active: isActive })}
               >
-                {day.name}
+                {day}
               </RecipeScheduleItem>
             );
           })}
@@ -71,7 +73,7 @@ const imgContainerCss = `
   border-radius: 4px 0 0 4px;
   height: 60px;
   width: 60px;
-  margin-right: 16px;
+  margin-right: 12px;
 `;
 
 const DishImg = styled.div`

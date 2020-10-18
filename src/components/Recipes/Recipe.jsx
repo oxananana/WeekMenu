@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import cn from "classnames";
+import { weekDaysNamesRU } from "../../constants";
 import { arrayToEnumString } from "../../helpers/helpers";
 import Icon from "../Common/Icon";
 
@@ -28,13 +29,15 @@ const Recipe = (props) => {
       <RecipeInfo>
         <RecipeTitle>{title}</RecipeTitle>
         <RecipeSchedule>
-          {schedule.map((day, index) => {
+          {weekDaysNamesRU.map((day, index) => {
+            const isActive = schedule && schedule[day];
+
             return (
               <RecipeScheduleItem
                 key={index}
-                className={cn({ active: day.isActive })}
+                className={cn({ active: isActive })}
               >
-                {day.name}
+                {day}
               </RecipeScheduleItem>
             );
           })}

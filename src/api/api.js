@@ -1,5 +1,3 @@
-import * as firebase from "firebase/app";
-import "firebase/database";
 import categoriesAPI from "./categoriesAPI";
 import recipesAPI from "./recipesAPI";
 import menuAPI from "./menuAPI";
@@ -25,6 +23,21 @@ const api = {
         return newData;
       }
     );
+  },
+  getMenuAndRecipes() {
+    let newData = { menu: null, recipes: null };
+
+    const menuPromise = menuAPI.getMenu().then((response) => {
+      newData.menu = response;
+    });
+
+    const recipesPromise = recipesAPI.getRecipes().then((response) => {
+      newData.recipes = response;
+    });
+
+    return Promise.all([recipesPromise, menuPromise]).then(() => {
+      return newData;
+    });
   },
 };
 

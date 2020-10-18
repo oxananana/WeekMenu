@@ -1,21 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { dishPropTypes, dishDefaultProps } from "./prop-types";
+import { dishPropTypes } from "./prop-types";
 import styled from "styled-components";
 import Icon from "../Common/Icon";
 
 const Dish = (props) => {
-  const { mealId, dish, removeDish, toggleDishIsDone } = props;
-  const { id, title, isDone, imgSrc } = dish;
+  const { day, mealId, dish, isDone, removeDish, toggleDishIsDone } = props;
+  const { id, title, imgSrc } = dish;
 
   return (
     <StyledDish>
-      <RemoveIcon onClick={() => removeDish(id, mealId)}>
+      <RemoveIcon onClick={() => removeDish(day, mealId, id)}>
         <Icon name="delete" />
       </RemoveIcon>
       <CoockingStatus
         isDone={isDone}
-        onClick={() => toggleDishIsDone(id, mealId)}
+        onClick={() => toggleDishIsDone(day, mealId, id, isDone)}
       >
         <Icon name="check" />
       </CoockingStatus>
@@ -31,18 +31,14 @@ const Dish = (props) => {
   );
 };
 
-// Dish.propTypes = {
-//   dish: dishPropTypes,
-//   mealId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-//   removeDish: PropTypes.func,
-//   toggleDishIsDone: PropTypes.func,
-// };
-
-// Dish.defaultProps = {
-//   // ...dishDefaultProps,
-//   // removeDish: () => {},
-//   // toggleDishIsDone: () => {},
-// };
+Dish.propTypes = {
+  dish: PropTypes.exact(dishPropTypes),
+  isDone: PropTypes.bool.isRequired,
+  day: PropTypes.string.isRequired,
+  mealId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  removeDish: PropTypes.func.isRequired,
+  toggleDishIsDone: PropTypes.func.isRequired,
+};
 
 const CoockingStatus = styled.span`
   position: absolute;
@@ -121,7 +117,7 @@ const ImgPlaceholder = styled.div`
 
 const DishTitle = styled.div`
   flex: 1;
-  padding: 0 16px;
+  padding: 0 20px 0 12px;
   font-size: 14px;
   max-height: 60px;
   display: -webkit-box;

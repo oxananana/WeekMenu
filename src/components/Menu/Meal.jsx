@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
+import { getDishesByIds } from "../../selectors/selectors";
+import { StateContext } from "../../App";
 import Dish from "./Dish";
 import Icon from "../Common/Icon";
 
 const Meal = (props) => {
-  const { id, title, dishes, removeDish, addDish, toggleDishIsDone } = props;
+  const {
+    day,
+    id,
+    title,
+    dishes,
+    removeDish,
+    addDish,
+    toggleDishIsDone,
+  } = props;
+
+  const { recipes } = useContext(StateContext);
+  const dishesFull = dishes ? getDishesByIds(recipes, Object.keys(dishes)) : [];
 
   return (
     <StyledMeal>
@@ -14,14 +28,16 @@ const Meal = (props) => {
           <Icon name="plus" />
         </AddIcon>
       </MealTitle>
-      {dishes.length > 0 ? (
+      {dishesFull.length > 0 ? (
         <Dishes>
-          {dishes.map((dish) => {
+          {dishesFull.map((dish) => {
             return (
               <Dish
                 key={dish.id}
+                day={day}
                 mealId={id}
                 dish={dish}
+                isDone={dishes[dish.id].isDone}
                 removeDish={removeDish}
                 toggleDishIsDone={toggleDishIsDone}
               />
@@ -33,6 +49,15 @@ const Meal = (props) => {
       )}
     </StyledMeal>
   );
+};
+
+Meal.propTypes = {
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  dishes: PropTypes.object,
+  removeDish: PropTypes.func.isRequired,
+  addDish: PropTypes.func.isRequired,
+  toggleDishIsDone: PropTypes.func.isRequired,
 };
 
 const StyledMeal = styled.div`

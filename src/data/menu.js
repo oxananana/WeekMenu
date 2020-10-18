@@ -8,92 +8,62 @@ for (let i = 0; i < 10; i++) {
 }
 
 const data = {
-  "2020-09-17": {
+  "2020-10-17": {
     meals: {
-      [ids[0]]: {
-        id: ids[0],
+      "2020-10-17-breakfast": {
+        id: "2020-10-17-breakfast",
         title: "Завтрак",
         type: "breakfast",
         dishes: [
-          { isDone: false, ...dishes["breakfast1"] },
-          { isDone: true, ...dishes["drink1"] },
-          { isDone: true, ...dishes["desert1"] },
+          { isDone: false, id: "-MJl18EixfCt_rpPtnXU" },
+          { isDone: true, id: "-MJl24M0SJawgShyaqg4" },
+          { isDone: true, id: "-MJlfuT53aDn-llJ5fWc" },
         ],
       },
 
-      [ids[1]]: {
-        id: ids[1],
+      "2020-10-17-lunch": {
+        id: "2020-10-17-lunch",
         title: "Обед",
         type: "lunch",
         dishes: [
-          { isDone: false, ...dishes["side2"] },
-          { isDone: true, ...dishes["meat2"] },
-          { isDone: false, ...dishes["salad1"] },
+          { isDone: true, id: "-MJl24M0SJawgShyaqg4" },
+          { isDone: false, id: "-MJl18EixfCt_rpPtnXU" },
+          { isDone: true, id: "-MJlfuT53aDn-llJ5fWc" },
         ],
       },
-      [ids[2]]: {
-        id: ids[2],
+      "2020-10-17-dinner": {
+        id: "2020-10-17-dinner",
         title: "Ужин",
         type: "dinner",
         dishes: [
-          { isDone: false, ...dishes["side2"] },
-          { isDone: false, ...dishes["meat2"] },
+          { isDone: false, id: "-MJl18EixfCt_rpPtnXU" },
+          { isDone: true, id: "-MJlfuT53aDn-llJ5fWc" },
         ],
       },
     },
   },
-  "2020-09-18": {
+  "2020-10-18": {
     meals: {
-      [ids[3]]: {
-        id: ids[3],
+      "2020-10-18-breakfast": {
+        id: "2020-10-18-breakfast",
         title: "Завтрак",
         type: "breakfast",
         dishes: [
-          { isDone: false, ...dishes["breakfast2"] },
-          { isDone: true, ...dishes["drink2"] },
-          { isDone: false, ...dishes["desert2"] },
+          { isDone: false, id: "-MJl18EixfCt_rpPtnXU" },
+          { isDone: true, id: "-MJlfuT53aDn-llJ5fWc" },
         ],
       },
-      [ids[4]]: {
-        id: ids[4],
-        title: "Обед",
-        type: "lunch",
-        dishes: [
-          { isDone: false, ...dishes["soup2"] },
-          { isDone: false, ...dishes["side1"] },
-          { isDone: false, ...dishes["meat1"] },
-        ],
-      },
-      [ids[5]]: {
-        id: ids[5],
-        title: "Ужин",
-        type: "dinner",
-        dishes: [
-          { isDone: false, ...dishes["side1"] },
-          { isDone: false, ...dishes["meat1"] },
-        ],
-      },
-    },
-  },
-  "2020-09-19": {
-    meals: {
-      [ids[6]]: {
-        id: ids[6],
-        title: "Завтрак",
-        type: "breakfast",
-        dishes: [{ isDone: false, ...dishes["breakfast2"] }],
-      },
-      [ids[7]]: {
-        id: ids[7],
+      "2020-10-18-lunch": {
+        id: "2020-10-18-lunch",
         title: "Обед",
         type: "lunch",
         dishes: [],
       },
-      [ids[8]]: {
-        id: ids[8],
+      "2020-10-18-dinner": {
+        id: "2020-10-18-dinner",
         title: "Ужин",
         type: "dinner",
-        dishes: [],
+        dishes: [{ isDone: true, id: "-MJlfuT53aDn-llJ5fWc" }],
       },
     },
   },

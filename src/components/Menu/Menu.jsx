@@ -1,82 +1,115 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import cn from "classnames";
-import { getDishById } from "../../selectors/selectors";
+import PropTypes from "prop-types";
+import * as firebase from "firebase/app";
+import "firebase/database";
+import { getWeekDayName } from "../../helpers/helpers";
+import { weekDaysNames } from "../../constants";
+import api from "../../api/api";
+import menuAPI from "../../api/menuAPI";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import Meals from "./Meals";
 import AddDishModal from "./AddDishModal/AddDishModal";
 
 const Menu = (props) => {
   useDocumentTitle(props.docTitle);
-  const dates = props.menu.dates;
-  const menu = props.menu.menu;
-  const recipes = props.recipes;
-  const categories = props.categories;
+  const { menu, setMenu, setRecipes } = props;
+  const weekDays = returnNextDays();
 
-  const [meals, setMeals] = useState(props.menu.meals);
-  const [dishes, setDishes] = useState(props.menu.dishes);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [editableDay, setEditableDay] = useState("");
   const [editableMeal, setEditableMeal] = useState("");
+  const [editableMealTitle, setEditableMealTitle] = useState("");
+
+  const removeDish = (day, mealId, dishId) => {
+    let updates = {};
+    updates[`menu/${day}/meals/${mealId}/dishes/${dishId}`] = null;
+    updates[`recipes/${dishId}/schedule/${getWeekDayName(day)}`] = false;
+
+    const db = firebase.database();
+
+    db.ref(`menu/${day}/meals/${mealId}/dishes/${dishId}`).remove((error) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("success delete dish");
+        api
+          .getMenuAndRecipes()
+          .then((response) => {
+            setMenu(response.menu);
+            setRecipes(response.recipes);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    });
+  };
+
+  const toggleDishIsDone = (day, mealId, dishId, isDone) => {
+    const db = firebase.database();
+
+    db.ref(`menu/${day}/meals/${mealId}/dishes/${dishId}/isDone`).set(
+      !isDone,
+      (error) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("success toggle dish");
+          menuAPI
+            .getMenu()
+            .then((response) => {
+              setMenu(response);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      }
+    );
+  };
+
+  const addDish = (day, mealId, mealTitle) => {
+    setModalIsOpen(true);
+    setEditableDay(day);
+    setEditableMeal(mealId);
+    setEditableMealTitle(mealTitle);
+  };
 
   const handleCloseModal = () => {
     setModalIsOpen(false);
   };
 
-  const addDish = (day, mealId) => {
-    setModalIsOpen(true);
-    setEditableDay(day);
-    setEditableMeal(mealId);
-  };
+  const handleSubmit = (day, mealId, selectedDishesIds) => {
+    let updates = {};
 
-  const removeDish = (dishId, mealId) => {
-    const newMeals = {
-      ...meals,
-      [mealId]: {
-        ...meals[mealId],
-        dishes: meals[mealId].dishes.filter((dish) => dish.id !== dishId),
-      },
-    };
-    setMeals(newMeals);
-  };
-
-  const toggleDishIsDone = (dishId, mealId) => {
-    const newMeals = {
-      ...meals,
-      [mealId]: {
-        ...meals[mealId],
-        dishes: meals[mealId].dishes.map((dish) => {
-          if (dish.id === dishId) {
-            return { ...dish, isDone: !dish.isDone };
-          }
-          return dish;
-        }),
-      },
-    };
-    setMeals(newMeals);
-  };
-
-  const handleSubmit = (selectedDishesIds, mealId) => {
-    const unduplicatedDishesIds = selectedDishesIds.filter((id) => {
-      return !meals[mealId].dishes.some((dish) => dish.id === id);
-    });
-    const unduplicatedDishes = unduplicatedDishesIds.map((id) => {
-      return { id: id, isDone: false };
-    });
-    const newMeals = {
-      ...meals,
-      [mealId]: {
-        ...meals[mealId],
-        dishes: meals[mealId].dishes.concat(unduplicatedDishes),
-      },
-    };
-    setMeals(newMeals);
-
-    const newDishes = { ...dishes };
     selectedDishesIds.forEach((id) => {
-      newDishes[id] = { ...getDishById(recipes, id) };
+      updates[`menu/${day}/meals/${mealId}/dishes/${id}`] = {
+        id: id,
+        isDone: false,
+      };
+      updates[`recipes/${id}/schedule/${getWeekDayName(day)}`] = true;
     });
-    setDishes(newDishes);
+
+    const db = firebase.database();
+
+    db.ref().update(updates, (error) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("success add dishes");
+        api
+          .getMenuAndRecipes()
+          .then((response) => {
+            setMenu(response.menu);
+            setRecipes(response.recipes);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    });
   };
 
   return (
@@ -85,16 +118,14 @@ const Menu = (props) => {
         isOpen={modalIsOpen}
         onClose={handleCloseModal}
         onSubmit={handleSubmit}
-        recipes={recipes}
-        categories={categories}
         day={editableDay}
         mealId={editableMeal}
+        mealTitle={editableMealTitle}
       />
 
       <MenuBoard>
-        {dates.map((date, index) => {
-          const day = formattingDay(date);
-          const mealsIds = menu[date].meals;
+        {weekDays.map((day, index) => {
+          const meals = Object.values(menu[day.dateString].meals);
 
           return (
             <DayMenu key={index}>
@@ -106,13 +137,11 @@ const Menu = (props) => {
               </DayDate>
 
               <Meals
-                mealsIds={mealsIds}
-                dishes={dishes}
+                day={day.dateString}
                 meals={meals}
+                toggleDishIsDone={toggleDishIsDone}
                 addDish={addDish}
                 removeDish={removeDish}
-                toggleDishIsDone={toggleDishIsDone}
-                day={`${day.weekDayName}, ${day.date}`}
               />
             </DayMenu>
           );
@@ -122,48 +151,38 @@ const Menu = (props) => {
   );
 };
 
-const formattingDay = (dateString) => {
-  const weekDaysNames = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
-  const date = new Date(dateString);
-  const today = new Date();
-
-  const day = {
-    date: date.getDate(),
-    weekDayName: weekDaysNames[date.getDay()],
-    isWeekend: date.getDay() === 0 || date.getDay() === 6,
-    isToday: today.toDateString() === date.toDateString(),
-  };
-
-  return day;
+Menu.propTypes = {
+  docTitle: PropTypes.string,
+  menu: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.object]),
+  setMenu: PropTypes.func.isRequired,
+  setRecipes: PropTypes.func.isRequired,
 };
 
-// const returnNextDays = () => {
-//   const weekDaysNames = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
+const returnNextDays = () => {
+  const today = new Date();
+  let nextDays = [];
 
-//   const today = new Date();
-//   let nextDays = [];
+  for (let i = 0; i < 7; i++) {
+    let newDayDate = new Date();
+    newDayDate.setDate(today.getDate() + i);
 
-//   for (let i = 0; i < 7; i++) {
-//     let newDayDate = new Date();
-//     newDayDate.setDate(today.getDate() + i);
+    let newDayMonth = newDayDate.getMonth() + 1;
+    if (newDayMonth < 10) {
+      newDayMonth = "0" + newDayMonth;
+    }
 
-//     let newDayMonth = newDayDate.getMonth() + 1;
-//     if (newDayMonth < 10) {
-//       newDayMonth = "0" + newDayMonth;
-//     }
+    const newDay = {
+      date: newDayDate.getDate(),
+      weekDayName: weekDaysNames[newDayDate.getDay()],
+      dateString: `${newDayDate.getFullYear()}-${newDayMonth}-${newDayDate.getDate()}`,
+      isWeekend: newDayDate.getDay() === 0 || newDayDate.getDay() === 6,
+    };
 
-//     const newDay = {
-//       date: newDayDate.getDate(),
-//       weekDayName: weekDaysNames[newDayDate.getDay()],
-//       dateString: `${newDayDate.getFullYear()}-${newDayMonth}-${newDayDate.getDate()}`,
-//       isWeekend: newDayDate.getDay() === 0 || newDayDate.getDay() === 6,
-//     };
+    nextDays.push(newDay);
+  }
 
-//     nextDays.push(newDay);
-//   }
-
-//   return nextDays;
-// };
+  return nextDays;
+};
 
 const MenuPage = styled.div`
   padding: 24px 0;
@@ -174,6 +193,7 @@ const MenuPage = styled.div`
 const MenuBoard = styled.div`
   display: flex;
   overflow: auto;
+  padding-bottom: 16px;
 `;
 
 const DayMenu = styled.div`

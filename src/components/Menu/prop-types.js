@@ -7,13 +7,8 @@ export const dishPropTypes = {
   imgSrc: PropTypes.string,
   categoryId: PropTypes.string,
   ingredients: PropTypes.arrayOf(PropTypes.string),
-  schedule: PropTypes.arrayOf(
-    PropTypes.exact({
-      name: PropTypes.string,
-      isActive: PropTypes.bool,
-    })
-  ),
-  recipe: PropTypes.string,
+  schedule: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.object]),
+  description: PropTypes.string,
 };
 
 export const dishDefaultProps = {
@@ -25,6 +20,6 @@ export const dishDefaultProps = {
     ingredients: [],
     categoryId: "",
     schedule: [],
-    recipe: "",
+    description: "",
   },
 };
