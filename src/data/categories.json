@@ -1,0 +1,42 @@
+{
+  "breakfast": {
+    "id": "breakfast",
+    "title": "Завтраки",
+    "priority": 1
+  },
+  "soups": {
+    "id": "soups",
+    "title": "Супы",
+    "priority": 2
+  },
+  "meat": {
+    "id": "meat",
+    "title": "Мясо",
+    "priority": 3
+  },
+  "fish": {
+    "id": "fish",
+    "title": "Рыба",
+    "priority": 4
+  },
+  "sides": {
+    "id": "sides",
+    "title": "Гарниры",
+    "priority": 5
+  },
+  "salads": {
+    "id": "salads",
+    "title": "Салаты",
+    "priority": 6
+  },
+  "drinks": {
+    "id": "drinks",
+    "title": "Напитки",
+    "priority": 7
+  },
+  "desert": {
+    "id": "desert",
+    "title": "Десерт",
+    "priority": 8
+  }
+}
