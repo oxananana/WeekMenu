@@ -54,7 +54,7 @@ const RecipesNavbar = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  background-color: ${({ theme }) => theme.bg.baseLight};
+  background-color: ${({ theme }) => theme.bg.base};
   margin-bottom: 32px;
   border-radius: 8px;
   border-radius: 8px;
@@ -64,12 +64,14 @@ const CategoryNav = styled.ul`
   display: flex;
   flex-wrap: wrap;
   list-style: none;
-  padding: 0;
+  padding: 0 24px;
 `;
 
 const CategoryNavItem = styled.li`
+  margin-right: 24px;
+
   a {
-    padding: 12px 16px;
+    padding: 12px 0;
     display: block;
     border-bottom: 2px solid transparent;
   }

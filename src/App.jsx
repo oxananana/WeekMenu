@@ -22,7 +22,7 @@ import api from "./api/api";
 export const StateContext = createContext();
 
 const App = () => {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("dark");
   const [user, setUser] = useState({ isAuth: false });
 
   const [data, isLoading] = useQuery(() => {

@@ -1,15 +1,17 @@
+// const primary = "#481380";
+
 const light = {
-  primary: "#5D4AC6",
+  primary: "#4d37c1",
   primaryRgba: "93,74,198",
   primaryHover: "rgba(93,74,198,.8)",
 
   baseText: "#393746",
   baseTextRgba: "57,55,70",
-  baseLightBg: "#fff",
+  baseLightBg: "#FAF9FD",
 };
 
 export const lightTheme = {
-  bg: { base: "#FAF9FD", baseLight: light.baseLightBg, primary: light.primary },
+  bg: { base: "#fff", baseLight: light.baseLightBg, primary: light.primary },
   text: {
     base: light.baseText,
     baseInvert: "#fff",
@@ -18,7 +20,7 @@ export const lightTheme = {
     grayLight: `rgba(${light.baseTextRgba}, .4)`,
     primary: light.primary,
     primaryHover: light.primaryHover,
-    error: "red",
+    error: "#f96262",
   },
   border: {
     base: "#efefef",
@@ -27,30 +29,41 @@ export const lightTheme = {
   },
   shadow: {
     base: "2px 4px 4px rgba(0, 0, 0, 0.02);",
+    navbar: "0 5px 8px -5px rgba(0,0,0,.08)",
+  },
+  img: {
+    overlay: "rgba(0,0,0,.05)",
+    overlayImg: "rgba(0,0,0,.4)",
+    overlayIcon: "#fff",
   },
 };
 
 const dark = {
-  primary: "#5D4AC6",
+  primary: "#7b66f1",
+
   primaryRgba: "93,74,198",
   primaryHover: "rgba(93,74,198,.8)",
 
   baseText: "rgba(255,255,255,.7)",
   baseTextRgba: "255,255,255",
-  baseLightBg: "rgba(255,255,255,.03)",
+  baseLightBg: "#26282b",
 };
 
 export const darkTheme = {
-  bg: { base: "#39306f", baseLight: dark.baseLightBg, primary: dark.primary },
+  bg: {
+    base: "#2c2e31",
+    baseLight: dark.baseLightBg,
+    primary: dark.primary,
+  },
   text: {
     base: dark.baseText,
     baseInvert: dark.baseTextRgba,
     navbar: dark.baseTextRgba,
-    gray: `rgba(${dark.baseTextRgba}, .6)`,
+    gray: `rgba(${dark.baseTextRgba}, .5)`,
     grayLight: `rgba(${dark.baseTextRgba}, .5)`,
     primary: dark.primary,
     primaryHover: dark.primaryHover,
-    error: "#ecbbbb",
+    error: "#f99a6b",
   },
   border: {
     base: "rgba(255, 255, 255, 0.05)",
@@ -59,5 +72,11 @@ export const darkTheme = {
   },
   shadow: {
     base: "2px 4px 4px rgba(0, 0, 0, 0.02);",
+    navbar: "0 5px 10px -5px rgba(0,0,0,.2)",
+  },
+  img: {
+    overlay: "rgba(255,255,255,.04)",
+    overlayImg: "rgba(0,0,0,.4)",
+    overlayIcon: dark.baseText,
   },
 };

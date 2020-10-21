@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import cn from "classnames";
+import PropTypes from "prop-types";
 import DOMPurify from "dompurify";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
+import { weekDaysNamesRU } from "../../constants";
 import { getRecipeById } from "../../selectors/selectors";
 import { arrayToEnumString } from "../../helpers/helpers";
+import { recipePropTypes } from "./prop-types";
 import Button from "../Common/Button";
 import Icon from "../Common/Icon";
 import EditRecipe from "./EditRecipe";
@@ -48,13 +51,14 @@ const RecipePage = (props) => {
           <dt>Наличие в расписании:</dt>
           <dd>
             <RecipeSchedule>
-              {schedule.map((day, index) => {
+              {weekDaysNamesRU.map((day, index) => {
+                const isActive = schedule && schedule[day];
                 return (
                   <RecipeScheduleItem
                     key={index}
-                    className={cn({ active: day.isActive })}
+                    className={cn({ active: isActive })}
                   >
-                    {day.name}
+                    {day}
                   </RecipeScheduleItem>
                 );
               })}
@@ -92,13 +96,19 @@ const formattingRecipeText = (text) => {
   };
 };
 
+RecipePage.propTypes = {
+  recipe: PropTypes.exact(recipePropTypes),
+  categories: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.object]),
+  recipes: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.object]),
+};
+
 const StyledRecipe = styled.div`
   margin: 0 auto;
   display: flex;
   max-width: 1200px;
   padding: 32px;
   border-radius: 4px;
-  background-color: ${({ theme }) => theme.bg.baseLight};
+  background-color: ${({ theme }) => theme.bg.base};
 `;
 
 const ResipeDescription = styled.div`
@@ -120,11 +130,11 @@ const RecipeImg = styled.div`
 
 const RecipeImgPlaceholder = styled.div`
   ${imgContainerCss};
-  border: 2px solid ${({ theme }) => theme.bg.base};
+  border: 2px solid ${({ theme }) => theme.bg.baseLight};
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${({ theme }) => theme.bg.base};
+  color: ${({ theme }) => theme.bg.baseLight};
   svg {
     width: 48px;
     height: 48px;

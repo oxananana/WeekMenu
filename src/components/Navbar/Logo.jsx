@@ -22,7 +22,7 @@ const Logo = () => {
 
 const StyledLogo = styled.div`
   svg {
-    width: 32px;
+    width: 28px;
     height: auto;
   }
 `;

@@ -5,6 +5,7 @@ import * as firebase from "firebase/app";
 import "firebase/database";
 import { StateContext } from "../../App";
 import recipesAPI from "../../api/recipesAPI";
+import { recipePropTypes } from "./prop-types";
 import Button from "../Common/Button";
 import AddEditRecipeForm from "./AddEditRecipeForm";
 
@@ -60,21 +61,9 @@ const EditRecipe = (props) => {
 };
 
 EditRecipe.propTypes = {
-  recipe: PropTypes.exact({
-    id: PropTypes.string.isRequired,
-    categoryId: PropTypes.string.isRequired,
-    imgSrc: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.string]),
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    schedule: PropTypes.array.isRequired,
-    ingredients: PropTypes.array,
-  }),
+  recipe: PropTypes.exact(recipePropTypes),
   toggleEditMode: PropTypes.func.isRequired,
   categories: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.object]),
-};
-
-EditRecipe.defaultProps = {
-  categories: null,
 };
 
 export default EditRecipe;

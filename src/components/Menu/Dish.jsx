@@ -64,12 +64,12 @@ const RemoveIcon = styled.span`
   opacity: 0;
 
   &:hover {
-    color: red;
+    color: ${({ theme }) => theme.text.error};
   }
 `;
 
 const StyledDish = styled.div`
-  background-color: ${({ theme }) => theme.bg.baseLight};
+  background-color: ${({ theme }) => theme.bg.base};
   display: flex;
   align-items: center;
   border-radius: 4px;
@@ -96,19 +96,19 @@ width: 60px;
 
 const DishImg = styled.div`
   ${imgContainerCss};
-  border-right: 1px solid ${({ theme }) => theme.bg.base};
+  border-right: 1px solid ${({ theme }) => theme.bg.baseLight};
   background-size: cover;
   background-position: center;
-  background-color: ${({ theme }) => theme.bg.baseLight};
+  background-color: ${({ theme }) => theme.bg.base};
 `;
 
 const ImgPlaceholder = styled.div`
   ${imgContainerCss};
-  border-right: 1px solid ${({ theme }) => theme.bg.base};
+  border-right: 1px solid ${({ theme }) => theme.bg.baseLight};
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${({ theme }) => theme.bg.base};
+  color: ${({ theme }) => theme.bg.baseLight};
   svg {
     width: 32px;
     height: 32px;

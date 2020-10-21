@@ -12,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-    background-color: ${({ theme }) => theme.bg.base};
+    background-color: ${({ theme }) => theme.bg.baseLight};
     font-size: 16px;
     color: ${({ theme }) => theme.text.base};
   }

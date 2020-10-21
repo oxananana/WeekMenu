@@ -11,17 +11,19 @@ const Navbar = (props) => {
     <NavbarContainer>
       <Container>
         <StyledNavbar>
-          <NavLink to="/">
-            <Logo />
-          </NavLink>
-          <Nav>
-            <NavItem>
-              <NavLink to="/menu">Меню</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink to="/recipes">Рецепты</NavLink>
-            </NavItem>
-          </Nav>
+          <NavbarLeft>
+            <NavLink to="/">
+              <Logo />
+            </NavLink>
+            <Nav>
+              <NavItem>
+                <NavLink to="/menu">Меню</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink to="/recipes">Рецепты</NavLink>
+              </NavItem>
+            </Nav>
+          </NavbarLeft>
           <NavbarRight>
             {props.isAuth ? (
               <NavLink to="/account">Аккаунт</NavLink>
@@ -51,14 +53,21 @@ Navbar.defaultProps = {
 };
 
 const NavbarContainer = styled.div`
-  background-color: ${({ theme }) => theme.bg.primary};
+  background-color: ${({ theme }) => theme.bg.base};
+  box-shadow: ${({ theme }) => theme.shadow.navbar};
+  position: relative;
 `;
 
 const StyledNavbar = styled.nav`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: ${({ theme }) => theme.text.navbar};
+  color: ${({ theme }) => theme.text.primary};
+`;
+
+const NavbarLeft = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const Nav = styled.ul`
@@ -71,13 +80,12 @@ const Nav = styled.ul`
 const NavItem = styled.li`
   a {
     display: block;
-    padding: 16px 24px;
-    opacity: 0.6;
-    text-transform: uppercase;
-    font-weight: bold;
+    padding: 16px 0;
+    margin-left: 32px;
+    border-bottom: 2px solid transparent;
 
     &.active {
-      opacity: 1;
+      border-color: ${({ theme }) => theme.bg.primary};
     }
 
     &:hover {
@@ -89,7 +97,9 @@ const NavItem = styled.li`
 const NavbarRight = styled.div`
   display: flex;
   align-items: center;
+  justify-content: flex-end;
 `;
+
 const ThemeSwitch = styled.span`
   border-radius: 50%;
   padding: 4px;

@@ -86,6 +86,7 @@ const AddIcon = styled.span`
 const Dishes = styled.div``;
 
 const NoDishes = styled.div`
+  font-size: 14px;
   color: ${({ theme }) => theme.text.gray};
 `;
 

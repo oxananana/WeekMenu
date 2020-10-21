@@ -45,7 +45,7 @@ Meals.propTypes = {
 
 const StyledMeals = styled.div`
   flex: 1;
-  background-color: ${({ theme }) => theme.bg.base};
+  background-color: ${({ theme }) => theme.bg.baseLight};
   padding: 16px;
   border-radius: 4px;
 `;

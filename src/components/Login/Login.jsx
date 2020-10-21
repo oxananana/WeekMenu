@@ -91,7 +91,7 @@ const Login = (props) => {
 const LoginForm = styled(Form)`
   max-width: 400px;
   margin: 0 auto;
-  background-color: ${({ theme }) => theme.bg.baseLight};
+  background-color: ${({ theme }) => theme.bg.base};
   border-radius: 8px;
   padding: 32px;
 `;

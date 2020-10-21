@@ -15,6 +15,7 @@ const LoaderIcon = styled.span`
   animation: rotate 2s linear infinite;
   width: ${(props) => props.size || 16}px;
   height: ${(props) => props.size || 16}px;
+  display: block;
 
   svg {
     width: 100%;

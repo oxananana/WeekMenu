@@ -49,7 +49,7 @@ const Field = styled.div`
   input[type="password"],
   textarea,
   select {
-    background-color: ${({ theme }) => theme.bg.baseLight};
+    background-color: ${({ theme }) => theme.bg.base};
     border: 1px solid ${({ theme }) => theme.border.input};
     border-radius: 4px;
     width: 100%;
@@ -60,7 +60,7 @@ const Field = styled.div`
     }
 
     &.error {
-      border-color: red;
+      border-color: ${({ theme }) => theme.text.error};
     }
 
     &:-webkit-autofill {

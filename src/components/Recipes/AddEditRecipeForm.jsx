@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import cn from "classnames";
 import * as firebase from "firebase/app";
 import "firebase/storage";
 import { arrayToEnumString, stringToArray } from "../../helpers/helpers";
 import { defaultCategoryId } from "../../constants";
 import { required } from "../../helpers/validate";
 import { getCategoryValues } from "../../selectors/selectors";
+import { recipePropTypes } from "./prop-types";
 import Form from "../Common/Form/Form";
 import FormField from "../Common/Form/FormField";
 import Icon from "../Common/Icon";
@@ -59,7 +61,7 @@ const AddEditRecipeForm = (props) => {
     <FormContainer onSubmit={handleSubmit} initialValues={initialValues}>
       <RecipeImgContainer>
         {imgSrc && <RecipeImg src={imgSrc} />}
-        <Overlay>
+        <Overlay className={cn({ "overlay-img": imgSrc })}>
           {imgIsLoading ? (
             <Loader invert size="48" />
           ) : (
@@ -112,20 +114,22 @@ const AddEditRecipeForm = (props) => {
   );
 };
 
+AddEditRecipeForm.propTypes = recipePropTypes;
+
 const FormContainer = styled(Form)`
   display: flex;
   margin: 0 auto;
   max-width: 1200px;
   padding: 32px;
   border-radius: 8px;
-  background-color: ${({ theme }) => theme.bg.baseLight};
+  background-color: ${({ theme }) => theme.bg.base};
 `;
 
 const RecipeImgContainer = styled.div`
   position: relative;
   width: 400px;
   height: 400px;
-  background-color: ${({ theme }) => theme.bg.base};
+  background-color: ${({ theme }) => theme.bg.baseLight};
   border-radius: 8px;
   margin-right: 32px;
   overflow: hidden;
@@ -135,18 +139,22 @@ const Overlay = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: ${({ theme }) => theme.img.overlay};
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 
+  &.overlay-img {
+    background-color: ${({ theme }) => theme.img.overlayImg};
+  }
+
   label {
     svg {
       width: 48px;
       height: 48px;
-      fill: #fff;
+      fill: ${({ theme }) => theme.img.overlayIcon};
       cursor: pointer;
 
       &:hover {

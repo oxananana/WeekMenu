@@ -187,12 +187,14 @@ const returnNextDays = () => {
 const MenuPage = styled.div`
   padding: 24px 0;
   flex: 1;
-  background-color: ${({ theme }) => theme.bg.baseLight};
+  background-color: ${({ theme }) => theme.bg.base};
 `;
 
 const MenuBoard = styled.div`
   display: flex;
   overflow: auto;
+  max-width: calc((260px * 5) + (264px * 2));
+  margin: 0 auto;
   padding-bottom: 16px;
 `;
 
@@ -205,20 +207,20 @@ const DayMenu = styled.div`
 
   &:first-child {
     padding-left: 8px;
+    width: 264px;
   }
 
   &:last-child {
     padding-right: 8px;
+    width: 264px;
   }
 `;
 const DayDate = styled.div`
-  /* display: flex;
-  align-items: center; */
   font-weight: bold;
   margin-bottom: 12px;
 
   &.weekend {
-    color: red;
+    color: ${({ theme }) => theme.text.error};
   }
 
   &.today {
