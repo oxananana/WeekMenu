@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, createContext } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import * as firebase from "firebase/app";
@@ -42,30 +42,64 @@ firebase.initializeApp(firebaseConfig);
 
 //   return ctx;
 // }
+export const RecipesContext = createContext();
 
-// function RecipeProvider() {
-//   const not = useNot()
-//   const [] = React.useState({})
+const RecipesProvider = (props) => {
+  // const not = useNot()
+  // const [] = React.useState({})
 
-//   function update() {
-//     // apicall
+  // function update() {
+  //   // apicall
 
-//     try {
-//       not.success('!')
-//     } catch(e) {
-//       not.error('!')
-//     }
-//   }
-// }
+  //   try {
+  //     not.success('!')
+  //   } catch(e) {
+  //     not.error('!')
+  //   }
+  // }
+  const [recipes, setRecipes] = useState();
+
+  return (
+    <RecipesContext.Provider value={{ recipes, setRecipes }}>
+      {props.children}
+    </RecipesContext.Provider>
+  );
+};
+
+export const CategoriesContext = createContext();
+
+const CategoriesProvider = (props) => {
+  // const not = useNot()
+  // const [] = React.useState({})
+
+  // function update() {
+  //   // apicall
+
+  //   try {
+  //     not.success('!')
+  //   } catch(e) {
+  //     not.error('!')
+  //   }
+  // }
+  const [categories, setCategories] = useState();
+
+  return (
+    <CategoriesContext.Provider value={{ categories, setCategories }}>
+      {props.children}
+    </CategoriesContext.Provider>
+  );
+};
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      {/* <NotContProvider>
-        <RecipeProvider> */}
-      <App />
-      {/* </RecipeProvider>
-      </NotContProvider> */}
+      {/* <NotContProvider> */}
+      <RecipesProvider>
+        <CategoriesProvider>
+          <App />
+        </CategoriesProvider>
+      </RecipesProvider>
+      {/*</NotContProvider> */}
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")

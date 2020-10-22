@@ -32,7 +32,7 @@ CategoryFilter.propTypes = {
 };
 
 const FilterNav = styled.ul`
-  background-color: ${({ theme }) => theme.bg.baseLight};
+  background-color: ${({ theme }) => theme.bg.base};
   list-style: none;
   border-radius: 4px;
   padding: 4px 0;

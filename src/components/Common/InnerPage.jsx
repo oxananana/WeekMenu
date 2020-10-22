@@ -11,7 +11,7 @@ const InnerPage = (props) => {
 };
 
 export const Inner = styled.div`
-  padding-top: 32px;
+  padding: 32px 0;
   flex: 1;
 `;
 

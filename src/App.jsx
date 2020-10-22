@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import * as firebase from "firebase/app";
@@ -18,26 +18,26 @@ import RecipePage from "./components/Recipes/RecipePage";
 import AddRecipe from "./components/Recipes/AddRecipe";
 import useQuery from "./hooks/useQuery";
 import api from "./api/api";
-
-export const StateContext = createContext();
+import { RecipesContext, CategoriesContext } from "./index";
 
 const App = () => {
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState("light");
   const [user, setUser] = useState({ isAuth: false });
 
   const [data, isLoading] = useQuery(() => {
     return api.getInitialData();
   }, {});
 
+  const { recipes, setRecipes } = useContext(RecipesContext);
+  const { categories, setCategories } = useContext(CategoriesContext);
+
   const [menu, setMenu] = useState(data.menu);
-  const [categories, setCategories] = useState(data.categories);
-  const [recipes, setRecipes] = useState(data.recipes);
 
   useEffect(() => {
     setMenu(data.menu);
     setCategories(data.categories);
     setRecipes(data.recipes);
-  }, [data]);
+  }, [data, setRecipes, setCategories]);
 
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
@@ -66,71 +66,69 @@ const App = () => {
   // }
 
   return (
-    <StateContext.Provider value={{ categories, recipes, setRecipes }}>
-      <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
-        <GlobalStyle />
-        <Navbar toggleTheme={toggleTheme} theme={theme} isAuth={user.isAuth} />
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <Switch>
-            <Route path="/" exact>
-              <Redirect to="/menu" />
-            </Route>
-            <Route path="/login">
-              <InnerPage>
-                <Login isAuth={user.isAuth} />
-              </InnerPage>
-            </Route>
-            <Route path="/account">
-              <InnerPage>
-                <Account user={user} />
-              </InnerPage>
-            </Route>
-            <Route path="/menu">
-              {menu ? (
-                <Menu
-                  menu={menu}
-                  recipes={recipes}
-                  categories={categories}
-                  setMenu={setMenu}
-                  setRecipes={setRecipes}
-                />
+    <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+      <GlobalStyle />
+      <Navbar toggleTheme={toggleTheme} theme={theme} isAuth={user.isAuth} />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <Switch>
+          <Route path="/" exact>
+            <Redirect to="/menu" />
+          </Route>
+          <Route path="/login">
+            <InnerPage>
+              <Login isAuth={user.isAuth} />
+            </InnerPage>
+          </Route>
+          <Route path="/account">
+            <InnerPage>
+              <Account user={user} />
+            </InnerPage>
+          </Route>
+          <Route path="/menu">
+            {menu ? (
+              <Menu
+                menu={menu}
+                recipes={recipes}
+                categories={categories}
+                setMenu={setMenu}
+                setRecipes={setRecipes}
+              />
+            ) : (
+              <div>Меню пустое</div>
+            )}
+          </Route>
+          <Route path="/recipes/new-recipe" exact>
+            <InnerPage>
+              <AddRecipe categories={categories} />
+            </InnerPage>
+          </Route>
+          <Route path="/recipes/:categoryId/:recipeId">
+            <InnerPage>
+              <RecipePage recipes={recipes} categories={categories} />
+            </InnerPage>
+          </Route>
+          <Route path="/recipes/:categoryId">
+            <InnerPage>
+              {categories ? (
+                <Recipes categories={categories} recipes={recipes} />
               ) : (
-                <div>Меню пустое</div>
+                <div>Нет рецептов или категорий</div>
               )}
-            </Route>
-            <Route path="/recipes/new-recipe" exact>
-              <InnerPage>
-                <AddRecipe categories={categories} />
-              </InnerPage>
-            </Route>
-            <Route path="/recipes/:categoryId/:recipeId">
-              <InnerPage>
-                <RecipePage recipes={recipes} categories={categories} />
-              </InnerPage>
-            </Route>
-            <Route path="/recipes/:categoryId">
-              <InnerPage>
-                {categories ? (
-                  <Recipes categories={categories} recipes={recipes} />
-                ) : (
-                  <div>Нет рецептов или категорий</div>
-                )}
-              </InnerPage>
-            </Route>
-            <Route path="/recipes/">
-              <Redirect to="/recipes/soups" />
-            </Route>
-            <Route path="*">
-              <InnerPage>
-                <NoMatch />
-              </InnerPage>
-            </Route>
-          </Switch>
-        )}
-      </ThemeProvider>
-    </StateContext.Provider>
+            </InnerPage>
+          </Route>
+          <Route path="/recipes/">
+            <Redirect to="/recipes/soups" />
+          </Route>
+          <Route path="*">
+            <InnerPage>
+              <NoMatch />
+            </InnerPage>
+          </Route>
+        </Switch>
+      )}
+    </ThemeProvider>
   );
 };
 

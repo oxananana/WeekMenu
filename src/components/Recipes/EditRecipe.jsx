@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import * as firebase from "firebase/app";
 import "firebase/database";
-import { StateContext } from "../../App";
+import { RecipesContext } from "../../index";
 import recipesAPI from "../../api/recipesAPI";
 import { recipePropTypes } from "./prop-types";
 import Button from "../Common/Button";
@@ -12,7 +12,7 @@ import AddEditRecipeForm from "./AddEditRecipeForm";
 const EditRecipe = (props) => {
   const { recipe, categories, toggleEditMode } = props;
   const history = useHistory();
-  const { setRecipes } = useContext(StateContext);
+  const { setRecipes } = useContext(RecipesContext);
 
   const handleSubmit = (formData) => {
     updateRecipe({ ...recipe, ...formData });

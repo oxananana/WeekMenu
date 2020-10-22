@@ -84,7 +84,7 @@ const ModalContainer = styled.div`
 `;
 
 const ModalOverlay = styled.div`
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.5);
   position: absolute;
   top: 0;
   left: 0;
@@ -93,7 +93,7 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalDialog = styled.div`
-  background-color: ${({ theme }) => theme.bg.base};
+  background-color: ${({ theme }) => theme.bg.baseLight};
   flex: 1;
   max-width: 600px;
   width: 100%;

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import cn from "classnames";
 import PropTypes from "prop-types";
 import * as firebase from "firebase/app";
 import "firebase/database";
@@ -9,7 +8,7 @@ import { weekDaysNames } from "../../constants";
 import api from "../../api/api";
 import menuAPI from "../../api/menuAPI";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
-import Meals from "./Meals";
+import DayMenu from "./DayMenu";
 import AddDishModal from "./AddDishModal/AddDishModal";
 
 const Menu = (props) => {
@@ -128,22 +127,14 @@ const Menu = (props) => {
           const meals = Object.values(menu[day.dateString].meals);
 
           return (
-            <DayMenu key={index}>
-              <DayDate
-                className={cn({ weekend: day.isWeekend, today: day.isToday })}
-              >
-                {day.weekDayName}, {day.date}
-                {day.isToday && " — Сегодня"}
-              </DayDate>
-
-              <Meals
-                day={day.dateString}
-                meals={meals}
-                toggleDishIsDone={toggleDishIsDone}
-                addDish={addDish}
-                removeDish={removeDish}
-              />
-            </DayMenu>
+            <DayMenu
+              key={index}
+              day={day}
+              meals={meals}
+              toggleDishIsDone={toggleDishIsDone}
+              addDish={addDish}
+              removeDish={removeDish}
+            />
           );
         })}
       </MenuBoard>
@@ -196,36 +187,6 @@ const MenuBoard = styled.div`
   max-width: calc((260px * 5) + (264px * 2));
   margin: 0 auto;
   padding-bottom: 16px;
-`;
-
-const DayMenu = styled.div`
-  width: 260px;
-  min-width: 240px;
-  padding: 0 4px;
-  display: flex;
-  flex-direction: column;
-
-  &:first-child {
-    padding-left: 8px;
-    width: 264px;
-  }
-
-  &:last-child {
-    padding-right: 8px;
-    width: 264px;
-  }
-`;
-const DayDate = styled.div`
-  font-weight: bold;
-  margin-bottom: 12px;
-
-  &.weekend {
-    color: ${({ theme }) => theme.text.error};
-  }
-
-  &.today {
-    color: ${({ theme }) => theme.text.primary};
-  }
 `;
 
 export default Menu;

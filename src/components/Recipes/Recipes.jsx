@@ -58,13 +58,13 @@ const RecipesNavbar = styled.div`
   margin-bottom: 32px;
   border-radius: 8px;
   border-radius: 8px;
+  padding: 0 24px;
 `;
 
 const CategoryNav = styled.ul`
   display: flex;
   flex-wrap: wrap;
   list-style: none;
-  padding: 0 24px;
 `;
 
 const CategoryNavItem = styled.li`
@@ -89,7 +89,7 @@ const CategoryNavItem = styled.li`
 
 const AddRecipeLink = styled(NavLink)`
   color: ${({ theme }) => theme.text.primary};
-  padding: 12px 16px;
+  padding: 12px 0;
   display: inline-flex;
   align-items: center;
 

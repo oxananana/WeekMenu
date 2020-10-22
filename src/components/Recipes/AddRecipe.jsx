@@ -4,7 +4,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import * as firebase from "firebase/app";
 import "firebase/database";
-import { StateContext } from "../../App";
+import { RecipesContext } from "../../index";
 import recipesAPI from "../../api/recipesAPI";
 import Button from "../Common/Button";
 import AddEditRecipeForm from "./AddEditRecipeForm";
@@ -13,7 +13,7 @@ const AddRecipe = (props) => {
   let history = useHistory();
   const { categories } = props;
 
-  const { setRecipes } = useContext(StateContext);
+  const { setRecipes } = useContext(RecipesContext);
 
   const handleSubmit = (formData) => {
     createNewRecipe(formData);

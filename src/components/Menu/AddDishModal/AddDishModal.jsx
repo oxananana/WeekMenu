@@ -3,7 +3,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { arrayToEnumString } from "../../../helpers/helpers";
 import { defaultCategoryId, weekDaysNames } from "../../../constants";
-import { StateContext } from "../../../App";
+import { RecipesContext, CategoriesContext } from "../../../index";
 import Modal from "../../Common/Modal";
 import CategoryFilter from "./CategoryFilter";
 import Category from "./Category";
@@ -11,7 +11,9 @@ import Category from "./Category";
 const AddDishModal = (props) => {
   const { isOpen, onClose, onSubmit, day, mealId, mealTitle } = props;
 
-  const { recipes, categories } = useContext(StateContext);
+  const { recipes } = useContext(RecipesContext);
+  const { categories } = useContext(CategoriesContext);
+
   const dishes = recipes;
 
   const [activeCategoryId, setActiveCategoryId] = useState(defaultCategoryId);

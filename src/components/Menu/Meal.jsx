@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { getDishesByIds } from "../../selectors/selectors";
-import { StateContext } from "../../App";
+import { RecipesContext } from "../../index";
 import Dish from "./Dish";
 import Icon from "../Common/Icon";
 
@@ -17,7 +17,7 @@ const Meal = (props) => {
     toggleDishIsDone,
   } = props;
 
-  const { recipes } = useContext(StateContext);
+  const { recipes } = useContext(RecipesContext);
   const dishesFull = dishes ? getDishesByIds(recipes, Object.keys(dishes)) : [];
 
   return (

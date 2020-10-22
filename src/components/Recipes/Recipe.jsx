@@ -82,7 +82,6 @@ const RecipeLink = styled(NavLink)`
   border-radius: 8px;
   flex: auto;
   width: 100%;
-  box-shadow: ${({ theme }) => theme.shadow.base};
   transition: transform 0.2s ease-out;
 
   & + & {
@@ -90,6 +89,7 @@ const RecipeLink = styled(NavLink)`
   }
 
   &:hover {
+    box-shadow: ${({ theme }) => theme.shadow.base};
     transform: translateY(-10px);
   }
 `;
