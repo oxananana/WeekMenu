@@ -11,7 +11,12 @@ const light = {
 };
 
 export const lightTheme = {
-  bg: { base: "#fff", baseLight: light.baseLightBg, primary: light.primary },
+  bg: {
+    base: "#fff",
+    baseLight: light.baseLightBg,
+    primary: light.primary,
+    droppable: "rgba(0,0,0,.05)",
+  },
   text: {
     base: light.baseText,
     baseInvert: "#fff",
@@ -28,8 +33,9 @@ export const lightTheme = {
     primary: light.primary,
   },
   shadow: {
-    base: "2px 4px 4px rgba(0, 0, 0, 0.02);",
+    base: "2px 4px 4px rgba(0, 0, 0, 0.03);",
     navbar: "0 5px 8px -5px rgba(0,0,0,.06)",
+    draggable: "2px 2px 5px rgba(0, 0, 0, 0.1);",
   },
   img: {
     overlay: "rgba(0,0,0,.05)",
@@ -54,6 +60,7 @@ export const darkTheme = {
     base: "#2c2e31",
     baseLight: dark.baseLightBg,
     primary: dark.primary,
+    droppable: "rgba(0,0,0,.1)",
   },
   text: {
     base: dark.baseText,
@@ -71,8 +78,9 @@ export const darkTheme = {
     primary: dark.primary,
   },
   shadow: {
-    base: "2px 4px 4px rgba(0, 0, 0, 0.02);",
+    base: "2px 4px 4px rgba(0, 0, 0, 0.08);",
     navbar: "0 5px 10px -5px rgba(0,0,0,.2)",
+    draggable: "2px 2px 5px rgba(0, 0, 0, 0.15);",
   },
   img: {
     overlay: "rgba(255,255,255,.04)",

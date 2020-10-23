@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { DragDropContext } from "react-beautiful-dnd";
 import * as firebase from "firebase/app";
 import "firebase/database";
 import { getWeekDayName } from "../../helpers/helpers";
@@ -111,6 +112,59 @@ const Menu = (props) => {
     });
   };
 
+  const onDragEnd = useCallback(
+    (result, provided) => {
+      const { destination, source, draggableId } = result;
+
+      if (!destination) {
+        return;
+      }
+
+      const sourceParams = JSON.parse(source.droppableId);
+      const destinationParams = JSON.parse(destination.droppableId);
+
+      const prevMealId = sourceParams.id;
+      const newMealId = destinationParams.id;
+
+      if (prevMealId === newMealId && destination.index === source.index) {
+        return;
+      }
+
+      const prevDay = sourceParams.day;
+      const newDay = destinationParams.day;
+      const dishId = JSON.parse(draggableId).id;
+
+      let updates = {};
+
+      updates[`menu/${prevDay}/meals/${prevMealId}/dishes/${dishId}`] = null;
+      updates[`menu/${newDay}/meals/${newMealId}/dishes/${dishId}`] = {
+        id: dishId,
+        isDone: false,
+      };
+      // updates[`recipes/${dishId}/schedule/${prevDay}`] = null;
+
+      const db = firebase.database();
+
+      db.ref().update(updates, (error) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("success move dishes");
+          api
+            .getMenuAndRecipes()
+            .then((response) => {
+              setMenu(response.menu);
+              setRecipes(response.recipes);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      });
+    },
+    [setMenu, setRecipes]
+  );
+
   return (
     <MenuPage>
       <AddDishModal
@@ -122,22 +176,24 @@ const Menu = (props) => {
         mealTitle={editableMealTitle}
       />
 
-      <MenuBoard>
-        {weekDays.map((day, index) => {
-          const meals = Object.values(menu[day.dateString].meals);
+      <DragDropContext onDragEnd={onDragEnd}>
+        <MenuBoard>
+          {weekDays.map((day, index) => {
+            const meals = Object.values(menu[day.dateString].meals);
 
-          return (
-            <DayMenu
-              key={index}
-              day={day}
-              meals={meals}
-              toggleDishIsDone={toggleDishIsDone}
-              addDish={addDish}
-              removeDish={removeDish}
-            />
-          );
-        })}
-      </MenuBoard>
+            return (
+              <DayMenu
+                key={index}
+                day={day}
+                meals={meals}
+                toggleDishIsDone={toggleDishIsDone}
+                addDish={addDish}
+                removeDish={removeDish}
+              />
+            );
+          })}
+        </MenuBoard>
+      </DragDropContext>
     </MenuPage>
   );
 };

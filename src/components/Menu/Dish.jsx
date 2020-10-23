@@ -1,38 +1,67 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { dishPropTypes } from "./prop-types";
+import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import Icon from "../Common/Icon";
 
 const Dish = (props) => {
-  const { day, mealId, dish, isDone, removeDish, toggleDishIsDone } = props;
+  const {
+    index,
+    day,
+    mealId,
+    dish,
+    isDone,
+    removeDish,
+    toggleDishIsDone,
+  } = props;
   const { id, title, imgSrc } = dish;
+  const onDragEnd = (result) => {
+    console.log(result);
+  };
 
   return (
-    <StyledDish>
-      <RemoveIcon onClick={() => removeDish(day, mealId, id)}>
-        <Icon name="delete" />
-      </RemoveIcon>
-      <CoockingStatus
-        isDone={isDone}
-        onClick={() => toggleDishIsDone(day, mealId, id, isDone)}
-      >
-        <Icon name="check" />
-      </CoockingStatus>
-      {imgSrc ? (
-        <DishImg style={{ backgroundImage: `url(${imgSrc})` }} />
-      ) : (
-        <ImgPlaceholder>
-          <Icon name="camera" />
-        </ImgPlaceholder>
+    <Draggable
+      draggableId={JSON.stringify({
+        id,
+        day,
+      })}
+      index={index}
+      onDragEnd={onDragEnd}
+    >
+      {(provided, snapshot) => (
+        <StyledDish
+          isDragging={snapshot.isDragging}
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+        >
+          <RemoveIcon onClick={() => removeDish(day, mealId, id)}>
+            <Icon name="delete" />
+          </RemoveIcon>
+          <CoockingStatus
+            isDone={isDone}
+            onClick={() => toggleDishIsDone(day, mealId, id, isDone)}
+          >
+            <Icon name="check" />
+          </CoockingStatus>
+          {imgSrc ? (
+            <DishImg style={{ backgroundImage: `url(${imgSrc})` }} />
+          ) : (
+            <ImgPlaceholder>
+              <Icon name="camera" />
+            </ImgPlaceholder>
+          )}
+          <DishTitle>{title}</DishTitle>
+        </StyledDish>
       )}
-      <DishTitle>{title}</DishTitle>
-    </StyledDish>
+    </Draggable>
   );
 };
 
 Dish.propTypes = {
   dish: PropTypes.exact(dishPropTypes),
+  index: PropTypes.number.isRequired,
   isDone: PropTypes.bool.isRequired,
   day: PropTypes.string.isRequired,
   mealId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
@@ -74,6 +103,8 @@ const StyledDish = styled.div`
   align-items: center;
   border-radius: 4px;
   position: relative;
+  box-shadow: ${({ isDragging, theme }) =>
+    isDragging && theme.shadow.draggable};
 
   & + & {
     margin-top: 4px;

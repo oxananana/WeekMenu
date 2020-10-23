@@ -20,6 +20,7 @@ const DayMenu = (props) => {
         {day.weekDayName}, {day.date}
         {day.isToday && " — Сегодня"}
       </DayDate>
+
       <Meals>
         {orderedMeals.map((meal) => {
           return (
@@ -84,7 +85,7 @@ const DayDate = styled.div`
 const Meals = styled.div`
   flex: 1;
   background-color: ${({ theme }) => theme.bg.baseLight};
-  padding: 16px;
+  padding: 8px;
   border-radius: 4px;
 `;
 

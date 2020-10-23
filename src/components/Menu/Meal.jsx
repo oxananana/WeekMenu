@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { Droppable } from "react-beautiful-dnd";
 import { getDishesByIds } from "../../selectors/selectors";
 import { RecipesContext } from "../../index";
-import Dish from "./Dish";
+import Dishes from "./Dishes";
 import Icon from "../Common/Icon";
 
 const Meal = (props) => {
@@ -21,37 +22,48 @@ const Meal = (props) => {
   const dishesFull = dishes ? getDishesByIds(recipes, Object.keys(dishes)) : [];
 
   return (
-    <StyledMeal>
-      <MealTitle>
-        {title}
-        <AddIcon onClick={addDish}>
-          <Icon name="plus" />
-        </AddIcon>
-      </MealTitle>
-      {dishesFull.length > 0 ? (
-        <Dishes>
-          {dishesFull.map((dish) => {
-            return (
-              <Dish
-                key={dish.id}
+    <Droppable
+      droppableId={JSON.stringify({
+        id,
+        day,
+      })}
+      type="dishes"
+    >
+      {(provided, snapshot) => {
+        return (
+          <StyledMeal
+            isDraggingOver={snapshot.isDraggingOver}
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
+            <MealTitle>
+              {title}
+              <AddIcon onClick={addDish}>
+                <Icon name="plus" />
+              </AddIcon>
+            </MealTitle>
+            {dishesFull.length > 0 ? (
+              <Dishes
                 day={day}
                 mealId={id}
-                dish={dish}
-                isDone={dishes[dish.id].isDone}
+                dishesFull={dishesFull}
+                dishes={dishes}
                 removeDish={removeDish}
                 toggleDishIsDone={toggleDishIsDone}
               />
-            );
-          })}
-        </Dishes>
-      ) : (
-        <NoDishes>Пока пусто</NoDishes>
-      )}
-    </StyledMeal>
+            ) : (
+              <NoDishes>Пока пусто</NoDishes>
+            )}
+            {provided.placeholder}
+          </StyledMeal>
+        );
+      }}
+    </Droppable>
   );
 };
 
 Meal.propTypes = {
+  day: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   dishes: PropTypes.object,
@@ -61,8 +73,13 @@ Meal.propTypes = {
 };
 
 const StyledMeal = styled.div`
+  background-color: ${({ isDraggingOver, theme }) =>
+    isDraggingOver && theme.bg.droppable};
+  padding: 8px;
+  border-radius: 4px;
+
   & + & {
-    margin-top: 32px;
+    margin-top: 12px;
   }
 `;
 
@@ -82,8 +99,6 @@ const AddIcon = styled.span`
     cursor: pointer;
   }
 `;
-
-const Dishes = styled.div``;
 
 const NoDishes = styled.div`
   font-size: 14px;
