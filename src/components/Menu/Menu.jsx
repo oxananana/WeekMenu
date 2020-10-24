@@ -54,7 +54,7 @@ const Menu = (props) => {
     });
   };
 
-  const toggleDishIsDone = (day, mealId, dishId, isDone) => {
+  const toggleDishIsDone = (day, mealId, dishId) => {
     const db = firebase.database();
 
     const currentDishes = getMealDishesByDay(menu, day, mealId);

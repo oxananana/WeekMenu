@@ -38,7 +38,7 @@ const Dish = (props) => {
           </RemoveIcon>
           <CoockingStatus
             isDone={isDone}
-            onClick={() => toggleDishIsDone(day, mealId, id, isDone)}
+            onClick={() => toggleDishIsDone(day, mealId, id)}
           >
             <Icon name="check" />
           </CoockingStatus>
