@@ -1,26 +1,17 @@
 // import memoize from "memoizee";
 
-export const getDishesByIds = (recipes, dishesIds) => {
-  if (!dishesIds) {
+export const getDishesFromRecipes = (recipes, dishes) => {
+  if (!dishes) {
     return [];
   }
-  return dishesIds.map((id) => {
-    return recipes[id];
+
+  return dishes.map((dish) => {
+    return { ...recipes[dish.id], isDone: dish.isDone };
   });
 };
 
-export const getDishesForMeal = (dishes, mealDishes) => {
-  return mealDishes.map((dish) => {
-    return { ...dish, ...dishes[dish.id] };
-  });
-};
-
-export const getMealById = (meals, mealId) => {
-  return meals[mealId];
-};
-
-export const getDishById = (dishes, dishId) => {
-  return dishes[dishId];
+export const getMealDishesByDay = (menu, day, mealId) => {
+  return [...(menu[day].meals[mealId].dishes || [])];
 };
 
 export const getCategoryDishes = (dishes, categoryId) => {

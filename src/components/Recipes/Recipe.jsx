@@ -2,8 +2,8 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import cn from "classnames";
-import { weekDaysNamesRU } from "../../constants";
+// import cn from "classnames";
+// import { weekDaysNamesRU } from "../../constants";
 import { arrayToEnumString } from "../../helpers/helpers";
 import Icon from "../Common/Icon";
 
@@ -28,7 +28,7 @@ const Recipe = (props) => {
       )}
       <RecipeInfo>
         <RecipeTitle>{title}</RecipeTitle>
-        <RecipeSchedule>
+        {/* <RecipeSchedule>
           {weekDaysNamesRU.map((day, index) => {
             const isActive = schedule && schedule[day];
 
@@ -41,7 +41,7 @@ const Recipe = (props) => {
               </RecipeScheduleItem>
             );
           })}
-        </RecipeSchedule>
+        </RecipeSchedule> */}
         <RecipeIngredients>
           {ingredients.length > 0
             ? arrayToEnumString(ingredients)
@@ -127,21 +127,22 @@ const RecipeInfo = styled.div`
 const RecipeTitle = styled.div`
   font-weight: bold;
   font-size: 16px;
+  margin-bottom: 12px;
 `;
 
-const RecipeSchedule = styled.ul`
-  display: flex;
-  margin: 12px -4px;
-`;
+// const RecipeSchedule = styled.ul`
+//   display: flex;
+//   margin: 12px -4px;
+// `;
 
-const RecipeScheduleItem = styled.li`
-  margin: 0 4px;
-  color: ${({ theme }) => theme.text.gray};
+// const RecipeScheduleItem = styled.li`
+//   margin: 0 4px;
+//   color: ${({ theme }) => theme.text.gray};
 
-  &.active {
-    color: ${({ theme }) => theme.text.base};
-  }
-`;
+//   &.active {
+//     color: ${({ theme }) => theme.text.base};
+//   }
+// `;
 
 const RecipeIngredients = styled.div`
   color: ${({ theme }) => theme.text.gray};

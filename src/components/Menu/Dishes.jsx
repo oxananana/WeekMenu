@@ -4,18 +4,11 @@ import PropTypes from "prop-types";
 import Dish from "./Dish";
 
 const Dishes = React.memo((props) => {
-  const {
-    day,
-    dishes,
-    dishesFull,
-    mealId,
-    removeDish,
-    toggleDishIsDone,
-  } = props;
+  const { day, dishes, mealId, removeDish, toggleDishIsDone } = props;
 
   return (
     <StyledDishes>
-      {dishesFull.map((dish, index) => {
+      {dishes.map((dish, index) => {
         return (
           <Dish
             key={dish.id}
@@ -23,7 +16,7 @@ const Dishes = React.memo((props) => {
             day={day}
             mealId={mealId}
             dish={dish}
-            isDone={dishes[dish.id].isDone}
+            isDone={dish.isDone}
             removeDish={removeDish}
             toggleDishIsDone={toggleDishIsDone}
           />
@@ -34,8 +27,7 @@ const Dishes = React.memo((props) => {
 });
 
 Dishes.propTypes = {
-  dishes: PropTypes.object.isRequired,
-  dishesFull: PropTypes.array.isRequired,
+  dishes: PropTypes.array.isRequired,
   day: PropTypes.string.isRequired,
   mealId: PropTypes.string.isRequired,
   removeDish: PropTypes.func.isRequired,

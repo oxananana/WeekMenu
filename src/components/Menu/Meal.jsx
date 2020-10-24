@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { Droppable } from "react-beautiful-dnd";
-import { getDishesByIds } from "../../selectors/selectors";
+import { getDishesFromRecipes } from "../../selectors/selectors";
 import { RecipesContext } from "../../index";
 import Dishes from "./Dishes";
 import Icon from "../Common/Icon";
@@ -19,7 +19,7 @@ const Meal = (props) => {
   } = props;
 
   const { recipes } = useContext(RecipesContext);
-  const dishesFull = dishes ? getDishesByIds(recipes, Object.keys(dishes)) : [];
+  const dishesFull = dishes ? getDishesFromRecipes(recipes, dishes) : [];
 
   return (
     <Droppable
@@ -46,8 +46,7 @@ const Meal = (props) => {
               <Dishes
                 day={day}
                 mealId={id}
-                dishesFull={dishesFull}
-                dishes={dishes}
+                dishes={dishesFull}
                 removeDish={removeDish}
                 toggleDishIsDone={toggleDishIsDone}
               />
@@ -66,7 +65,7 @@ Meal.propTypes = {
   day: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  dishes: PropTypes.object,
+  dishes: PropTypes.array,
   removeDish: PropTypes.func.isRequired,
   addDish: PropTypes.func.isRequired,
   toggleDishIsDone: PropTypes.func.isRequired,

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import cn from "classnames";
+// import cn from "classnames";
 import PropTypes from "prop-types";
 import DOMPurify from "dompurify";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
-import { weekDaysNamesRU } from "../../constants";
+// import { weekDaysNamesRU } from "../../constants";
 import { getRecipeById } from "../../selectors/selectors";
 import { arrayToEnumString } from "../../helpers/helpers";
 import { recipePropTypes } from "./prop-types";
@@ -48,7 +48,7 @@ const RecipePage = (props) => {
       <ResipeDescription>
         <RecipeTitle>{title}</RecipeTitle>
         <Dl>
-          <dt>Наличие в расписании:</dt>
+          {/* <dt>Наличие в расписании:</dt>
           <dd>
             <RecipeSchedule>
               {weekDaysNamesRU.map((day, index) => {
@@ -63,7 +63,7 @@ const RecipePage = (props) => {
                 );
               })}
             </RecipeSchedule>
-          </dd>
+          </dd> */}
           <dt>Категория:</dt>
           <dd>{categories[categoryId].title}</dd>
           <dt>Ингредиенты:</dt>
@@ -157,19 +157,19 @@ const Dl = styled.dl`
   }
 `;
 
-const RecipeSchedule = styled.ul`
-  display: flex;
-  margin: 0 -4px;
-`;
+// const RecipeSchedule = styled.ul`
+//   display: flex;
+//   margin: 0 -4px;
+// `;
 
-const RecipeScheduleItem = styled.li`
-  margin: 0 4px;
-  color: ${({ theme }) => theme.text.gray};
+// const RecipeScheduleItem = styled.li`
+//   margin: 0 4px;
+//   color: ${({ theme }) => theme.text.gray};
 
-  &.active {
-    color: ${({ theme }) => theme.text.base};
-  }
-`;
+//   &.active {
+//     color: ${({ theme }) => theme.text.base};
+//   }
+// `;
 
 const RecipeIngredients = styled.div`
   margin: 12px 0;

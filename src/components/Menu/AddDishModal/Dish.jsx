@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import cn from "classnames";
-import { weekDaysNamesRU } from "../../../constants";
+// import { weekDaysNamesRU } from "../../../constants";
 import Icon from "../../Common/Icon";
 
 const Dish = (props) => {
@@ -23,7 +23,7 @@ const Dish = (props) => {
       )}
       <div>
         <DishTitle>{title}</DishTitle>
-        <RecipeSchedule>
+        {/* <RecipeSchedule>
           {weekDaysNamesRU.map((day, index) => {
             const isActive = schedule && schedule[day];
             return (
@@ -35,7 +35,7 @@ const Dish = (props) => {
               </RecipeScheduleItem>
             );
           })}
-        </RecipeSchedule>
+        </RecipeSchedule> */}
       </div>
       {isActive && (
         <CheckedIcon>
@@ -104,20 +104,20 @@ const DishTitle = styled.div`
   overflow: hidden;
 `;
 
-const RecipeSchedule = styled.ul`
-  display: flex;
-  margin: 8px -4px 0;
-  font-size: 12px;
-`;
+// const RecipeSchedule = styled.ul`
+//   display: flex;
+//   margin: 8px -4px 0;
+//   font-size: 12px;
+// `;
 
-const RecipeScheduleItem = styled.li`
-  margin: 0 4px;
-  color: ${({ theme }) => theme.text.gray};
+// const RecipeScheduleItem = styled.li`
+//   margin: 0 4px;
+//   color: ${({ theme }) => theme.text.gray};
 
-  &.active {
-    color: ${({ theme }) => theme.text.base};
-  }
-`;
+//   &.active {
+//     color: ${({ theme }) => theme.text.base};
+//   }
+// `;
 
 const CheckedIcon = styled.div`
   position: absolute;

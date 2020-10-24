@@ -22,10 +22,7 @@ const Dish = (props) => {
 
   return (
     <Draggable
-      draggableId={JSON.stringify({
-        id,
-        day,
-      })}
+      draggableId={id + mealId + index}
       index={index}
       onDragEnd={onDragEnd}
     >
