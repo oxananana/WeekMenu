@@ -6,6 +6,7 @@ import "firebase/auth";
 import "./App.css";
 import GlobalStyle from "./theme/GlobalStyle";
 import { lightTheme, darkTheme } from "./theme/themes";
+import ErrorBoundary from "./components/Common/ErrorBoundary";
 import InnerPage from "./components/Common/InnerPage";
 import NoMatch from "./components/Common/NoMatch";
 import Navbar from "./components/Navbar/Navbar";
@@ -69,65 +70,67 @@ const App = () => {
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <GlobalStyle />
       <Navbar toggleTheme={toggleTheme} theme={theme} isAuth={user.isAuth} />
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <Switch>
-          <Route path="/" exact>
-            <Redirect to="/menu" />
-          </Route>
-          <Route path="/login">
-            <InnerPage>
-              <Login isAuth={user.isAuth} />
-            </InnerPage>
-          </Route>
-          <Route path="/account">
-            <InnerPage>
-              <Account user={user} />
-            </InnerPage>
-          </Route>
-          <Route path="/menu">
-            {menu ? (
-              <Menu
-                menu={menu}
-                recipes={recipes}
-                categories={categories}
-                setMenu={setMenu}
-                setRecipes={setRecipes}
-              />
-            ) : (
-              <div>Меню пустое</div>
-            )}
-          </Route>
-          <Route path="/recipes/new-recipe" exact>
-            <InnerPage>
-              <AddRecipe categories={categories} />
-            </InnerPage>
-          </Route>
-          <Route path="/recipes/:categoryId/:recipeId">
-            <InnerPage>
-              <RecipePage recipes={recipes} categories={categories} />
-            </InnerPage>
-          </Route>
-          <Route path="/recipes/:categoryId">
-            <InnerPage>
-              {categories ? (
-                <Recipes categories={categories} recipes={recipes} />
+      <ErrorBoundary>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <Switch>
+            <Route path="/" exact>
+              <Redirect to="/menu" />
+            </Route>
+            <Route path="/login">
+              <InnerPage>
+                <Login isAuth={user.isAuth} />
+              </InnerPage>
+            </Route>
+            <Route path="/account">
+              <InnerPage>
+                <Account user={user} />
+              </InnerPage>
+            </Route>
+            <Route path="/menu">
+              {menu ? (
+                <Menu
+                  menu={menu}
+                  recipes={recipes}
+                  categories={categories}
+                  setMenu={setMenu}
+                  setRecipes={setRecipes}
+                />
               ) : (
-                <div>Нет рецептов или категорий</div>
+                <div>Меню пустое</div>
               )}
-            </InnerPage>
-          </Route>
-          <Route path="/recipes/">
-            <Redirect to="/recipes/soups" />
-          </Route>
-          <Route path="*">
-            <InnerPage>
-              <NoMatch />
-            </InnerPage>
-          </Route>
-        </Switch>
-      )}
+            </Route>
+            <Route path="/recipes/new-recipe" exact>
+              <InnerPage>
+                <AddRecipe categories={categories} />
+              </InnerPage>
+            </Route>
+            <Route path="/recipes/:categoryId/:recipeId">
+              <InnerPage>
+                <RecipePage recipes={recipes} categories={categories} />
+              </InnerPage>
+            </Route>
+            <Route path="/recipes/:categoryId">
+              <InnerPage>
+                {categories ? (
+                  <Recipes categories={categories} recipes={recipes} />
+                ) : (
+                  <div>Нет рецептов или категорий</div>
+                )}
+              </InnerPage>
+            </Route>
+            <Route path="/recipes/">
+              <Redirect to="/recipes/soups" />
+            </Route>
+            <Route path="*">
+              <InnerPage>
+                <NoMatch />
+              </InnerPage>
+            </Route>
+          </Switch>
+        )}
+      </ErrorBoundary>
     </ThemeProvider>
   );
 };

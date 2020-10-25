@@ -16,6 +16,10 @@ export const lightTheme = {
     baseLight: light.baseLightBg,
     primary: light.primary,
     droppable: "rgba(0,0,0,.05)",
+    error: "#f96262",
+    info: "rgba(0,0,0,.02)",
+    warning: "#fff2db",
+    success: "#ddf7dd",
   },
   text: {
     base: light.baseText,
@@ -26,6 +30,9 @@ export const lightTheme = {
     primary: light.primary,
     primaryHover: light.primaryHover,
     error: "#f96262",
+    info: `rgba(${light.baseTextRgba}, .7)`,
+    warning: "orange",
+    success: "#179617",
   },
   border: {
     base: "#efefef",
@@ -61,6 +68,10 @@ export const darkTheme = {
     baseLight: dark.baseLightBg,
     primary: dark.primary,
     droppable: "rgba(0,0,0,.1)",
+    error: "#f96262",
+    info: "rgba(0,0,0,.1)",
+    warning: "#483003",
+    success: "#043c04",
   },
   text: {
     base: dark.baseText,
@@ -71,6 +82,9 @@ export const darkTheme = {
     primary: dark.primary,
     primaryHover: dark.primaryHover,
     error: "#f96b63",
+    info: `rgba(${dark.baseTextRgba}, .5)`,
+    warning: "#b97800",
+    success: "#007b00",
   },
   border: {
     base: "rgba(255, 255, 255, 0.05)",
