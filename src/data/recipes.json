@@ -1,0 +1,39 @@
+{
+  "-MKVJ1Ow9Md-zHH89K1Y": {
+    "categoryId": "drinks",
+    "description": "",
+    "id": "-MKVJ1Ow9Md-zHH89K1Y",
+    "title": "Кофе"
+  },
+  "-MKVJZQ0m2fY5l3BJyhT": {
+    "categoryId": "soups",
+    "description": "",
+    "id": "-MKVJZQ0m2fY5l3BJyhT",
+    "imgSrc": "https://firebasestorage.googleapis.com/v0/b/weekmenu-715a1.appspot.com/o/recipes%2F10863241%3Ds1280%3Dh960.jpeg?alt=media&token=f8d4355d-f604-4e6a-98a9-e6501744b006",
+    "ingredients": [
+      "Мясо",
+      "лук",
+      "морковь",
+      "соленые огурцы",
+      "томатная паста",
+      "маслины",
+      "колбаса"
+    ],
+    "title": "Солянка"
+  },
+  "-MKVWW0DCQISK_Ngw7fh": {
+    "categoryId": "desert",
+    "description": "",
+    "id": "-MKVWW0DCQISK_Ngw7fh",
+    "imgSrc": "https://firebasestorage.googleapis.com/v0/b/weekmenu-715a1.appspot.com/o/recipes%2Fpirozhnoe-eklery-vanilnye-0.jpg?alt=media&token=71a878c5-2be3-4f35-90d2-cc3c8118e14c",
+    "ingredients": [
+      "Мука",
+      "молоко",
+      "сливочное масло",
+      "сахар",
+      "соль",
+      "корица"
+    ],
+    "title": "Эклер"
+  }
+}

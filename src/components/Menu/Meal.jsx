@@ -22,42 +22,44 @@ const Meal = (props) => {
   const dishesFull = dishes ? getDishesFromRecipes(recipes, dishes) : [];
 
   return (
-    <Droppable
-      droppableId={JSON.stringify({
-        id,
-        day,
-      })}
-      type="dishes"
-    >
-      {(provided, snapshot) => {
-        return (
-          <StyledMeal
-            isDraggingOver={snapshot.isDraggingOver}
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-          >
-            <MealTitle>
-              {title}
-              <AddIcon onClick={addDish}>
-                <Icon name="plus" />
-              </AddIcon>
-            </MealTitle>
-            {dishesFull.length > 0 ? (
-              <Dishes
-                day={day}
-                mealId={id}
-                dishes={dishesFull}
-                removeDish={removeDish}
-                toggleDishIsDone={toggleDishIsDone}
-              />
-            ) : (
-              <NoDishes>Пока пусто</NoDishes>
-            )}
-            {provided.placeholder}
-          </StyledMeal>
-        );
-      }}
-    </Droppable>
+    <StyledMeal>
+      <MealTitle>
+        {title}
+        <AddIcon onClick={addDish}>
+          <Icon name="plus" />
+        </AddIcon>
+      </MealTitle>
+      <Droppable
+        droppableId={JSON.stringify({
+          id,
+          day,
+        })}
+        type="dishes"
+      >
+        {(provided, snapshot) => {
+          return (
+            <DishesContainer
+              isDraggingOver={snapshot.isDraggingOver}
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+            >
+              {dishesFull.length > 0 ? (
+                <Dishes
+                  day={day}
+                  mealId={id}
+                  dishes={dishesFull}
+                  removeDish={removeDish}
+                  toggleDishIsDone={toggleDishIsDone}
+                />
+              ) : (
+                <NoDishes>Пока пусто</NoDishes>
+              )}
+              {provided.placeholder}
+            </DishesContainer>
+          );
+        }}
+      </Droppable>
+    </StyledMeal>
   );
 };
 
@@ -72,22 +74,25 @@ Meal.propTypes = {
 };
 
 const StyledMeal = styled.div`
+  & + & {
+    margin-top: 4px;
+  }
+`;
+
+const DishesContainer = styled.div`
   background-color: ${({ isDraggingOver, theme }) =>
     isDraggingOver && theme.bg.droppable};
+  transition: background-color 0.2s ease-out;
   padding: 8px;
   border-radius: 4px;
-
-  & + & {
-    margin-top: 12px;
-  }
 `;
 
 const MealTitle = styled.div`
   font-weight: 600;
-  margin-bottom: 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 8px 8px 4px;
 `;
 
 const AddIcon = styled.span`

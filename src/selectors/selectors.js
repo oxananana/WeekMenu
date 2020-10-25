@@ -14,6 +14,10 @@ export const getMealDishesByDay = (menu, day, mealId) => {
   return [...(menu[day].meals[mealId].dishes || [])];
 };
 
+export const getMealsByDay = (menu, day) => {
+  return { ...menu[day].meals };
+};
+
 export const getCategoryDishes = (dishes, categoryId) => {
   if (!dishes) {
     return [];

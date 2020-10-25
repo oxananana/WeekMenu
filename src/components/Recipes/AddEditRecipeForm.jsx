@@ -7,7 +7,6 @@ import { arrayToEnumString, stringToArray } from "../../helpers/helpers";
 import { defaultCategoryId } from "../../constants";
 import { required } from "../../helpers/validate";
 import { getCategoryValues } from "../../selectors/selectors";
-import { recipePropTypes } from "./prop-types";
 import Form from "../Common/Form/Form";
 import FormField from "../Common/Form/FormField";
 import Icon from "../Common/Icon";
@@ -113,8 +112,6 @@ const AddEditRecipeForm = (props) => {
     </FormContainer>
   );
 };
-
-AddEditRecipeForm.propTypes = recipePropTypes;
 
 const FormContainer = styled(Form)`
   display: flex;

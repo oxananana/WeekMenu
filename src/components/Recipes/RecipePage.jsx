@@ -11,12 +11,13 @@ import { arrayToEnumString } from "../../helpers/helpers";
 import { recipePropTypes } from "./prop-types";
 import Button from "../Common/Button";
 import Icon from "../Common/Icon";
+import NoMatch from "../Common/NoMatch";
 import EditRecipe from "./EditRecipe";
 
 const RecipePage = (props) => {
-  const { recipeId } = useParams();
+  const pathParams = useParams();
   const categories = props.categories;
-  const recipe = getRecipeById(props.recipes, recipeId);
+  const recipe = getRecipeById(props.recipes, pathParams.recipeId);
   const { categoryId, title, imgSrc, schedule, ingredients, description } = {
     ...recipe,
   };
@@ -34,8 +35,8 @@ const RecipePage = (props) => {
       categories={categories}
       toggleEditMode={toggleEditMode}
     />
-  ) : !title ? (
-    <div>нет такого рецепта, кривой урл</div>
+  ) : !title || pathParams.categoryId !== categoryId ? (
+    <NoMatch />
   ) : (
     <StyledRecipe>
       {imgSrc ? (

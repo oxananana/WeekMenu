@@ -2,12 +2,9 @@ import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { DragDropContext } from "react-beautiful-dnd";
-import * as firebase from "firebase/app";
-import "firebase/database";
 // import { getWeekDayName } from "../../helpers/helpers";
-import { getMealDishesByDay } from "../../selectors/selectors";
+import { getMealsByDay } from "../../selectors/selectors";
 import { weekDaysNames } from "../../constants";
-import api from "../../api/api";
 import menuAPI from "../../api/menuAPI";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import DayMenu from "./DayMenu";
@@ -15,7 +12,7 @@ import AddDishModal from "./AddDishModal/AddDishModal";
 
 const Menu = (props) => {
   useDocumentTitle(props.docTitle);
-  const { menu, setMenu, setRecipes } = props;
+  const { menu, setMenu } = props;
   const weekDays = returnNextDays();
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -23,41 +20,48 @@ const Menu = (props) => {
   const [editableMeal, setEditableMeal] = useState("");
   const [editableMealTitle, setEditableMealTitle] = useState("");
 
+  const updateDishes = (day, mealId, newDishes) => {
+    let updates = {};
+    updates[`menu/${day}/meals/${mealId}/dishes`] = newDishes;
+    // updates[`recipes/${dishId}/schedule/${getWeekDayName(day)}`] = false;
+
+    menuAPI
+      .updateDishes(updates)
+      .then(() => {
+        console.log("success update dishes");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const removeDish = (day, mealId, dishId) => {
-    const currentDishes = getMealDishesByDay(menu, day, mealId);
+    const currentMeals = getMealsByDay(menu, day);
+    const currentMeal = currentMeals[mealId];
+    const currentDishes = currentMeal.dishes || [];
 
     const newDishes = currentDishes.filter((dish) => {
       return dish.id !== dishId;
     });
 
-    let updates = {};
-    updates[`menu/${day}/meals/${mealId}/dishes`] = newDishes;
-    // updates[`recipes/${dishId}/schedule/${getWeekDayName(day)}`] = false;
-
-    const db = firebase.database();
-
-    db.ref().update(updates, (error) => {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log("success delete dish");
-        api
-          .getMenuAndRecipes()
-          .then((response) => {
-            setMenu(response.menu);
-            setRecipes(response.recipes);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
+    setMenu({
+      ...menu,
+      [day]: {
+        meals: {
+          ...currentMeals,
+          [mealId]: { ...currentMeal, dishes: newDishes },
+        },
+      },
     });
+    // setRecipes(response.recipes);
+
+    updateDishes(day, mealId, newDishes);
   };
 
   const toggleDishIsDone = (day, mealId, dishId) => {
-    const db = firebase.database();
-
-    const currentDishes = getMealDishesByDay(menu, day, mealId);
+    const currentMeals = getMealsByDay(menu, day);
+    const currentMeal = currentMeals[mealId];
+    const currentDishes = currentMeal.dishes || [];
 
     const newDishes = currentDishes.map((dish) => {
       if (dish.id === dishId) {
@@ -66,21 +70,17 @@ const Menu = (props) => {
       return dish;
     });
 
-    db.ref(`menu/${day}/meals/${mealId}/dishes`).set(newDishes, (error) => {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log("success toggle dish");
-        menuAPI
-          .getMenu()
-          .then((response) => {
-            setMenu(response);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
+    setMenu({
+      ...menu,
+      [day]: {
+        meals: {
+          ...currentMeals,
+          [mealId]: { ...currentMeal, dishes: newDishes },
+        },
+      },
     });
+
+    updateDishes(day, mealId, newDishes);
   };
 
   const addDish = (day, mealId, mealTitle) => {
@@ -95,9 +95,9 @@ const Menu = (props) => {
   };
 
   const handleSubmit = (day, mealId, selectedDishesIds) => {
-    let updates = {};
-
-    const currentDishes = getMealDishesByDay(menu, day, mealId);
+    const currentMeals = getMealsByDay(menu, day);
+    const currentMeal = currentMeals[mealId];
+    const currentDishes = currentMeal.dishes || [];
 
     const newDishes = [
       ...currentDishes,
@@ -109,31 +109,22 @@ const Menu = (props) => {
       }),
     ];
 
-    updates[`menu/${day}/meals/${mealId}/dishes`] = newDishes;
-    // updates[`recipes/${id}/schedule/${getWeekDayName(day)}`] = true;
-
-    const db = firebase.database();
-
-    db.ref().update(updates, (error) => {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log("success add dishes");
-        api
-          .getMenuAndRecipes()
-          .then((response) => {
-            setMenu(response.menu);
-            setRecipes(response.recipes);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
+    setMenu({
+      ...menu,
+      [day]: {
+        meals: {
+          ...currentMeals,
+          [mealId]: { ...currentMeal, dishes: newDishes },
+        },
+      },
     });
+
+    updateDishes(day, mealId, newDishes);
   };
 
   const onDragEnd = useCallback(
     (result) => {
+      const start = new Date().getTime();
       const { destination, source } = result;
 
       if (!destination) {
@@ -155,48 +146,61 @@ const Menu = (props) => {
       const prevDay = sourceParams.day;
       const newDay = destinationParams.day;
 
-      let updates = {};
-
       if (prevMealId === newMealId) {
-        const mealDishes = getMealDishesByDay(menu, prevDay, prevMealId);
+        const currentMeals = getMealsByDay(menu, prevDay);
+        const currentMeal = currentMeals[prevMealId];
+        const mealDishes = currentMeal.dishes;
 
         const [removed] = mealDishes.splice(oldIndex, 1);
         mealDishes.splice(newIndex, 0, removed);
 
-        updates[`menu/${newDay}/meals/${newMealId}/dishes`] = mealDishes;
+        setMenu({
+          ...menu,
+          [prevDay]: {
+            meals: {
+              ...currentMeals,
+              [prevMealId]: { ...currentMeal, dishes: mealDishes },
+            },
+          },
+        });
+
+        updateDishes(newDay, newMealId, mealDishes);
       } else {
-        const prevMealDishes = getMealDishesByDay(menu, prevDay, prevMealId);
-        const newMealDishes = getMealDishesByDay(menu, newDay, newMealId);
+        const currentMealsPrevDay = getMealsByDay(menu, prevDay);
+        const currentMealPrevDay = currentMealsPrevDay[prevMealId];
+        const prevMealDishes = currentMealPrevDay.dishes;
+
+        const currentMealsNewDay = getMealsByDay(menu, newDay);
+        const currentMealNewDay = currentMealsNewDay[newMealId];
+        const newMealDishes = currentMealNewDay.dishes || [];
 
         const [removed] = prevMealDishes.splice(oldIndex, 1);
         newMealDishes.splice(newIndex, 0, removed);
 
-        updates[`menu/${prevDay}/meals/${prevMealId}/dishes`] = prevMealDishes;
-        updates[`menu/${newDay}/meals/${newMealId}/dishes`] = newMealDishes;
+        setMenu({
+          ...menu,
+          [prevDay]: {
+            meals: {
+              ...currentMealsPrevDay,
+              [prevMealId]: { ...currentMealPrevDay, dishes: prevMealDishes },
+            },
+          },
+          [newDay]: {
+            meals: {
+              ...currentMealsNewDay,
+              [newMealId]: { ...currentMealNewDay, dishes: newMealDishes },
+            },
+          },
+        });
+
+        updateDishes(prevDay, prevMealId, prevMealDishes);
+        updateDishes(newDay, newMealId, newMealDishes);
       }
 
-      // updates[`recipes/${dishId}/schedule/${prevDay}`] = null;
-
-      const db = firebase.database();
-
-      db.ref().update(updates, (error) => {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log("success move dishes");
-          api
-            .getMenuAndRecipes()
-            .then((response) => {
-              setMenu(response.menu);
-              setRecipes(response.recipes);
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        }
-      });
+      const end = new Date().getTime();
+      console.log(end - start);
     },
-    [setMenu, setRecipes, menu]
+    [setMenu, menu]
   );
 
   return (

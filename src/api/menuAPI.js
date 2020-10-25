@@ -1,6 +1,5 @@
 import * as firebase from "firebase/app";
 import "firebase/database";
-// import { db } from "./api";
 
 const menuAPI = {
   getMenu() {
@@ -12,6 +11,11 @@ const menuAPI = {
       .then((snapshot) => {
         return snapshot.val();
       });
+  },
+  updateDishes(updates) {
+    const db = firebase.database();
+
+    return db.ref().update(updates);
   },
 };
 

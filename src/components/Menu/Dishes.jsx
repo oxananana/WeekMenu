@@ -11,7 +11,7 @@ const Dishes = React.memo((props) => {
       {dishes.map((dish, index) => {
         return (
           <Dish
-            key={dish.id}
+            key={dish.id + index}
             index={index}
             day={day}
             mealId={mealId}

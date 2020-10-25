@@ -1,10 +1,8 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
-import * as firebase from "firebase/app";
-import "firebase/database";
-import { RecipesContext } from "../../index";
 import recipesAPI from "../../api/recipesAPI";
+import { RecipesContext } from "../../index";
 import { recipePropTypes } from "./prop-types";
 import Button from "../Common/Button";
 import AddEditRecipeForm from "./AddEditRecipeForm";
@@ -12,34 +10,17 @@ import AddEditRecipeForm from "./AddEditRecipeForm";
 const EditRecipe = (props) => {
   const { recipe, categories, toggleEditMode } = props;
   const history = useHistory();
-  const { setRecipes } = useContext(RecipesContext);
+  const { recipes, setRecipes } = useContext(RecipesContext);
 
   const handleSubmit = (formData) => {
-    updateRecipe({ ...recipe, ...formData });
-  };
+    const updatedRecipe = { ...recipe, ...formData };
 
-  const updateRecipe = (recipe) => {
-    const db = firebase.database();
-
-    db.ref(`recipes/${recipe.id}`).set(recipe, (error) => {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log("success edit recipe");
-        recipesAPI
-          .getRecipes()
-          .then((response) => {
-            setRecipes(response);
-          })
-          .then(() => {
-            history.push(`/recipes/${recipe.categoryId}/${recipe.id}`);
-            toggleEditMode();
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
+    setRecipes({ ...recipes, [recipe.id]: updatedRecipe });
+    recipesAPI.setRecipe(updatedRecipe).catch((error) => {
+      console.log(error);
     });
+    history.push(`/recipes/${updatedRecipe.categoryId}/${updatedRecipe.id}`);
+    toggleEditMode();
   };
 
   return (

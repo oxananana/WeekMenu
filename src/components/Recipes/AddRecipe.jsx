@@ -2,8 +2,6 @@ import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import * as firebase from "firebase/app";
-import "firebase/database";
 import { RecipesContext } from "../../index";
 import recipesAPI from "../../api/recipesAPI";
 import Button from "../Common/Button";
@@ -13,35 +11,14 @@ const AddRecipe = (props) => {
   let history = useHistory();
   const { categories } = props;
 
-  const { setRecipes } = useContext(RecipesContext);
+  const { recipes, setRecipes } = useContext(RecipesContext);
 
-  const handleSubmit = (formData) => {
-    createNewRecipe(formData);
-  };
-
-  const createNewRecipe = (recipe) => {
-    const db = firebase.database();
-    const recipeId = db.ref().child("recipes").push().key;
-    const newRecipe = { ...recipe, id: recipeId };
-
-    db.ref(`recipes/${recipeId}`).set(newRecipe, (error) => {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log("success add recipe");
-        recipesAPI
-          .getRecipes()
-          .then((response) => {
-            setRecipes(response);
-          })
-          .then(() => {
-            history.push(`/recipes/${recipe.categoryId}/${recipeId}`);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
+  const handleSubmit = (recipe) => {
+    setRecipes({ ...recipes, [recipe.id]: recipe });
+    recipesAPI.setNewRecipe(recipe).catch((error) => {
+      console.log(error);
     });
+    history.push(`/recipes/${recipe.categoryId}/${recipe.id}`);
   };
 
   return (

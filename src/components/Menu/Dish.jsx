@@ -16,16 +16,9 @@ const Dish = (props) => {
     toggleDishIsDone,
   } = props;
   const { id, title, imgSrc } = dish;
-  const onDragEnd = (result) => {
-    console.log(result);
-  };
 
   return (
-    <Draggable
-      draggableId={id + mealId + index}
-      index={index}
-      onDragEnd={onDragEnd}
-    >
+    <Draggable draggableId={id + mealId + index} index={index}>
       {(provided, snapshot) => (
         <StyledDish
           isDragging={snapshot.isDragging}
