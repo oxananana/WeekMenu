@@ -124,7 +124,6 @@ const Menu = (props) => {
 
   const onDragEnd = useCallback(
     (result) => {
-      const start = new Date().getTime();
       const { destination, source } = result;
 
       if (!destination) {
@@ -196,9 +195,6 @@ const Menu = (props) => {
         updateDishes(prevDay, prevMealId, prevMealDishes);
         updateDishes(newDay, newMealId, newMealDishes);
       }
-
-      const end = new Date().getTime();
-      console.log(end - start);
     },
     [setMenu, menu]
   );
@@ -247,19 +243,25 @@ const returnNextDays = () => {
   const today = new Date();
   let nextDays = [];
 
+  const addZero = (number) => {
+    if (number < 10) {
+      return "0" + number;
+    }
+    return number;
+  };
+
   for (let i = 0; i < 7; i++) {
     let newDayDate = new Date();
     newDayDate.setDate(today.getDate() + i);
 
-    let newDayMonth = newDayDate.getMonth() + 1;
-    if (newDayMonth < 10) {
-      newDayMonth = "0" + newDayMonth;
-    }
+    const newDayMonth = newDayDate.getMonth() + 1;
 
     const newDay = {
       date: newDayDate.getDate(),
       weekDayName: weekDaysNames[newDayDate.getDay()],
-      dateString: `${newDayDate.getFullYear()}-${newDayMonth}-${newDayDate.getDate()}`,
+      dateString: `${newDayDate.getFullYear()}-${addZero(
+        newDayMonth
+      )}-${addZero(newDayDate.getDate())}`,
       isWeekend: newDayDate.getDay() === 0 || newDayDate.getDay() === 6,
     };
 

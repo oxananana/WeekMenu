@@ -39,22 +39,29 @@ const Meal = (props) => {
         {(provided, snapshot) => {
           return (
             <DishesContainer
+              draggingFromThisWith={snapshot.draggingFromThisWith}
               isDraggingOver={snapshot.isDraggingOver}
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
               {dishesFull.length > 0 ? (
-                <Dishes
-                  day={day}
-                  mealId={id}
-                  dishes={dishesFull}
-                  removeDish={removeDish}
-                  toggleDishIsDone={toggleDishIsDone}
-                />
+                <>
+                  <Dishes
+                    day={day}
+                    mealId={id}
+                    dishes={dishesFull}
+                    removeDish={removeDish}
+                    toggleDishIsDone={toggleDishIsDone}
+                  />
+                  {provided.placeholder}
+                </>
               ) : (
-                <NoDishes>Пока пусто</NoDishes>
+                <>
+                  {provided.placeholder}
+                  {!snapshot.isDraggingOver && <NoDishes>Пока пусто</NoDishes>}
+                </>
               )}
-              {provided.placeholder}
+              {}
             </DishesContainer>
           );
         }}
@@ -80,9 +87,11 @@ const StyledMeal = styled.div`
 `;
 
 const DishesContainer = styled.div`
+  background-color: ${({ draggingFromThisWith, theme }) =>
+    draggingFromThisWith && theme.bg.droppableParent};
   background-color: ${({ isDraggingOver, theme }) =>
     isDraggingOver && theme.bg.droppable};
-  transition: background-color 0.2s ease-out;
+  transition: background-color 0.2s ease-out, height 0.2s ease-out;
   padding: 8px;
   border-radius: 4px;
 `;

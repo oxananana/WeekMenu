@@ -14,11 +14,13 @@ const AddRecipe = (props) => {
   const { recipes, setRecipes } = useContext(RecipesContext);
 
   const handleSubmit = (recipe) => {
-    setRecipes({ ...recipes, [recipe.id]: recipe });
-    recipesAPI.setNewRecipe(recipe).catch((error) => {
+    const recipeId = recipesAPI.getNewKey();
+
+    setRecipes({ ...recipes, [recipeId]: recipe });
+    recipesAPI.setRecipe({ ...recipe, id: recipeId }).catch((error) => {
       console.log(error);
     });
-    history.push(`/recipes/${recipe.categoryId}/${recipe.id}`);
+    history.push(`/recipes/${recipe.categoryId}/${recipeId}`);
   };
 
   return (

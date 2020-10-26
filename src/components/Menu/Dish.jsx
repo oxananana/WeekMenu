@@ -19,32 +19,34 @@ const Dish = (props) => {
 
   return (
     <Draggable draggableId={id + mealId + index} index={index}>
-      {(provided, snapshot) => (
-        <StyledDish
-          isDragging={snapshot.isDragging}
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-        >
-          <RemoveIcon onClick={() => removeDish(day, mealId, id)}>
-            <Icon name="delete" />
-          </RemoveIcon>
-          <CoockingStatus
-            isDone={isDone}
-            onClick={() => toggleDishIsDone(day, mealId, id)}
+      {(provided, snapshot) => {
+        return (
+          <StyledDish
+            isDragging={snapshot.isDragging}
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
           >
-            <Icon name="check" />
-          </CoockingStatus>
-          {imgSrc ? (
-            <DishImg style={{ backgroundImage: `url(${imgSrc})` }} />
-          ) : (
-            <ImgPlaceholder>
-              <Icon name="camera" />
-            </ImgPlaceholder>
-          )}
-          <DishTitle>{title}</DishTitle>
-        </StyledDish>
-      )}
+            <RemoveIcon onClick={() => removeDish(day, mealId, id)}>
+              <Icon name="delete" />
+            </RemoveIcon>
+            <CoockingStatus
+              isDone={isDone}
+              onClick={() => toggleDishIsDone(day, mealId, id)}
+            >
+              <Icon name="check" />
+            </CoockingStatus>
+            {imgSrc ? (
+              <DishImg style={{ backgroundImage: `url(${imgSrc})` }} />
+            ) : (
+              <ImgPlaceholder>
+                <Icon name="camera" />
+              </ImgPlaceholder>
+            )}
+            <DishTitle>{title}</DishTitle>
+          </StyledDish>
+        );
+      }}
     </Draggable>
   );
 };
@@ -92,13 +94,10 @@ const StyledDish = styled.div`
   display: flex;
   align-items: center;
   border-radius: 4px;
+  margin-bottom: 4px;
   position: relative;
   box-shadow: ${({ isDragging, theme }) =>
     isDragging && theme.shadow.draggable};
-
-  & + & {
-    margin-top: 4px;
-  }
 
   &:hover {
     cursor: pointer;

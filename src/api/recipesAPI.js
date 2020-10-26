@@ -17,12 +17,9 @@ const recipesAPI = {
 
     return db.ref(`recipes/${recipe.id}`).set(recipe);
   },
-  setNewRecipe(recipe) {
+  getNewKey() {
     const db = firebase.database();
-    const recipeId = db.ref().child("recipes").push().key;
-    const newRecipe = { ...recipe, id: recipeId };
-
-    return db.ref(`recipes/${recipeId}`).set(newRecipe);
+    return db.ref().child("recipes").push().key;
   },
 };
 
