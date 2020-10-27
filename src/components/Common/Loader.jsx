@@ -2,16 +2,33 @@ import React from "react";
 import styled from "styled-components";
 
 const Loader = (props) => {
-  return (
-    <LoaderIcon {...props}>
-      <svg viewBox="0 0 50 50">
-        <circle cx="25" cy="25" r="20"></circle>
-      </svg>
-    </LoaderIcon>
+  return props.full ? (
+    <LoaderContainer>
+      <LoaderIcon size="32" />
+    </LoaderContainer>
+  ) : (
+    <LoaderIcon size={props.size} />
   );
 };
 
-const LoaderIcon = styled.span`
+const LoaderIcon = (props) => {
+  return (
+    <StyledIcon {...props}>
+      <svg viewBox="0 0 50 50">
+        <circle cx="25" cy="25" r="20"></circle>
+      </svg>
+    </StyledIcon>
+  );
+};
+
+const LoaderContainer = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const StyledIcon = styled.span`
   animation: rotate 2s linear infinite;
   width: ${(props) => props.size || 16}px;
   height: ${(props) => props.size || 16}px;

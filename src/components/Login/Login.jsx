@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
 import styled from "styled-components";
-import { required, minLength } from "../../helpers/validate";
+import authAPI from "../../api/authAPI";
+import { required } from "../../helpers/validate";
 import Button from "../Common/Button";
 import FormField from "../Common/Form/FormField";
 import Form from "../Common/Form/Form";
-import authAPI from "../../api/authAPI";
+import Logo from "../Navbar/Logo";
 
 const errorFromCode = {
   "auth/invalid-email": {
@@ -59,38 +59,45 @@ const Login = (props) => {
     });
   };
 
-  return props.isAuth ? (
-    <Redirect to="/account" />
-  ) : (
-    <LoginForm
-      onSubmit={handleSubmit}
-      commonError={errors.commonError}
-      fieldErrors={errors.fieldErrors}
-    >
-      <Title>Войти</Title>
-      <FormField
-        fieldType="input"
-        type="text"
-        name="email"
-        label="E-mail"
-        validators={[required, minLength]}
-        autoFocus
-      />
-      <FormField
-        fieldType="input"
-        type="password"
-        name="password"
-        label="Пароль"
-        validators={[required]}
-      />
-      <Button full>Войти</Button>
-    </LoginForm>
+  return (
+    <LoginPage>
+      <LoginForm
+        onSubmit={handleSubmit}
+        commonError={errors.commonError}
+        fieldErrors={errors.fieldErrors}
+      >
+        <Title>Войти в приложение</Title>
+        <FormField
+          fieldType="input"
+          type="text"
+          name="email"
+          label="E-mail"
+          validators={[required]}
+          autoFocus
+        />
+        <FormField
+          fieldType="input"
+          type="password"
+          name="password"
+          label="Пароль"
+          validators={[required]}
+        />
+        <Button full>Войти</Button>
+      </LoginForm>
+    </LoginPage>
   );
 };
+const LoginPage = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 32px;
+`;
 
 const LoginForm = styled(Form)`
-  max-width: 400px;
+  max-width: 360px;
   margin: 0 auto;
+  width: 100%;
   background-color: ${({ theme }) => theme.bg.base};
   border-radius: 8px;
   padding: 32px;

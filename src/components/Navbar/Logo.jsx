@@ -21,6 +21,8 @@ const Logo = () => {
 };
 
 const StyledLogo = styled.div`
+  color: ${({ theme }) => theme.text.primary};
+
   svg {
     width: 28px;
     height: auto;

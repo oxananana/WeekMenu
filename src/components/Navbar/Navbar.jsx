@@ -25,11 +25,7 @@ const Navbar = (props) => {
             </Nav>
           </NavbarLeft>
           <NavbarRight>
-            {props.isAuth ? (
-              <NavLink to="/account">Аккаунт</NavLink>
-            ) : (
-              <NavLink to="/login">Войти</NavLink>
-            )}
+            <NavLink to="/account">Аккаунт</NavLink>
             <ThemeSwitch onClick={props.toggleTheme}>
               {props.theme === "light" ? (
                 <Icon name="sun" />
@@ -45,11 +41,7 @@ const Navbar = (props) => {
 };
 
 Navbar.propTypes = {
-  toggleTheme: PropTypes.func,
-};
-
-Navbar.defaultProps = {
-  toggleTheme: () => {},
+  toggleTheme: PropTypes.func.isRequired,
 };
 
 const NavbarContainer = styled.div`

@@ -14,10 +14,3 @@ export const required = (value) => {
   }
   return "Пожалуйста, заполните поле.";
 };
-
-export const minLength = (value) => {
-  if (value.length >= 5) {
-    return undefined;
-  }
-  return "Минимум 5 символов";
-};
