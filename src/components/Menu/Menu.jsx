@@ -286,6 +286,7 @@ const MenuBoard = styled.div`
     padding: 0;
     display: flex;
     overflow: auto;
+    padding-bottom: 12px;
     max-width: calc((260px * 5) + (264px * 2));
   `}
 `;

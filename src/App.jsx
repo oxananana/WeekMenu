@@ -1,5 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Route, Redirect, Switch, useHistory } from "react-router-dom";
+import {
+  Route,
+  Redirect,
+  Switch,
+  useHistory,
+  useLocation,
+} from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import * as firebase from "firebase/app";
 import "firebase/auth";
@@ -25,13 +31,14 @@ const App = () => {
   const [theme, setTheme] = useState("light");
   const [user, setUser] = useState({ isAuth: false });
   const history = useHistory();
+  const location = useLocation();
+
+  const { recipes, setRecipes } = useContext(RecipesContext);
+  const { categories, setCategories } = useContext(CategoriesContext);
 
   const [data, isLoading] = useQuery(() => {
     return api.getInitialData();
   }, {});
-
-  const { recipes, setRecipes } = useContext(RecipesContext);
-  const { categories, setCategories } = useContext(CategoriesContext);
 
   const [menu, setMenu] = useState(data.menu);
 
@@ -45,13 +52,13 @@ const App = () => {
     return firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         setUser({ ...user, isAuth: true });
-        history.push("/menu");
+        history.push(location.pathname);
       } else {
         setUser({ isAuth: false });
         history.push("/login");
       }
     });
-  }, []);
+  }, []); // eslint-disable-line
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
