@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import cn from "classnames";
 import PropTypes from "prop-types";
+import mediaQuery from "../../theme/mediaQuery";
 import Meal from "./Meal";
 
 const DayMenu = (props) => {
@@ -52,21 +53,32 @@ DayMenu.propTypes = {
 };
 
 const StyledDayMenu = styled.div`
-  width: 260px;
   min-width: 240px;
   padding: 0 4px;
   display: flex;
   flex-direction: column;
 
-  &:first-child {
-    padding-left: 8px;
-    width: 264px;
+  & + & {
+    margin-top: 16px;
   }
 
-  &:last-child {
-    padding-right: 8px;
-    width: 264px;
-  }
+  ${mediaQuery.greaterThen("medium")`
+    width: 260px;
+
+    & + & {
+      margin-top: 0;
+    }
+
+    &:first-child {
+      padding-left: 8px;
+      width: 264px;
+    }
+
+    &:last-child {
+      padding-right: 8px;
+      width: 264px;
+    }
+  `}
 `;
 
 const DayDate = styled.div`

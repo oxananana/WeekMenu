@@ -46,9 +46,6 @@ Category.propTypes = {
 
 const StyledCategory = styled.div`
   flex: 1;
-  & + & {
-    margin-top: 32px;
-  }
 `;
 
 const Dishes = styled.div``;

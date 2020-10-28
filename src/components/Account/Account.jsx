@@ -21,7 +21,7 @@ const Account = (props) => {
 
 const SignOutBtn = styled.div`
   display: inline-block;
-  margin-top: 32px;
+  margin-top: 20px;
   color: ${({ theme }) => theme.text.primary};
 
   &:hover,

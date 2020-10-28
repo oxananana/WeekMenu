@@ -73,6 +73,7 @@ const imgContainerCss = `
   border-radius: 4px 0 0 4px;
   height: 60px;
   width: 60px;
+  min-width: 60px;
   margin-right: 12px;
 `;
 

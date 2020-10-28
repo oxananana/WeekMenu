@@ -4,6 +4,7 @@ import styled from "styled-components";
 // import cn from "classnames";
 import PropTypes from "prop-types";
 import DOMPurify from "dompurify";
+import mediaQuery from "../../theme/mediaQuery";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 // import { weekDaysNamesRU } from "../../constants";
 import { getRecipeById } from "../../selectors/selectors";
@@ -105,11 +106,15 @@ RecipePage.propTypes = {
 
 const StyledRecipe = styled.div`
   margin: 0 auto;
-  display: flex;
   max-width: 1200px;
-  padding: 32px;
   border-radius: 4px;
   background-color: ${({ theme }) => theme.bg.base};
+  padding: 24px;
+
+  ${mediaQuery.greaterThen("medium")`
+    display: flex;
+    padding: 32px;
+  `}
 `;
 
 const ResipeDescription = styled.div`
@@ -117,10 +122,20 @@ const ResipeDescription = styled.div`
 `;
 
 const imgContainerCss = `
-  width: 400px;
+  width: 100%;
   height: 400px;
   border-radius: 8px;
-  margin-right: 32px;
+  margin-bottom: 24px;
+
+  ${mediaQuery.greaterThen("medium")`
+    margin-right: 32px;
+    margin-bottom: 0;
+    width: 50%;
+  `}
+
+  ${mediaQuery.greaterThen("large")`
+    width: 400px;
+  `}
 `;
 
 const RecipeImg = styled.div`

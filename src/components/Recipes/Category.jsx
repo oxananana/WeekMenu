@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import mediaQuery from "../../theme/mediaQuery";
 import { getCategoryRecipes } from "../../selectors/selectors";
 import Recipe from "./Recipe";
 
@@ -26,7 +27,7 @@ const Category = (props) => {
           })}
         </RecipeList>
       ) : (
-        <div>Здесь пока нет рецептов</div>
+        <NoRecipes>Здесь пока нет рецептов</NoRecipes>
       )}
     </StyledCategory>
   );
@@ -47,22 +48,38 @@ const StyledCategory = styled.div`
     margin-top: 32px;
   }
 `;
+
 const CategoryTitle = styled.div`
   font-weight: bold;
   font-size: 20px;
-  margin-bottom: 20px;
 `;
 
 const RecipeList = styled.div`
   display: flex;
-  margin: 0 -12px;
+  flex-wrap: wrap;
+  margin: 8px -12px 0;
 `;
 
 const RecipeContainer = styled.div`
-  padding: 0 12px;
-  width: 25%;
-  min-width: 280px;
   display: flex;
+  padding: 12px;
+  width: 100%;
+
+  ${mediaQuery.greaterThen("medium")`
+    width: 50%;
+  `}
+
+  ${mediaQuery.greaterThen("large")`
+    width: 25%;
+  `}
+
+  ${mediaQuery.greaterThen("xlarge")`
+    width: 20%;
+  `}
+`;
+
+const NoRecipes = styled.div`
+  margin-top: 16px;
 `;
 
 export default Category;

@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Container } from "./Container";
+import mediaQuery from "../../theme/mediaQuery";
 
 const InnerPage = (props) => {
   return (
@@ -11,8 +12,16 @@ const InnerPage = (props) => {
 };
 
 export const Inner = styled.div`
-  padding: 32px 0;
+  padding: 16px 0;
   flex: 1;
+
+  ${mediaQuery.greaterThen("small")`
+    padding: 24px 0;
+  `}
+
+  ${mediaQuery.greaterThen("medium")`
+    padding: 32px 0;
+  `}
 `;
 
 export default InnerPage;

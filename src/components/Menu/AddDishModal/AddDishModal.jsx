@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import mediaQuery from "../../../theme/mediaQuery";
 import { arrayToEnumString } from "../../../helpers/helpers";
 import { defaultCategoryId, weekDaysNames } from "../../../constants";
 import { RecipesContext, CategoriesContext } from "../../../index";
@@ -103,7 +104,9 @@ AddDishModal.propTypes = {
 };
 
 const Dishes = styled.div`
-  display: flex;
+  ${mediaQuery.greaterThen("medium")`
+    display: flex;
+  `}
 `;
 
 const SelectedDishes = styled.div`

@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import mediaQuery from "../../theme/mediaQuery";
 // import cn from "classnames";
 // import { weekDaysNamesRU } from "../../constants";
 import { arrayToEnumString } from "../../helpers/helpers";
@@ -56,20 +57,6 @@ Recipe.propTypes = {
   recipe: PropTypes.object,
 };
 
-// Recipe.propTypes = PropTypes.shape({
-//   id: PropTypes.string,
-//   title: PropTypes.string,
-//   imgSrc: PropTypes.string,
-//   categoryId: PropTypes.string,
-//   schedule: PropTypes.oneOfType(
-//     PropTypes.array,
-//     PropTypes.arrayOf(
-//       PropTypes.exact({ name: PropTypes.string, isActive: PropTypes.bool })
-//     )
-//   ),
-//   ingredients: PropTypes.arrayOf(PropTypes.string),
-// });
-
 Recipe.defaultProps = {
   recipe: {
     schedule: [],
@@ -95,8 +82,12 @@ const RecipeLink = styled(NavLink)`
 `;
 
 const imgContainerCss = `
-  height: 200px;
+  height: 220px;
   border-radius: 8px 8px 0 0;
+
+  ${mediaQuery.greaterThen("xlarge")`
+    height: 250px;
+  `}
 `;
 
 const RecipeImg = styled.div`

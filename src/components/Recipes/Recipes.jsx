@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { NavLink, useParams } from "react-router-dom";
 import cn from "classnames";
 import PropTypes from "prop-types";
+import mediaQuery from "../../theme/mediaQuery";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import Icon from "../Common/Icon";
 import Category from "./Category";
@@ -58,7 +59,11 @@ const RecipesNavbar = styled.div`
   margin-bottom: 32px;
   border-radius: 8px;
   border-radius: 8px;
-  padding: 0 24px;
+  padding: 6px 16px;
+
+  ${mediaQuery.greaterThen("medium")`
+    padding: 0 24px;
+  `}
 `;
 
 const CategoryNav = styled.ul`
@@ -71,9 +76,13 @@ const CategoryNavItem = styled.li`
   margin-right: 24px;
 
   a {
-    padding: 12px 0;
+    padding: 8px 0;
     display: block;
     border-bottom: 2px solid transparent;
+
+    ${mediaQuery.greaterThen("medium")`
+      padding: 12px 0;
+    `}
   }
 
   a:hover,
@@ -89,9 +98,13 @@ const CategoryNavItem = styled.li`
 
 const AddRecipeLink = styled(NavLink)`
   color: ${({ theme }) => theme.text.primary};
-  padding: 12px 0;
+  padding: 8px 0;
   display: inline-flex;
   align-items: center;
+
+  ${mediaQuery.greaterThen("medium")`
+    padding: 12px 0;
+  `}
 
   &:hover {
     color: ${({ theme }) => theme.text.primaryHover};

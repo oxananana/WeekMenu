@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import mediaQuery from "../../theme/mediaQuery";
 import { Container } from "../Common/Container";
 import Logo from "./Logo";
 import Icon from "../Common/Icon";
@@ -72,9 +73,17 @@ const Nav = styled.ul`
 const NavItem = styled.li`
   a {
     display: block;
-    padding: 16px 0;
-    margin-left: 32px;
+    padding: 16px 0 14px;
+    margin-left: 16px;
     border-bottom: 2px solid transparent;
+
+    ${mediaQuery.greaterThen("small")`
+      margin-left: 20px;
+   `}
+
+    ${mediaQuery.greaterThen("medium")`
+      margin-left: 32px;
+   `}
 
     &.active {
       border-color: ${({ theme }) => theme.bg.primary};
@@ -94,7 +103,6 @@ const NavbarRight = styled.div`
 
 const ThemeSwitch = styled.span`
   border-radius: 50%;
-  padding: 4px;
   margin-left: 16px;
 
   &:hover {

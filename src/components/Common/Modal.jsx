@@ -1,6 +1,7 @@
 import React, { useLayoutEffect } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import mediaQuery from "../../theme/mediaQuery";
 import Portal from "./Portal";
 import Icon from "./Icon";
 import Button from "./Button";
@@ -75,17 +76,27 @@ const ModalContainer = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: 60px 24px;
+  padding: 16px;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
   z-index: 1000;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  ${mediaQuery.greaterThen("medium")`
+    padding:  24px;
+  `}
+
+  ${mediaQuery.greaterThen("large")`
+    padding: 60px 24px;
+  `}
 `;
 
 const ModalOverlay = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -103,21 +114,33 @@ const ModalDialog = styled.div`
 `;
 
 const ModalHeader = styled.div`
-  padding: 16px 24px;
+  padding: 16px;
   font-weight: bold;
   font-size: 18px;
   border-bottom: 1px solid ${({ theme }) => theme.border.base};
+
+  ${mediaQuery.greaterThen("medium")`
+    padding: 16px 24px;
+  `}
 `;
 
 const ModalBody = styled.div`
-  padding: 24px;
+  padding: 16px;
+
+  ${mediaQuery.greaterThen("medium")`
+    padding: 24px;
+  `}
 `;
 
 const ModalFooter = styled.div`
-  padding: 16px 24px;
+  padding: 16px;
   display: flex;
   justify-content: space-between;
   border-top: 1px solid ${({ theme }) => theme.border.base};
+
+  ${mediaQuery.greaterThen("medium")`
+    padding: 16px 24px;
+  `}
 `;
 
 const CloseIcon = styled.span`

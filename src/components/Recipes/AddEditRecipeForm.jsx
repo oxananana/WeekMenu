@@ -3,6 +3,7 @@ import styled from "styled-components";
 import cn from "classnames";
 import * as firebase from "firebase/app";
 import "firebase/storage";
+import mediaQuery from "../../theme/mediaQuery";
 import { arrayToEnumString, stringToArray } from "../../helpers/helpers";
 import { defaultCategoryId } from "../../constants";
 import { required } from "../../helpers/validate";
@@ -114,22 +115,36 @@ const AddEditRecipeForm = (props) => {
 };
 
 const FormContainer = styled(Form)`
-  display: flex;
   margin: 0 auto;
   max-width: 1200px;
-  padding: 32px;
   border-radius: 8px;
   background-color: ${({ theme }) => theme.bg.base};
+  padding: 24px;
+
+  ${mediaQuery.greaterThen("medium")`
+    display: flex;
+    padding: 32px;
+  `}
 `;
 
 const RecipeImgContainer = styled.div`
-  position: relative;
-  width: 400px;
-  height: 400px;
   background-color: ${({ theme }) => theme.bg.baseLight};
-  border-radius: 8px;
-  margin-right: 32px;
   overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 400px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+
+  ${mediaQuery.greaterThen("medium")`
+    margin-right: 32px;
+    margin-bottom: 0;
+    width: 50%;
+  `}
+
+  ${mediaQuery.greaterThen("large")`
+    width: 400px;
+  `}
 `;
 
 const Overlay = styled.div`

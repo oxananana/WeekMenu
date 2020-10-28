@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import mediaQuery from "../../theme/mediaQuery";
 import authAPI from "../../api/authAPI";
 import { required } from "../../helpers/validate";
 import Button from "../Common/Button";
 import FormField from "../Common/Form/FormField";
 import Form from "../Common/Form/Form";
-import Logo from "../Navbar/Logo";
 
 const errorFromCode = {
   "auth/invalid-email": {
@@ -87,11 +87,16 @@ const Login = (props) => {
     </LoginPage>
   );
 };
+
 const LoginPage = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
-  padding: 32px;
+  padding: 20px;
+
+  ${mediaQuery.greaterThen("small")`
+    padding: 32px;
+  `}
 `;
 
 const LoginForm = styled(Form)`
@@ -100,7 +105,11 @@ const LoginForm = styled(Form)`
   width: 100%;
   background-color: ${({ theme }) => theme.bg.base};
   border-radius: 8px;
-  padding: 32px;
+  padding: 20px;
+
+  ${mediaQuery.greaterThen("small")`
+    padding: 32px;
+  `}
 `;
 
 const Title = styled.div`

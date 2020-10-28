@@ -109,9 +109,10 @@ const StyledDish = styled.div`
 `;
 
 const imgContainerCss = `
-border-radius: 4px 0 0 4px;
-height: 60px;
-width: 60px;
+  border-radius: 4px 0 0 4px;
+  height: 60px;
+  width: 60px;
+  min-width: 60px;
 `;
 
 const DishImg = styled.div`

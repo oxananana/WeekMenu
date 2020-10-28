@@ -71,6 +71,10 @@ const normalize = css`
     line-height: 1.15;
     margin: 0;
   }
+  input,
+  textarea {
+    -webkit-appearance: none;
+  }
   button,
   input {
     overflow: visible;
