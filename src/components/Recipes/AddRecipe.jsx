@@ -36,10 +36,10 @@ const AddRecipe = (props) => {
           categories={categories}
           buttons={
             <>
-              <Button type="submit">Добавить</Button>
               <Button invert to="/recipes">
                 Отмена
               </Button>
+              <Button type="submit">Добавить</Button>
             </>
           }
         />

@@ -16,6 +16,7 @@ const Meal = (props) => {
     removeDish,
     addDish,
     toggleDishIsDone,
+    animatedDishes,
   } = props;
 
   const { recipes } = useContext(RecipesContext);
@@ -52,6 +53,7 @@ const Meal = (props) => {
                     dishes={dishesFull}
                     removeDish={removeDish}
                     toggleDishIsDone={toggleDishIsDone}
+                    animatedDishes={animatedDishes}
                   />
                   {provided.placeholder}
                 </>
@@ -78,6 +80,7 @@ Meal.propTypes = {
   removeDish: PropTypes.func.isRequired,
   addDish: PropTypes.func.isRequired,
   toggleDishIsDone: PropTypes.func.isRequired,
+  animatedDishes: PropTypes.object.isRequired,
 };
 
 const StyledMeal = styled.div`

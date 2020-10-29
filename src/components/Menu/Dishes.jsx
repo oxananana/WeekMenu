@@ -4,11 +4,23 @@ import PropTypes from "prop-types";
 import Dish from "./Dish";
 
 const Dishes = React.memo((props) => {
-  const { day, dishes, mealId, removeDish, toggleDishIsDone } = props;
+  const {
+    day,
+    dishes,
+    mealId,
+    removeDish,
+    toggleDishIsDone,
+    animatedDishes,
+  } = props;
 
   return (
     <StyledDishes>
       {dishes.map((dish, index) => {
+        let isNew;
+        if (animatedDishes.new) {
+          isNew = animatedDishes.new.some((id) => id === mealId + dish.id);
+        }
+
         return (
           <Dish
             key={dish.id + index}
@@ -19,6 +31,8 @@ const Dishes = React.memo((props) => {
             isDone={dish.isDone}
             removeDish={removeDish}
             toggleDishIsDone={toggleDishIsDone}
+            isNew={isNew}
+            animatedDishes={animatedDishes}
           />
         );
       })}
@@ -32,6 +46,7 @@ Dishes.propTypes = {
   mealId: PropTypes.string.isRequired,
   removeDish: PropTypes.func.isRequired,
   toggleDishIsDone: PropTypes.func.isRequired,
+  animatedDishes: PropTypes.object.isRequired,
 };
 
 const StyledDishes = styled.div``;

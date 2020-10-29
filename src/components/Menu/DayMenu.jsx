@@ -6,7 +6,14 @@ import mediaQuery from "../../theme/mediaQuery";
 import Meal from "./Meal";
 
 const DayMenu = (props) => {
-  const { day, meals, addDish, removeDish, toggleDishIsDone } = props;
+  const {
+    day,
+    meals,
+    addDish,
+    removeDish,
+    toggleDishIsDone,
+    animatedDishes,
+  } = props;
   const orderedMeals = meals.sort((mealFirst, mealSecond) => {
     if (mealFirst.order > mealSecond.order) {
       return 1;
@@ -26,6 +33,7 @@ const DayMenu = (props) => {
         {orderedMeals.map((meal) => {
           return (
             <Meal
+              animatedDishes={animatedDishes}
               day={day.dateString}
               id={meal.id}
               title={meal.title}
@@ -50,6 +58,7 @@ DayMenu.propTypes = {
   addDish: PropTypes.func.isRequired,
   removeDish: PropTypes.func.isRequired,
   toggleDishIsDone: PropTypes.func.isRequired,
+  animatedDishes: PropTypes.object.isRequired,
 };
 
 const StyledDayMenu = styled.div`

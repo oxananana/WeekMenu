@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { dishPropTypes } from "./prop-types";
 import { Draggable } from "react-beautiful-dnd";
-import styled from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 import Icon from "../Common/Icon";
 
 const Dish = (props) => {
@@ -14,20 +14,40 @@ const Dish = (props) => {
     isDone,
     removeDish,
     toggleDishIsDone,
+    isNew,
   } = props;
   const { id, title, imgSrc } = dish;
+
+  const [isRemoved, setIsRemoved] = useState(false);
+
+  useEffect(() => {
+    return () => {};
+  }, []);
+
+  const handleRemoveDish = () => {
+    setIsRemoved(true);
+  };
+
+  const onAnimationEnd = () => {
+    if (isRemoved) {
+      removeDish(day, mealId, id);
+    }
+  };
 
   return (
     <Draggable draggableId={id + mealId + index} index={index}>
       {(provided, snapshot) => {
         return (
           <StyledDish
-            isDragging={snapshot.isDragging}
             ref={provided.innerRef}
+            isDragging={snapshot.isDragging}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
+            isNew={isNew}
+            isRemoved={isRemoved}
+            onAnimationEnd={onAnimationEnd}
           >
-            <RemoveIcon onClick={() => removeDish(day, mealId, id)}>
+            <RemoveIcon onClick={handleRemoveDish}>
               <Icon name="delete" />
             </RemoveIcon>
             <CoockingStatus
@@ -89,6 +109,39 @@ const RemoveIcon = styled.span`
   }
 `;
 
+const fadeOut = keyframes`
+ 0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+`;
+
+const appearance = (props) => keyframes`
+ 0% {
+    box-shadow: 0 0 0 0 ${props.startColor};
+  }
+  70% {
+    box-shadow: 0 0 0 10px ${props.endColor};
+  }
+  100% {
+    box-shadow: 0 0 0 0 ${props.endColor};
+  }
+`;
+
+const appearanceAnimation = (color) =>
+  css`
+    ${appearance(color)} .8s ease-out
+  `;
+
+const fadeOutAnimation = css`
+  ${fadeOut} .2s ease-out forwards
+`;
+
 const StyledDish = styled.div`
   background-color: ${({ theme }) => theme.bg.base};
   display: flex;
@@ -98,6 +151,14 @@ const StyledDish = styled.div`
   position: relative;
   box-shadow: ${({ isDragging, theme }) =>
     isDragging && theme.shadow.draggable};
+
+  animation: ${({ isNew, theme }) =>
+    isNew &&
+    appearanceAnimation({
+      startColor: theme.bg.pulseStart,
+      endColor: theme.bg.pulseEnd,
+    })};
+  animation: ${({ isRemoved }) => isRemoved && fadeOutAnimation};
 
   &:hover {
     cursor: pointer;

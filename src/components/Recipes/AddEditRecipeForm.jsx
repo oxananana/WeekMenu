@@ -132,7 +132,7 @@ const RecipeImgContainer = styled.div`
   overflow: hidden;
   position: relative;
   width: 100%;
-  height: 400px;
+  height: 300px;
   border-radius: 8px;
   margin-bottom: 24px;
 
@@ -143,6 +143,7 @@ const RecipeImgContainer = styled.div`
   `}
 
   ${mediaQuery.greaterThen("large")`
+    height: 400px;
     width: 400px;
   `}
 `;

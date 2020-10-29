@@ -31,10 +31,10 @@ const EditRecipe = (props) => {
       categories={categories}
       buttons={
         <>
-          <Button type="submit">Сохранить</Button>
           <Button invert onClick={toggleEditMode}>
             Отмена
           </Button>
+          <Button type="submit">Сохранить</Button>
         </>
       }
     />

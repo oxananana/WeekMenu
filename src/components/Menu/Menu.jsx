@@ -16,6 +16,8 @@ const Menu = (props) => {
   const { menu, setMenu } = props;
   const weekDays = returnNextDays();
 
+  const [animatedDishes, setAnimatedDishes] = useState({});
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [editableDay, setEditableDay] = useState("");
   const [editableMeal, setEditableMeal] = useState("");
@@ -37,6 +39,8 @@ const Menu = (props) => {
   };
 
   const removeDish = (day, mealId, dishId) => {
+    setAnimatedDishes({ removed: mealId + dishId });
+
     const currentMeals = getMealsByDay(menu, day);
     const currentMeal = currentMeals[mealId];
     const currentDishes = currentMeal.dishes || [];
@@ -96,6 +100,8 @@ const Menu = (props) => {
   };
 
   const handleSubmit = (day, mealId, selectedDishesIds) => {
+    setAnimatedDishes({ new: selectedDishesIds.map((id) => mealId + id) });
+
     const currentMeals = getMealsByDay(menu, day);
     const currentMeal = currentMeals[mealId];
     const currentDishes = currentMeal.dishes || [];
@@ -218,6 +224,7 @@ const Menu = (props) => {
 
             return (
               <DayMenu
+                animatedDishes={animatedDishes}
                 key={index}
                 day={day}
                 meals={meals}

@@ -38,7 +38,7 @@ const FilterNav = styled.ul`
   border-radius: 4px;
   padding: 4px;
   min-width: 120px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   display: flex;
   flex-wrap: wrap;
 
@@ -51,7 +51,7 @@ const FilterNav = styled.ul`
 `;
 
 const FilterNavItem = styled.li`
-  padding: 8px 0;
+  padding: 12px 0;
   margin: 0 12px;
   display: block;
   border-bottom: 2px solid transparent;

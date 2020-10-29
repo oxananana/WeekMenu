@@ -76,13 +76,9 @@ const CategoryNavItem = styled.li`
   margin-right: 24px;
 
   a {
-    padding: 8px 0;
+    padding: 12px 0;
     display: block;
     border-bottom: 2px solid transparent;
-
-    ${mediaQuery.greaterThen("medium")`
-      padding: 12px 0;
-    `}
   }
 
   a:hover,

@@ -114,13 +114,13 @@ const ModalDialog = styled.div`
 `;
 
 const ModalHeader = styled.div`
-  padding: 16px;
+  padding: 16px 32px 16px 16px;
   font-weight: bold;
   font-size: 18px;
   border-bottom: 1px solid ${({ theme }) => theme.border.base};
 
   ${mediaQuery.greaterThen("medium")`
-    padding: 16px 24px;
+    padding: 16px 40px 16px 24px;
   `}
 `;
 
