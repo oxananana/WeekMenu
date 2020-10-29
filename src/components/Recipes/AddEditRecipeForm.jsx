@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import cn from "classnames";
 import * as firebase from "firebase/app";
 import "firebase/storage";
 import mediaQuery from "../../theme/mediaQuery";
@@ -23,6 +22,8 @@ const AddEditRecipeForm = (props) => {
   };
   const [imgSrc, setImgSrc] = useState(props.imgSrc || null);
   const [imgIsLoading, setImgIsLoading] = useState(false);
+  const [isUploadError, setIsUploadError] = useState(false);
+
   const imgFileInput = React.createRef();
 
   const handleImgFileChange = () => {
@@ -38,12 +39,17 @@ const AddEditRecipeForm = (props) => {
         },
         (error) => {
           console.log(error);
+          setImgIsLoading(false);
+          setIsUploadError(true);
         },
         () => {
           console.log("успешно загружено изображение");
           uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
             setImgSrc(downloadURL);
             setImgIsLoading(false);
+            if (isUploadError) {
+              setIsUploadError(false);
+            }
           });
         }
       );
@@ -61,12 +67,13 @@ const AddEditRecipeForm = (props) => {
     <FormContainer onSubmit={handleSubmit} initialValues={initialValues}>
       <RecipeImgContainer>
         {imgSrc && <RecipeImg src={imgSrc} />}
-        <Overlay className={cn({ "overlay-img": imgSrc })}>
+        <Overlay isOverlayImg={imgSrc} isUploadError={isUploadError}>
           {imgIsLoading ? (
             <Loader invert size="48" />
           ) : (
             <label htmlFor="img">
               <Icon name="camera_plus" />
+              <Note>Размер файла не должен превышать 1 Мб.</Note>
               <InputFile
                 type="file"
                 name="img"
@@ -148,32 +155,53 @@ const RecipeImgContainer = styled.div`
   `}
 `;
 
+const Note = styled.div`
+  font-size: 14px;
+  margin: 8px auto 0;
+  max-width: 170px;
+  text-align: center;
+
+  .overlay-img & {
+    color: ${({ theme, isUploadError }) =>
+      isUploadError ? theme.text.error : theme.text.baseInvert};
+    opacity: 1;
+  }
+`;
+
 const Overlay = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  background-color: ${({ theme }) => theme.img.overlay};
+  background-color: ${({ theme, isOverlayImg }) =>
+    isOverlayImg ? theme.img.overlayImg : theme.img.overlay};
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 
-  &.overlay-img {
-    background-color: ${({ theme }) => theme.img.overlayImg};
-  }
-
   label {
     svg {
+      margin: 0 auto;
       width: 48px;
       height: 48px;
-      fill: ${({ theme }) => theme.img.overlayIcon};
+      fill: ${({ theme, isOverlayImg }) =>
+        isOverlayImg ? theme.img.overlayIcon : theme.text.grayLight};
       cursor: pointer;
 
       &:hover {
         opacity: 0.8;
       }
     }
+  }
+
+  ${Note} {
+    color: ${({ theme, isUploadError, isOverlayImg }) =>
+      isUploadError
+        ? theme.text.error
+        : isOverlayImg
+        ? theme.text.baseInvert
+        : theme.text.gray};
   }
 `;
 
@@ -190,6 +218,7 @@ const RecipeImg = styled.img`
 const Fields = styled.div`
   flex: 1;
 `;
+
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;

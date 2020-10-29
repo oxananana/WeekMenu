@@ -27,7 +27,6 @@ export const lightTheme = {
   text: {
     base: light.baseText,
     baseInvert: "#fff",
-    navbar: "#fff",
     gray: `rgba(${light.baseTextRgba}, .7)`,
     grayLight: `rgba(${light.baseTextRgba}, .4)`,
     primary: light.primary,
@@ -49,7 +48,7 @@ export const lightTheme = {
   },
   img: {
     overlay: "rgba(0,0,0,.05)",
-    overlayImg: "rgba(0,0,0,.4)",
+    overlayImg: "rgba(0,0,0,.5)",
     overlayIcon: "#fff",
   },
 };
@@ -61,7 +60,7 @@ const dark = {
   primaryHover: "rgba(93,74,198,.8)",
 
   baseText: "rgba(255,255,255,.7)",
-  baseTextRgba: "255,255,255",
+  baseTextRgba: "rgb(255,255,255)",
   baseLightBg: "#26282b",
 };
 
@@ -81,8 +80,7 @@ export const darkTheme = {
   },
   text: {
     base: dark.baseText,
-    baseInvert: dark.baseTextRgba,
-    navbar: dark.baseTextRgba,
+    baseInvert: dark.baseText,
     gray: `rgba(${dark.baseTextRgba}, .5)`,
     grayLight: `rgba(${dark.baseTextRgba}, .5)`,
     primary: dark.primary,
@@ -104,7 +102,7 @@ export const darkTheme = {
   },
   img: {
     overlay: "rgba(255,255,255,.04)",
-    overlayImg: "rgba(0,0,0,.4)",
+    overlayImg: "rgba(0,0,0,.5)",
     overlayIcon: dark.baseText,
   },
 };
