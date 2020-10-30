@@ -1,34 +1,60 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+// const Loader = (props) => {
+//   return props.full ? (
+//     <LoaderContainer>
+//       <LoaderIcon size="32" />
+//     </LoaderContainer>
+//   ) : (
+//     <LoaderIcon size={props.size} />
+//   );
+// };
 
 const Loader = (props) => {
-  return props.full ? (
-    <LoaderContainer>
-      <LoaderIcon size="32" />
-    </LoaderContainer>
-  ) : (
-    <LoaderIcon size={props.size} />
-  );
-};
-
-const LoaderIcon = (props) => {
-  return (
-    <StyledIcon {...props}>
+  return props.circle ? (
+    <LoaderCircle {...props}>
       <svg viewBox="0 0 50 50">
         <circle cx="25" cy="25" r="20"></circle>
       </svg>
-    </StyledIcon>
+    </LoaderCircle>
+  ) : (
+    <LoaderBarContainer>
+      <LoaderBar />
+    </LoaderBarContainer>
   );
 };
 
-const LoaderContainer = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+const LoaderBarContainer = styled.div`
+  position: fixed;
+  z-index: 1001;
+  left: 0;
+  top: 0;
+  height: 2px;
+  width: 100%;
+  background-color: ${({ theme }) => theme.bg.loader};
 `;
 
-const StyledIcon = styled.span`
+const bar = keyframes`
+ 0% {
+    width: 0;
+  }
+  40% {
+    width: 50%;
+  }
+  100% {
+    width: 100%;
+  }
+`;
+
+const LoaderBar = styled.div`
+  height: 2px;
+  width: 0;
+  background-color: ${({ theme }) => theme.bg.primary};
+  animation: ${bar} 3s ease-out infinite;
+`;
+
+const LoaderCircle = styled.span`
   animation: rotate 2s linear infinite;
   width: ${(props) => props.size || 16}px;
   height: ${(props) => props.size || 16}px;
@@ -42,8 +68,7 @@ const StyledIcon = styled.span`
   circle {
     fill: none;
     stroke-width: 5;
-    stroke: ${({ theme, invert }) =>
-      invert ? theme.bg.baseLight : theme.bg.primary};
+    stroke: ${({ theme }) => theme.bg.baseLight};
     stroke-linecap: round;
     animation: dash 1s ease-in-out infinite;
   }

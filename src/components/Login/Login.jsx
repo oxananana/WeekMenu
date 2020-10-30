@@ -8,26 +8,6 @@ import FormField from "../Common/Form/FormField";
 import Form from "../Common/Form/Form";
 import Loader from "../Common/Loader";
 
-const errorFromCode = {
-  "auth/invalid-email": {
-    message: "Некорректный e-mail.",
-    isCommon: false,
-    field: "email",
-  },
-  "auth/wrong-password": {
-    message: "Неверный e-mail или пароль.",
-    isCommon: true,
-  },
-  "auth/user-not-found": {
-    message: "Неверный e-mail или пароль.",
-    isCommon: true,
-  },
-  "auth/too-many-requests": {
-    message: "Превышено количество попыток входа. Попробуйте войти позже.",
-    isCommon: true,
-  },
-};
-
 const Login = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -71,7 +51,7 @@ const Login = (props) => {
   };
 
   return isLoading ? (
-    <Loader full />
+    <Loader />
   ) : (
     <LoginPage>
       <LoginForm
@@ -99,6 +79,26 @@ const Login = (props) => {
       </LoginForm>
     </LoginPage>
   );
+};
+
+const errorFromCode = {
+  "auth/invalid-email": {
+    message: "Некорректный e-mail.",
+    isCommon: false,
+    field: "email",
+  },
+  "auth/wrong-password": {
+    message: "Неверный e-mail или пароль.",
+    isCommon: true,
+  },
+  "auth/user-not-found": {
+    message: "Неверный e-mail или пароль.",
+    isCommon: true,
+  },
+  "auth/too-many-requests": {
+    message: "Превышено количество попыток входа. Попробуйте войти позже.",
+    isCommon: true,
+  },
 };
 
 const LoginPage = styled.div`

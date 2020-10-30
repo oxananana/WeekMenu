@@ -70,7 +70,7 @@ const AddEditRecipeForm = (props) => {
         {imgSrc && <RecipeImg src={imgSrc} />}
         <Overlay isOverlayImg={imgSrc} isUploadError={isUploadError}>
           {imgIsLoading ? (
-            <Loader invert size="48" />
+            <Loader size="48" circle />
           ) : (
             <label htmlFor="img">
               <Icon name="camera_plus" />

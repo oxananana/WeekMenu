@@ -14,6 +14,7 @@ export const lightTheme = {
   bg: {
     base: "#fff",
     baseLight: light.baseLightBg,
+    loader: "#efefef",
     primary: light.primary,
     pulseStart: "rgba(93,74,198,.2)",
     pulseEnd: "rgba(93,74,198,0)",
@@ -68,6 +69,7 @@ export const darkTheme = {
   bg: {
     base: "#2c2e31",
     baseLight: dark.baseLightBg,
+    loader: "#151515",
     primary: dark.primary,
     pulseStart: "rgba(93,74,198,.4)",
     pulseEnd: "rgba(93,74,198,0)",

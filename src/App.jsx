@@ -84,7 +84,7 @@ const App = () => {
       <GlobalStyle />
       <ErrorBoundary>
         {isLoading ? (
-          <Loader full />
+          <Loader />
         ) : (
           <>
             {user.isAuth && (
