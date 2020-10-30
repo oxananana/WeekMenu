@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { nanoid } from "nanoid";
 import * as firebase from "firebase/app";
 import "firebase/storage";
 import mediaQuery from "../../theme/mediaQuery";
@@ -29,8 +30,9 @@ const AddEditRecipeForm = (props) => {
   const handleImgFileChange = () => {
     if (imgFileInput.current.files.length) {
       const file = imgFileInput.current.files[0];
+      const fileName = nanoid() + file.type.replace("image/", ".");
 
-      const storageRef = firebase.storage().ref(`recipes/${file.name}`);
+      const storageRef = firebase.storage().ref(`recipes/${fileName}`);
       const uploadTask = storageRef.put(file);
       uploadTask.on(
         "state_changed",
@@ -38,7 +40,6 @@ const AddEditRecipeForm = (props) => {
           setImgIsLoading(true);
         },
         (error) => {
-          console.log(error);
           setImgIsLoading(false);
           setIsUploadError(true);
         },
