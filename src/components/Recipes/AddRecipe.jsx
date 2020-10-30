@@ -13,10 +13,10 @@ const AddRecipe = (props) => {
 
   const { recipes, setRecipes } = useContext(RecipesContext);
 
-  const handleSubmit = (recipe) => {
-    const recipeId = recipesAPI.getNewKey();
+  const handleSubmit = async (recipe) => {
+    const recipeId = await recipesAPI.getNewKey();
 
-    setRecipes({ ...recipes, [recipeId]: recipe });
+    setRecipes({ ...recipes, [recipeId]: { ...recipe, id: recipeId } });
     recipesAPI.setRecipe({ ...recipe, id: recipeId }).catch((error) => {
       console.log(error);
     });

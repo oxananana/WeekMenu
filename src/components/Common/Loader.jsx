@@ -1,16 +1,6 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 
-// const Loader = (props) => {
-//   return props.full ? (
-//     <LoaderContainer>
-//       <LoaderIcon size="32" />
-//     </LoaderContainer>
-//   ) : (
-//     <LoaderIcon size={props.size} />
-//   );
-// };
-
 const Loader = (props) => {
   return props.circle ? (
     <LoaderCircle {...props}>

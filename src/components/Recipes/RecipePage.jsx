@@ -123,7 +123,7 @@ const ResipeDescription = styled.div`
 
 const imgContainerCss = `
   width: 100%;
-  height: 400px;
+  height: 300px;
   border-radius: 8px;
   margin-bottom: 24px;
 
@@ -135,6 +135,7 @@ const imgContainerCss = `
 
   ${mediaQuery.greaterThen("large")`
     width: 400px;
+    height: 400px;
   `}
 `;
 

@@ -50,34 +50,35 @@ const Login = (props) => {
       });
   };
 
-  return isLoading ? (
-    <Loader />
-  ) : (
-    <LoginPage>
-      <LoginForm
-        onSubmit={handleSubmit}
-        commonError={errors.commonError}
-        fieldErrors={errors.fieldErrors}
-      >
-        <Title>Войти в приложение</Title>
-        <FormField
-          fieldType="input"
-          type="text"
-          name="email"
-          label="E-mail"
-          validators={[required]}
-          autoFocus
-        />
-        <FormField
-          fieldType="input"
-          type="password"
-          name="password"
-          label="Пароль"
-          validators={[required]}
-        />
-        <Button full>Войти</Button>
-      </LoginForm>
-    </LoginPage>
+  return (
+    <>
+      {isLoading && <Loader />}
+      <LoginPage>
+        <LoginForm
+          onSubmit={handleSubmit}
+          commonError={errors.commonError}
+          fieldErrors={errors.fieldErrors}
+        >
+          <Title>Войти в приложение</Title>
+          <FormField
+            fieldType="input"
+            type="text"
+            name="email"
+            label="E-mail"
+            validators={[required]}
+            autoFocus
+          />
+          <FormField
+            fieldType="input"
+            type="password"
+            name="password"
+            label="Пароль"
+            validators={[required]}
+          />
+          <Button full>Войти</Button>
+        </LoginForm>
+      </LoginPage>
+    </>
   );
 };
 
