@@ -6,6 +6,7 @@ import { required } from "../../helpers/validate";
 import Button from "../Common/Button";
 import FormField from "../Common/Form/FormField";
 import Form from "../Common/Form/Form";
+import Loader from "../Common/Loader";
 
 const errorFromCode = {
   "auth/invalid-email": {
@@ -28,6 +29,8 @@ const errorFromCode = {
 };
 
 const Login = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const [errors, setErrors] = useState({
     fieldErrors: null,
     commonError: null,
@@ -38,28 +41,38 @@ const Login = (props) => {
   };
 
   const login = ({ email, password }) => {
-    authAPI.login(email, password).catch((serverError) => {
-      const error = errorFromCode[serverError.code];
-      const errorMessage = error ? error.message : serverError.message;
-      const isCommonError = error ? error.isCommon : true;
+    setIsLoading(true);
 
-      if (isCommonError) {
-        setErrors({
-          ...errors,
-          commonError: errorMessage,
-          fieldErrors: null,
-        });
-      } else {
-        setErrors({
-          ...errors,
-          commonError: null,
-          fieldErrors: { email: errorMessage },
-        });
-      }
-    });
+    authAPI
+      .login(email, password)
+      .then(() => {
+        setIsLoading(false);
+      })
+      .catch((serverError) => {
+        setIsLoading(false);
+        const error = errorFromCode[serverError.code];
+        const errorMessage = error ? error.message : serverError.message;
+        const isCommonError = error ? error.isCommon : true;
+
+        if (isCommonError) {
+          setErrors({
+            ...errors,
+            commonError: errorMessage,
+            fieldErrors: null,
+          });
+        } else {
+          setErrors({
+            ...errors,
+            commonError: null,
+            fieldErrors: { email: errorMessage },
+          });
+        }
+      });
   };
 
-  return (
+  return isLoading ? (
+    <Loader full />
+  ) : (
     <LoginPage>
       <LoginForm
         onSubmit={handleSubmit}

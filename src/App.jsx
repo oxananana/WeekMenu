@@ -52,7 +52,11 @@ const App = () => {
     return firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         setUser({ ...user, isAuth: true });
-        history.push(location.pathname);
+        if (location.pathname === "/login") {
+          history.push("/menu");
+        } else {
+          history.push(location.pathname);
+        }
       } else {
         setUser({ isAuth: false });
         history.push("/login");

@@ -9,7 +9,7 @@ export const validate = (value, fnArr) => {
 };
 
 export const required = (value) => {
-  if (value) {
+  if (value && value.trim()) {
     return undefined;
   }
   return "Пожалуйста, заполните поле.";
