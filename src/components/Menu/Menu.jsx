@@ -106,9 +106,15 @@ const Menu = (props) => {
     const currentMeal = currentMeals[mealId];
     const currentDishes = currentMeal.dishes || [];
 
+    const uniqueSelectedDishesIds = selectedDishesIds.filter((id) => {
+      return !currentDishes.some((dish) => {
+        return dish.id === id;
+      });
+    });
+
     const newDishes = [
       ...currentDishes,
-      ...selectedDishesIds.map((id) => {
+      ...uniqueSelectedDishesIds.map((id) => {
         return {
           id: id,
           isDone: false,

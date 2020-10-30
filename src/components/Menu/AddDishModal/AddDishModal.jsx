@@ -18,7 +18,7 @@ const AddDishModal = (props) => {
   const dishes = recipes;
 
   const [activeCategoryId, setActiveCategoryId] = useState(defaultCategoryId);
-  const [selectedDishesIds, setDelectedDishesIds] = useState([]);
+  const [selectedDishesIds, setSelectedDishesIds] = useState([]);
 
   const handleChangeFilter = (categoryId) => {
     setActiveCategoryId(categoryId);
@@ -26,18 +26,18 @@ const AddDishModal = (props) => {
 
   const handleSelectDish = (dishId) => {
     if (selectedDishesIds.includes(dishId)) {
-      setDelectedDishesIds(
+      setSelectedDishesIds(
         selectedDishesIds.filter((id) => {
           return id !== dishId;
         })
       );
     } else {
-      setDelectedDishesIds([...selectedDishesIds, dishId]);
+      setSelectedDishesIds([...selectedDishesIds, dishId]);
     }
   };
 
   const handleSubmit = () => {
-    setDelectedDishesIds([]);
+    setSelectedDishesIds([]);
     setActiveCategoryId(defaultCategoryId);
     onSubmit(day, mealId, selectedDishesIds);
     onClose();
