@@ -116,7 +116,7 @@ const App = () => {
                     setRecipes={setRecipes}
                   />
                 ) : (
-                  <div>Меню пустое</div>
+                  <InnerPage>Меню пустое</InnerPage>
                 )}
               </Route>
               <Route path="/recipes/new-recipe" exact>
