@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import recipesAPI from "../../api/recipesAPI";
 import { RecipesContext } from "../../index";
+import { getRecipeTitles } from "../../selectors/selectors";
 import { recipePropTypes } from "./prop-types";
 import Button from "../Common/Button";
 import AddEditRecipeForm from "./AddEditRecipeForm";
@@ -10,7 +11,9 @@ import AddEditRecipeForm from "./AddEditRecipeForm";
 const EditRecipe = (props) => {
   const { recipe, categories, toggleEditMode } = props;
   const history = useHistory();
+
   const { recipes, setRecipes } = useContext(RecipesContext);
+  const recipeTitles = getRecipeTitles(recipes);
 
   const handleSubmit = (formData) => {
     const updatedRecipe = { ...recipe, ...formData };
@@ -29,6 +32,7 @@ const EditRecipe = (props) => {
       onSubmit={handleSubmit}
       action="edit"
       categories={categories}
+      recipeTitles={recipeTitles}
       buttons={
         <>
           <Button invert onClick={toggleEditMode}>

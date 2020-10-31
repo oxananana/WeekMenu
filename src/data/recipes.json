@@ -3,13 +3,14 @@
     "categoryId": "drinks",
     "description": "",
     "id": "-MKVJ1Ow9Md-zHH89K1Y",
+    "imgSrc": "https://firebasestorage.googleapis.com/v0/b/weekmenu-715a1.appspot.com/o/recipes%2FScreenshot%202020-10-13%20at%2017.27.03.png?alt=media&token=82f3acc5-8b6b-49f0-8b2e-9359f815c0d4",
     "title": "Кофе"
   },
   "-MKVJZQ0m2fY5l3BJyhT": {
     "categoryId": "soups",
     "description": "",
     "id": "-MKVJZQ0m2fY5l3BJyhT",
-    "imgSrc": "https://firebasestorage.googleapis.com/v0/b/weekmenu-715a1.appspot.com/o/recipes%2F10863241%3Ds1280%3Dh960.jpeg?alt=media&token=f8d4355d-f604-4e6a-98a9-e6501744b006",
+    "imgSrc": "https://firebasestorage.googleapis.com/v0/b/weekmenu-715a1.appspot.com/o/recipes%2FOJtnXqbSoF1-stoIQH_sg?alt=media&token=d2cbcbb6-0ae4-436c-9d39-ebdb1962d06a",
     "ingredients": [
       "Мясо",
       "лук",
@@ -35,5 +36,86 @@
       "корица"
     ],
     "title": "Эклер"
+  },
+  "-MK_CNZCcokKbYKXfG_A": {
+    "categoryId": "drinks",
+    "description": "",
+    "id": "-MK_CNZCcokKbYKXfG_A",
+    "imgSrc": "https://firebasestorage.googleapis.com/v0/b/weekmenu-715a1.appspot.com/o/recipes%2Ftea_black.jpg?alt=media&token=70a3f864-2a49-418c-99c8-ca7dd994f3fd",
+    "title": "Чай"
+  },
+  "-MK_CVf77tdWuZcu2jxO": {
+    "categoryId": "sides",
+    "description": "",
+    "id": "-MK_CVf77tdWuZcu2jxO",
+    "ingredients": ["Гречка", "вода", "соль"],
+    "title": "Гречка"
+  },
+  "-MK_Cbnv-FM84bqBPYmH": {
+    "categoryId": "sides",
+    "description": "",
+    "id": "-MK_Cbnv-FM84bqBPYmH",
+    "imgSrc": "https://firebasestorage.googleapis.com/v0/b/weekmenu-715a1.appspot.com/o/recipes%2FbJ9-MmCHcyuA4wq0uniN-.png?alt=media&token=7463e870-4bfa-4bb9-8401-13b4ae14a88e",
+    "ingredients": ["Рис", "вода"],
+    "title": "Рис"
+  },
+  "-MK_CuTrdejR-ErG7YjC": {
+    "categoryId": "salads",
+    "description": "",
+    "id": "-MK_CuTrdejR-ErG7YjC",
+    "imgSrc": "https://firebasestorage.googleapis.com/v0/b/weekmenu-715a1.appspot.com/o/recipes%2FtTu7i8aFLnhEgAo3ei9gi.png?alt=media&token=cadfa39a-8a29-4d6b-ad6d-43eaa8fd996f",
+    "ingredients": [
+      "Помидоры",
+      "огурцы",
+      "салат",
+      "авокадо",
+      "масло оливковое",
+      "лимон"
+    ],
+    "title": "Овощной салат с помидорами и огурцами"
+  },
+  "-MK_F0OZl8Jy2P49WnMZ": {
+    "categoryId": "meat",
+    "description": "",
+    "id": "-MK_F0OZl8Jy2P49WnMZ",
+    "imgSrc": "https://firebasestorage.googleapis.com/v0/b/weekmenu-715a1.appspot.com/o/recipes%2Fchicken.jpg?alt=media&token=90b8520f-148a-4b5b-975f-1b098b54a1bd",
+    "ingredients": ["Куриное филе", "специи по необходимости"],
+    "title": "Куриная грудка на гриле"
+  },
+  "-MK_FJIrsMlIZ-hlkCrl": {
+    "categoryId": "meat",
+    "description": "",
+    "id": "-MK_FJIrsMlIZ-hlkCrl",
+    "imgSrc": "https://firebasestorage.googleapis.com/v0/b/weekmenu-715a1.appspot.com/o/recipes%2Fmeatballs.jpg?alt=media&token=4d280c27-7014-47c0-9875-79252146452e",
+    "title": "Тефтели в томатном соусе"
+  },
+  "-MK_G3siFTiuNlU9CBQ-": {
+    "categoryId": "breakfast",
+    "description": "",
+    "id": "-MK_G3siFTiuNlU9CBQ-",
+    "imgSrc": "https://firebasestorage.googleapis.com/v0/b/weekmenu-715a1.appspot.com/o/recipes%2Foatmeal.jpg?alt=media&token=f63becb4-af82-4f5a-921e-58c1e06c7489",
+    "ingredients": ["Овсянка", "молоко"],
+    "title": "Овсяная каша"
+  },
+  "-MK_HA-9cyp_cS_jj6A7": {
+    "categoryId": "desert",
+    "description": "",
+    "id": "-MK_HA-9cyp_cS_jj6A7",
+    "imgSrc": "https://firebasestorage.googleapis.com/v0/b/weekmenu-715a1.appspot.com/o/recipes%2Foat_cookies.jpg?alt=media&token=8b39c00b-d16e-46c5-a565-fb89f2fbc1bb",
+    "title": "Овсяное печенье"
+  },
+  "-MKtZY-VP3qvFU0PnreA": {
+    "categoryId": "sides",
+    "description": "",
+    "id": "-MKtZY-VP3qvFU0PnreA",
+    "imgSrc": "https://firebasestorage.googleapis.com/v0/b/weekmenu-715a1.appspot.com/o/recipes%2FjDs4-uXyMlvjfi-WKr_Cf.jpeg?alt=media&token=007714a6-b58f-4eca-86f3-6a529b86ece0",
+    "title": "Спагетти с тушеной курицей"
+  },
+  "-MKtZfGlgUajPIzwRay9": {
+    "categoryId": "sides",
+    "description": "",
+    "id": "-MKtZfGlgUajPIzwRay9",
+    "imgSrc": "https://firebasestorage.googleapis.com/v0/b/weekmenu-715a1.appspot.com/o/recipes%2F6IRgjaypDZShohVTYHwr6.jpeg?alt=media&token=5dd5cd60-0da4-4402-9e56-01468dbccdb1",
+    "title": "Спагетти с курицей "
   }
 }

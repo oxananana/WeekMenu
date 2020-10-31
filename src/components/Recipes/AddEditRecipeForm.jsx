@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { nanoid } from "nanoid";
+import PropTypes from "prop-types";
 import * as firebase from "firebase/app";
 import "firebase/storage";
 import mediaQuery from "../../theme/mediaQuery";
@@ -14,12 +15,19 @@ import Icon from "../Common/Icon";
 import Loader from "../Common/Loader";
 
 const AddEditRecipeForm = (props) => {
-  const { categories, categoryId, title, description, ingredients } = props;
+  const {
+    categories,
+    categoryId,
+    title,
+    description,
+    ingredients,
+    recipeTitles,
+  } = props;
   const initialValues = {
     categoryId: categoryId || categories[defaultCategoryId].id,
     title,
     description,
-    ingredients: arrayToEnumString(ingredients || []),
+    ingredients: arrayToEnumString(ingredients),
   };
   const [imgSrc, setImgSrc] = useState(props.imgSrc || null);
   const [imgIsLoading, setImgIsLoading] = useState(false);
@@ -64,6 +72,14 @@ const AddEditRecipeForm = (props) => {
       imgSrc: imgSrc,
     });
   };
+
+  const uniqueTitle = (value) => {
+    if (recipeTitles.includes(value)) {
+      return "Рецепт с таким названием уже есть.";
+    }
+    return undefined;
+  };
+
   return (
     <FormContainer onSubmit={handleSubmit} initialValues={initialValues}>
       <RecipeImgContainer>
@@ -92,8 +108,8 @@ const AddEditRecipeForm = (props) => {
           fieldType="input"
           type="text"
           name="title"
-          label="Заголовок"
-          validators={[required]}
+          label="Название"
+          validators={[required, uniqueTitle]}
         />
         <FormField fieldType="select" name="categoryId" label="Категория">
           {getCategoryValues(categories).map((category) => {
@@ -120,6 +136,28 @@ const AddEditRecipeForm = (props) => {
       </Fields>
     </FormContainer>
   );
+};
+
+AddEditRecipeForm.propTypes = {
+  categories: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.object]),
+  categoryId: PropTypes.oneOfType([
+    PropTypes.oneOf([null]),
+    PropTypes.string.isRequired,
+  ]),
+  title: PropTypes.string,
+  description: PropTypes.string,
+  ingredients: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.array]),
+  recipeTitles: PropTypes.array.isRequired,
+  imgSrc: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.string]),
+  buttons: PropTypes.node,
+  onSubmit: PropTypes.func.isRequired,
+  action: PropTypes.string.isRequired,
+};
+
+AddEditRecipeForm.defaultProps = {
+  title: "",
+  ingredients: [],
+  description: "",
 };
 
 const FormContainer = styled(Form)`

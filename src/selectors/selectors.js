@@ -31,6 +31,13 @@ export const getRecipeById = (recipes, recipeId) => {
   return recipes[recipeId];
 };
 
+export const getRecipeTitles = (recipes) => {
+  if (!recipes) {
+    return [];
+  }
+  return Object.values(recipes).map((recipe) => recipe.title);
+};
+
 export const getCategoryValues = (categories) => {
   return Object.values(categories);
 };

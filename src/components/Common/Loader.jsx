@@ -41,7 +41,7 @@ const LoaderBar = styled.div`
   height: 2px;
   width: 0;
   background-color: ${({ theme }) => theme.bg.primary};
-  animation: ${bar} 3s ease-out infinite;
+  animation: ${bar} 3s ease-out;
 `;
 
 const LoaderCircle = styled.span`

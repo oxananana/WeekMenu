@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { RecipesContext } from "../../index";
+import { getRecipeTitles } from "../../selectors/selectors";
 import recipesAPI from "../../api/recipesAPI";
 import Button from "../Common/Button";
 import AddEditRecipeForm from "./AddEditRecipeForm";
@@ -12,6 +13,7 @@ const AddRecipe = (props) => {
   const { categories } = props;
 
   const { recipes, setRecipes } = useContext(RecipesContext);
+  const recipeTitles = getRecipeTitles(recipes);
 
   const handleSubmit = async (recipe) => {
     const recipeId = await recipesAPI.getNewKey();
@@ -30,10 +32,8 @@ const AddRecipe = (props) => {
         <AddEditRecipeForm
           action="add"
           onSubmit={handleSubmit}
-          title=""
-          description=""
-          ingredients=""
           categories={categories}
+          recipeTitles={recipeTitles}
           buttons={
             <>
               <Button invert to="/recipes">
