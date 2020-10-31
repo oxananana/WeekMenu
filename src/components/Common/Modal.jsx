@@ -11,7 +11,7 @@ const Modal = (props) => {
 
   const handleClose = () => {
     document.documentElement.style.overflow = null;
-    document.body.style.overflow = null;
+    // document.body.style.overflow = null;
     onClose();
   };
 
@@ -23,7 +23,7 @@ const Modal = (props) => {
   useLayoutEffect(() => {
     if (isOpen) {
       document.documentElement.style.overflow = "hidden";
-      document.body.style.overflowY = "scroll";
+      // document.body.style.overflowY = "scroll";
     }
   });
 

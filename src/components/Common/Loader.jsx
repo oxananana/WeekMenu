@@ -49,6 +49,7 @@ const LoaderCircle = styled.span`
   width: ${(props) => props.size || 16}px;
   height: ${(props) => props.size || 16}px;
   display: block;
+  color: ${({ theme }) => theme.bg.baseLight};
 
   svg {
     width: 100%;
@@ -58,7 +59,7 @@ const LoaderCircle = styled.span`
   circle {
     fill: none;
     stroke-width: 5;
-    stroke: ${({ theme }) => theme.bg.baseLight};
+    stroke: currentColor;
     stroke-linecap: round;
     animation: dash 1s ease-in-out infinite;
   }

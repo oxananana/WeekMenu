@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Route,
   Redirect,
@@ -13,45 +13,22 @@ import "./App.css";
 import GlobalStyle from "./theme/GlobalStyle";
 import { lightTheme, darkTheme } from "./theme/themes";
 import ErrorBoundary from "./components/Common/ErrorBoundary";
-import InnerPage from "./components/Common/InnerPage";
-import NoMatch from "./components/Common/NoMatch";
-import Navbar from "./components/Navbar/Navbar";
-import Loader from "./components/Common/Loader";
-import Menu from "./components/Menu/Menu";
 import Login from "./components/Login/Login";
-import Account from "./components/Account/Account";
-import Recipes from "./components/Recipes/Recipes.jsx";
-import RecipePage from "./components/Recipes/RecipePage";
-import AddRecipe from "./components/Recipes/AddRecipe";
-import useQuery from "./hooks/useQuery";
-import api from "./api/api";
-import { RecipesContext, CategoriesContext } from "./index";
+import AuthenticatedApp from "./AuthenticatedApp";
+import Loader from "./components/Common/Loader";
 
 const App = () => {
   const [theme, setTheme] = useState("light");
   const [user, setUser] = useState({ isAuth: false });
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
   const history = useHistory();
   const location = useLocation();
-
-  const { recipes, setRecipes } = useContext(RecipesContext);
-  const { categories, setCategories } = useContext(CategoriesContext);
-
-  const [data, isLoading] = useQuery(() => {
-    return api.getInitialData();
-  }, {});
-
-  const [menu, setMenu] = useState(data.menu);
-
-  useEffect(() => {
-    setMenu(data.menu);
-    setCategories(data.categories);
-    setRecipes(data.recipes);
-  }, [data, setRecipes, setCategories]);
 
   useEffect(() => {
     return firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         setUser({ ...user, isAuth: true });
+        setIsAuthLoading(false);
         if (location.pathname === "/login") {
           history.push("/menu");
         } else {
@@ -59,6 +36,7 @@ const App = () => {
         }
       } else {
         setUser({ isAuth: false });
+        setIsAuthLoading(false);
         history.push("/login");
       }
     });
@@ -83,71 +61,25 @@ const App = () => {
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <GlobalStyle />
       <ErrorBoundary>
-        {isLoading ? (
+        {isAuthLoading ? (
           <Loader />
         ) : (
-          <>
-            {user.isAuth && (
-              <Navbar
-                toggleTheme={toggleTheme}
-                theme={theme}
-                isAuth={user.isAuth}
-              />
-            )}
-            <Switch>
-              <Route path="/login">
-                <Login />
-              </Route>
-              <Route path="/" exact>
-                <Redirect to="/menu" />
-              </Route>
-              <Route path="/account">
-                <InnerPage>
-                  <Account user={user} />
-                </InnerPage>
-              </Route>
-              <Route path="/menu">
-                {menu ? (
-                  <Menu
-                    menu={menu}
-                    recipes={recipes}
-                    categories={categories}
-                    setMenu={setMenu}
-                    setRecipes={setRecipes}
-                  />
-                ) : (
-                  <InnerPage>Меню пустое</InnerPage>
-                )}
-              </Route>
-              <Route path="/recipes/new-recipe" exact>
-                <InnerPage>
-                  <AddRecipe categories={categories} />
-                </InnerPage>
-              </Route>
-              <Route path="/recipes/:categoryId/:recipeId">
-                <InnerPage>
-                  <RecipePage recipes={recipes} categories={categories} />
-                </InnerPage>
-              </Route>
-              <Route path="/recipes/:categoryId">
-                <InnerPage>
-                  {categories ? (
-                    <Recipes categories={categories} recipes={recipes} />
-                  ) : (
-                    <div>Нет рецептов или категорий</div>
-                  )}
-                </InnerPage>
-              </Route>
-              <Route path="/recipes/">
-                <Redirect to="/recipes/soups" />
-              </Route>
-              <Route path="*">
-                <InnerPage>
-                  <NoMatch />
-                </InnerPage>
-              </Route>
-            </Switch>
-          </>
+          <Switch>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/">
+              {user.isAuth ? (
+                <AuthenticatedApp
+                  theme={theme}
+                  toggleTheme={toggleTheme}
+                  user={user}
+                />
+              ) : (
+                <Redirect to="/login" />
+              )}
+            </Route>
+          </Switch>
         )}
       </ErrorBoundary>
     </ThemeProvider>

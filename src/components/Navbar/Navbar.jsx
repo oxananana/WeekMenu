@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import PropTypes from "prop-types";
 import mediaQuery from "../../theme/mediaQuery";
 import { Container } from "../Common/Container";
@@ -42,6 +42,7 @@ const Navbar = (props) => {
 };
 
 Navbar.propTypes = {
+  theme: PropTypes.string.isRequired,
   toggleTheme: PropTypes.func.isRequired,
 };
 
@@ -70,12 +71,24 @@ const Nav = styled.ul`
   display: flex;
 `;
 
+const NavLinkCss = (borderColor) => css`
+  display: block;
+  padding: 16px 0 14px;
+  border-bottom: 2px solid transparent;
+
+  &.active {
+    border-color: ${borderColor};
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
 const NavItem = styled.li`
   a {
-    display: block;
-    padding: 16px 0 14px;
     margin-left: 16px;
-    border-bottom: 2px solid transparent;
+    ${NavLinkCss(({ theme }) => theme.bg.primary)};
 
     ${mediaQuery.greaterThen("small")`
       margin-left: 20px;
@@ -84,14 +97,6 @@ const NavItem = styled.li`
     ${mediaQuery.greaterThen("medium")`
       margin-left: 32px;
    `}
-
-    &.active {
-      border-color: ${({ theme }) => theme.bg.primary};
-    }
-
-    &:hover {
-      opacity: 0.8;
-    }
   }
 `;
 
@@ -99,6 +104,10 @@ const NavbarRight = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+
+  a {
+    ${NavLinkCss(({ theme }) => theme.bg.primary)};
+  }
 `;
 
 const ThemeSwitch = styled.span`
@@ -108,6 +117,10 @@ const ThemeSwitch = styled.span`
   &:hover {
     cursor: pointer;
     opacity: 0.9;
+  }
+
+  &.active {
+    border-color: ${({ theme }) => theme.bg.primary};
   }
 
   svg {
