@@ -6,15 +6,21 @@ const GlobalStyle = createGlobalStyle`
   ${reset}
   ${normalize}
 
+  html {
+    height: -webkit-fill-available;
+  }
+
   body {
     font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
     "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     background-color: ${({ theme }) => theme.bg.baseLight};
     font-size: 16px;
     color: ${({ theme }) => theme.text.base};
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
   }
 
   p {
@@ -39,6 +45,7 @@ const GlobalStyle = createGlobalStyle`
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    min-height: -webkit-fill-available;
   }
 `;
 
