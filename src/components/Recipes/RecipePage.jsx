@@ -73,7 +73,9 @@ const RecipePage = (props) => {
           <dt>Ингредиенты:</dt>
           <dd>
             <RecipeIngredients>
-              {ingredients ? arrayToEnumString(ingredients) : "Не заполнено"}
+              {ingredients && ingredients.length > 0
+                ? arrayToEnumString(ingredients)
+                : "Не заполнено"}
             </RecipeIngredients>
           </dd>
           <dt>Рецепт:</dt>

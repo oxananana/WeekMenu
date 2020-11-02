@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { NavLink, useParams } from "react-router-dom";
 import cn from "classnames";
-import PropTypes from "prop-types";
 import { categoriesPropTypes } from "../../prop-types";
 import mediaQuery from "../../theme/mediaQuery";
 import useDocumentTitle from "../../hooks/useDocumentTitle";

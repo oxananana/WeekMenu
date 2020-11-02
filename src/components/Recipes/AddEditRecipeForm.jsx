@@ -23,6 +23,8 @@ const AddEditRecipeForm = (props) => {
     description,
     ingredients,
     recipeTitles,
+    action,
+    onSubmit,
   } = props;
   const initialValues = {
     categoryId: categoryId || categories[defaultCategoryId].id,
@@ -67,18 +69,24 @@ const AddEditRecipeForm = (props) => {
   };
 
   const handleSubmit = (formData) => {
-    props.onSubmit({
-      ...formData,
-      ingredients: stringToArray(formData.ingredients),
+    let formattedData = { ...formData };
+    Object.entries(formattedData).forEach(([key, value]) => {
+      formattedData[key] = value.trim();
+    });
+    onSubmit({
+      ...formattedData,
+      ingredients: stringToArray(formattedData.ingredients),
       imgSrc: imgSrc,
     });
   };
 
   const uniqueTitle = (value) => {
-    if (recipeTitles.includes(value)) {
-      return "Рецепт с таким названием уже есть.";
+    if (action === "add" || value.trim() !== title) {
+      if (recipeTitles.includes(value.trim())) {
+        return "Рецепт с таким названием уже есть.";
+      }
+      return undefined;
     }
-    return undefined;
   };
 
   return (
