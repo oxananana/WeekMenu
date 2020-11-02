@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import recipesAPI from "../../api/recipesAPI";
 import { RecipesContext } from "../../index";
 import { getRecipeTitles } from "../../selectors/selectors";
-import { recipePropTypes } from "./prop-types";
+import { recipePropTypes, categoriesPropTypes } from "../../prop-types";
 import Button from "../Common/Button";
 import AddEditRecipeForm from "./AddEditRecipeForm";
 
@@ -48,7 +48,7 @@ const EditRecipe = (props) => {
 EditRecipe.propTypes = {
   recipe: PropTypes.exact(recipePropTypes),
   toggleEditMode: PropTypes.func.isRequired,
-  categories: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.object]),
+  categories: categoriesPropTypes,
 };
 
 export default EditRecipe;

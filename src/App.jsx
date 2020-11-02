@@ -28,7 +28,6 @@ const App = () => {
     return firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         setUser({ ...user, isAuth: true });
-        setIsAuthLoading(false);
         if (location.pathname === "/login") {
           history.push("/menu");
         } else {
@@ -36,10 +35,11 @@ const App = () => {
         }
       } else {
         setUser({ isAuth: false });
-        setIsAuthLoading(false);
         history.push("/login");
       }
+      setIsAuthLoading(false);
     });
+    // не передаю history и location, чтобы не войти в бесконечный цикл
   }, []); // eslint-disable-line
 
   const toggleTheme = () => {

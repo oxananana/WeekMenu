@@ -1,7 +1,7 @@
 import React from "react";
 
-const NoMatch = () => {
+const PageNotFound = () => {
   return <div>Страница не найдена.</div>;
 };
 
-export default NoMatch;
+export default PageNotFound;

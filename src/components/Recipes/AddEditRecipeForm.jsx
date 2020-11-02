@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { nanoid } from "nanoid";
-import PropTypes from "prop-types";
 import * as firebase from "firebase/app";
 import "firebase/storage";
+import PropTypes from "prop-types";
+import { categoriesPropTypes } from "../../prop-types";
 import mediaQuery from "../../theme/mediaQuery";
 import { arrayToEnumString, stringToArray } from "../../helpers/helpers";
 import { defaultCategoryId } from "../../constants";
@@ -139,7 +140,7 @@ const AddEditRecipeForm = (props) => {
 };
 
 AddEditRecipeForm.propTypes = {
-  categories: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.object]),
+  categories: categoriesPropTypes,
   categoryId: PropTypes.oneOfType([
     PropTypes.oneOf([null]),
     PropTypes.string.isRequired,

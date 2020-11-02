@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-// import cn from "classnames";
 import PropTypes from "prop-types";
 import DOMPurify from "dompurify";
 import mediaQuery from "../../theme/mediaQuery";
@@ -9,16 +8,19 @@ import useDocumentTitle from "../../hooks/useDocumentTitle";
 // import { weekDaysNamesRU } from "../../constants";
 import { getRecipeById } from "../../selectors/selectors";
 import { arrayToEnumString } from "../../helpers/helpers";
-import { recipePropTypes } from "./prop-types";
+import { recipePropTypes, categoriesPropTypes } from "../../prop-types";
 import Button from "../Common/Button";
 import Icon from "../Common/Icon";
-import NoMatch from "../Common/NoMatch";
+import PageNotFound from "../Common/PageNotFound";
 import EditRecipe from "./EditRecipe";
+import {} from "react";
+import { RecipesContext } from "../..";
 
 const RecipePage = (props) => {
   const pathParams = useParams();
   const categories = props.categories;
-  const recipe = getRecipeById(props.recipes, pathParams.recipeId);
+  const recipes = useContext(RecipesContext).recipes;
+  const recipe = getRecipeById(recipes, pathParams.recipeId);
   const { categoryId, title, imgSrc, schedule, ingredients, description } = {
     ...recipe,
   };
@@ -37,7 +39,7 @@ const RecipePage = (props) => {
       toggleEditMode={toggleEditMode}
     />
   ) : !title || pathParams.categoryId !== categoryId ? (
-    <NoMatch />
+    <PageNotFound />
   ) : (
     <StyledRecipe>
       {imgSrc ? (
@@ -100,8 +102,7 @@ const formattingRecipeText = (text) => {
 
 RecipePage.propTypes = {
   recipe: PropTypes.exact(recipePropTypes),
-  categories: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.object]),
-  recipes: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.object]),
+  categories: categoriesPropTypes,
 };
 
 const StyledRecipe = styled.div`

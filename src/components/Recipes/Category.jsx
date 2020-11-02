@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import mediaQuery from "../../theme/mediaQuery";
 import { getCategoryRecipes } from "../../selectors/selectors";
 import Recipe from "./Recipe";
+import { RecipesContext } from "../../index";
 
 const Category = (props) => {
   const { title, categoryId } = props;
+  const allRecipes = useContext(RecipesContext).recipes;
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-    setRecipes(getCategoryRecipes(props.recipes, categoryId));
-  }, [props.recipes, categoryId]);
+    setRecipes(getCategoryRecipes(allRecipes, categoryId));
+  }, [allRecipes, categoryId]);
 
   return (
     <StyledCategory>
@@ -36,7 +38,6 @@ const Category = (props) => {
 Category.propTypes = {
   categoryId: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  recipes: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.object]),
 };
 
 Category.defaultProps = {

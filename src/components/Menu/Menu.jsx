@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { DragDropContext } from "react-beautiful-dnd";
 import mediaQuery from "../../theme/mediaQuery";
 // import { getWeekDayName } from "../../helpers/helpers";
+import { categoriesPropTypes } from "../../prop-types";
 import { getMealsByDay } from "../../selectors/selectors";
 import { weekDaysNames } from "../../constants";
 import menuAPI from "../../api/menuAPI";
@@ -13,7 +14,7 @@ import AddDishModal from "./AddDishModal/AddDishModal";
 
 const Menu = (props) => {
   useDocumentTitle(props.docTitle);
-  const { menu, setMenu } = props;
+  const { menu, setMenu, categories } = props;
   const weekDays = returnNextDays();
 
   const [animatedDishes, setAnimatedDishes] = useState({});
@@ -221,6 +222,7 @@ const Menu = (props) => {
         day={editableDay}
         mealId={editableMeal}
         mealTitle={editableMealTitle}
+        categories={categories}
       />
 
       <DragDropContext onDragEnd={onDragEnd}>
@@ -247,10 +249,12 @@ const Menu = (props) => {
 };
 
 Menu.propTypes = {
+  categories: categoriesPropTypes,
   docTitle: PropTypes.string,
-  menu: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.object]),
+  menu: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.object])
+    .isRequired,
   setMenu: PropTypes.func.isRequired,
-  setRecipes: PropTypes.func.isRequired,
+  // setRecipes: PropTypes.func.isRequired,
 };
 
 const returnNextDays = () => {

@@ -23,7 +23,7 @@ const FormField = (props) => {
     <Field>
       {label && <Label htmlFor={props.name}>{label}</Label>}
       <Control {...rest} className={cn({ error: error })}>
-        {props.children}
+        {children}
       </Control>
       {error && <ErrorMessage>{error}</ErrorMessage>}
     </Field>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { dishPropTypes } from "./prop-types";
+import { dishPropTypes } from "../../prop-types";
 import { Draggable } from "react-beautiful-dnd";
 import styled, { keyframes, css } from "styled-components";
 import Icon from "../Common/Icon";

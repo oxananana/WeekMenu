@@ -3,13 +3,14 @@ import styled from "styled-components";
 import { NavLink, useParams } from "react-router-dom";
 import cn from "classnames";
 import PropTypes from "prop-types";
+import { categoriesPropTypes } from "../../prop-types";
 import mediaQuery from "../../theme/mediaQuery";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import Icon from "../Common/Icon";
 import Category from "./Category";
 
 const Recipes = (props) => {
-  const { categories, recipes } = props;
+  const { categories } = props;
   const activeCategoryId = useParams()["categoryId"];
   const title = props.categories[activeCategoryId].title;
   useDocumentTitle(title);
@@ -36,19 +37,17 @@ const Recipes = (props) => {
           <Icon name="plus" /> Добавить рецепт
         </AddRecipeLink>
       </RecipesNavbar>
-      <Category title={title} categoryId={activeCategoryId} recipes={recipes} />
+      <Category title={title} categoryId={activeCategoryId} />
     </>
   );
 };
 
 Recipes.propTypes = {
-  categories: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.object]),
-  recipes: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.object]),
+  categories: categoriesPropTypes,
 };
 
 Recipes.defaultProps = {
   categories: null,
-  recipes: null,
 };
 
 const RecipesNavbar = styled.div`
@@ -81,8 +80,7 @@ const CategoryNavItem = styled.li`
     border-bottom: 2px solid transparent;
   }
 
-  a:hover,
-  a.active {
+  a:hover {
     color: ${({ theme }) => theme.text.primaryHover};
   }
 

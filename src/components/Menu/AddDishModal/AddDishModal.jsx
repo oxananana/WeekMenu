@@ -1,19 +1,27 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { categoriesPropTypes } from "../../../prop-types";
 import mediaQuery from "../../../theme/mediaQuery";
 import { arrayToEnumString } from "../../../helpers/helpers";
 import { defaultCategoryId, weekDaysNames } from "../../../constants";
-import { RecipesContext, CategoriesContext } from "../../../index";
+import { RecipesContext } from "../../../index";
 import Modal from "../../Common/Modal";
 import CategoryFilter from "./CategoryFilter";
 import Category from "./Category";
 
 const AddDishModal = (props) => {
-  const { isOpen, onClose, onSubmit, day, mealId, mealTitle } = props;
+  const {
+    categories,
+    isOpen,
+    onClose,
+    onSubmit,
+    day,
+    mealId,
+    mealTitle,
+  } = props;
 
   const { recipes } = useContext(RecipesContext);
-  const { categories } = useContext(CategoriesContext);
 
   const dishes = recipes;
 
@@ -82,24 +90,15 @@ const AddDishModal = (props) => {
 
 const formattingDay = (day) => {
   const date = new Date(day);
-  // const today = new Date();
-
-  // const day = {
-  //   date: date.getDate(),
-  //   weekDayName: weekDaysNames[date.getDay()],
-  //   isWeekend: date.getDay() === 0 || date.getDay() === 6,
-  //   isToday: today.toDateString() === date.toDateString(),
-  // };
-
   return `${weekDaysNames[date.getDay()]}, ${date.getDate()}`;
 };
 
 AddDishModal.propTypes = {
   isOpen: PropTypes.bool,
   onClose: PropTypes.func,
-  categories: PropTypes.object,
   day: PropTypes.string,
   mealId: PropTypes.string,
+  categories: categoriesPropTypes,
   recipes: PropTypes.object,
 };
 

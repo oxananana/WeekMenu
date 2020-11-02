@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import PropTypes from "prop-types";
+import { categoriesPropTypes } from "../../prop-types";
 import { RecipesContext } from "../../index";
 import { getRecipeTitles } from "../../selectors/selectors";
 import recipesAPI from "../../api/recipesAPI";
@@ -51,7 +51,7 @@ const AddRecipe = (props) => {
 };
 
 AddRecipe.propTypes = {
-  categories: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.object]),
+  categories: categoriesPropTypes,
 };
 
 AddRecipe.defaultProps = {

@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import cn from "classnames";
 import PropTypes from "prop-types";
+import { categoriesPropTypes } from "../../../prop-types";
 import mediaQuery from "../../../theme/mediaQuery";
 
 const CategoryFilter = (props) => {
@@ -27,7 +28,7 @@ const CategoryFilter = (props) => {
 };
 
 CategoryFilter.propTypes = {
-  categories: PropTypes.object,
+  categories: categoriesPropTypes,
   activeCategoryId: PropTypes.string,
   changeFilter: PropTypes.func,
 };

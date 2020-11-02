@@ -8,6 +8,10 @@ const GlobalStyle = createGlobalStyle`
 
   html {
     height: -webkit-fill-available;
+    @supports (-webkit-touch-callout: none) {
+    /* The hack for Safari */
+      height: -webkit-fill-available;
+    }
   }
 
   body {
@@ -19,8 +23,6 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${({ theme }) => theme.bg.baseLight};
     font-size: 16px;
     color: ${({ theme }) => theme.text.base};
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
   }
 
   p {
@@ -45,7 +47,11 @@ const GlobalStyle = createGlobalStyle`
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    min-height: -webkit-fill-available;
+
+    @supports (-webkit-touch-callout: none) {
+    /* The hack for Safari */
+      min-height: -webkit-fill-available;
+    }
   }
 `;
 
