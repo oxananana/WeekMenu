@@ -44,7 +44,10 @@ const AddEditRecipeForm = (props) => {
       const fileName = nanoid() + file.type.replace("image/", ".");
 
       const storageRef = firebase.storage().ref(`recipes/${fileName}`);
-      const uploadTask = storageRef.put(file);
+      const metadata = {
+        cacheControl: "private,max-age=172800",
+      };
+      const uploadTask = storageRef.put(file, metadata);
       uploadTask.on(
         "state_changed",
         (snapshot) => {

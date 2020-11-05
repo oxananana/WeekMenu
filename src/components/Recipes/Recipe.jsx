@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import PropTypes from "prop-types";
 import mediaQuery from "../../theme/mediaQuery";
 // import cn from "classnames";
@@ -90,9 +90,19 @@ const imgContainerCss = `
   `}
 `;
 
+const fade = keyframes`
+ 0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
+
 const RecipeImg = styled.div`
   ${imgContainerCss};
   border-bottom: 1px solid ${({ theme }) => theme.bg.baseLight};
+  animation: ${fade} 0.2s ease-out;
   background-size: cover;
   background-position: center;
 `;
