@@ -11,6 +11,8 @@ import Loader from "../Common/Loader";
 const Login = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
+  console.log("render login");
+
   const [errors, setErrors] = useState({
     fieldErrors: null,
     commonError: null,

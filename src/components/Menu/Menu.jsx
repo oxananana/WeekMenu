@@ -14,10 +14,10 @@ import AddDishModal from "./AddDishModal/AddDishModal";
 
 const Menu = (props) => {
   useDocumentTitle(props.docTitle);
-  const { menu, setMenu, categories } = props;
+  const { menu, changeMenu, categories } = props;
   const weekDays = returnNextDays();
 
-  const [animatedDishes, setAnimatedDishes] = useState({});
+  const [animatedNewDishes, setAnimatedNewDishes] = useState({});
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [editableDay, setEditableDay] = useState("");
@@ -40,8 +40,6 @@ const Menu = (props) => {
   };
 
   const removeDish = (day, mealId, dishId) => {
-    setAnimatedDishes({ removed: mealId + dishId });
-
     const currentMeals = getMealsByDay(menu, day);
     const currentMeal = currentMeals[mealId];
     const currentDishes = currentMeal.dishes || [];
@@ -50,7 +48,7 @@ const Menu = (props) => {
       return dish.id !== dishId;
     });
 
-    setMenu({
+    changeMenu({
       ...menu,
       [day]: {
         meals: {
@@ -76,7 +74,7 @@ const Menu = (props) => {
       return dish;
     });
 
-    setMenu({
+    changeMenu({
       ...menu,
       [day]: {
         meals: {
@@ -101,7 +99,7 @@ const Menu = (props) => {
   };
 
   const handleSubmit = (day, mealId, selectedDishesIds) => {
-    setAnimatedDishes({ new: selectedDishesIds.map((id) => mealId + id) });
+    setAnimatedNewDishes({ new: selectedDishesIds.map((id) => mealId + id) });
 
     const currentMeals = getMealsByDay(menu, day);
     const currentMeal = currentMeals[mealId];
@@ -123,7 +121,7 @@ const Menu = (props) => {
       }),
     ];
 
-    setMenu({
+    changeMenu({
       ...menu,
       [day]: {
         meals: {
@@ -167,7 +165,7 @@ const Menu = (props) => {
         const [removed] = mealDishes.splice(oldIndex, 1);
         mealDishes.splice(newIndex, 0, removed);
 
-        setMenu({
+        changeMenu({
           ...menu,
           [prevDay]: {
             meals: {
@@ -190,7 +188,7 @@ const Menu = (props) => {
         const [removed] = prevMealDishes.splice(oldIndex, 1);
         newMealDishes.splice(newIndex, 0, removed);
 
-        setMenu({
+        changeMenu({
           ...menu,
           [prevDay]: {
             meals: {
@@ -210,8 +208,12 @@ const Menu = (props) => {
         updateDishes(newDay, newMealId, newMealDishes);
       }
     },
-    [setMenu, menu]
+    [changeMenu, menu]
   );
+
+  const handleResetAnimatedNewDishes = () => {
+    setAnimatedNewDishes({});
+  };
 
   return (
     <MenuPage>
@@ -232,7 +234,8 @@ const Menu = (props) => {
 
             return (
               <DayMenu
-                animatedDishes={animatedDishes}
+                animatedNewDishes={animatedNewDishes}
+                resetAnimatedNewDishes={handleResetAnimatedNewDishes}
                 key={index}
                 day={day}
                 meals={meals}
@@ -253,7 +256,7 @@ Menu.propTypes = {
   docTitle: PropTypes.string,
   menu: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.object])
     .isRequired,
-  setMenu: PropTypes.func.isRequired,
+  changeMenu: PropTypes.func.isRequired,
   // setRecipes: PropTypes.func.isRequired,
 };
 

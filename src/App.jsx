@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Route,
   Redirect,
@@ -24,14 +24,16 @@ const App = () => {
   const history = useHistory();
   const location = useLocation();
 
+  const prevPathRef = useRef(location.pathname);
+
   useEffect(() => {
     return firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         setUser({ ...user, isAuth: true });
-        if (location.pathname === "/login") {
+        if (prevPathRef.current === "/login") {
           history.push("/menu");
         } else {
-          history.push(location.pathname);
+          history.push(prevPathRef.current);
         }
       } else {
         setUser({ isAuth: false });
@@ -39,8 +41,7 @@ const App = () => {
       }
       setIsAuthLoading(false);
     });
-    // не передаю history и location, чтобы не войти в бесконечный цикл
-  }, []); // eslint-disable-line
+  }, [history]);
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");

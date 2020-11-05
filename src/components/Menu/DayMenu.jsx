@@ -12,7 +12,8 @@ const DayMenu = (props) => {
     addDish,
     removeDish,
     toggleDishIsDone,
-    animatedDishes,
+    animatedNewDishes,
+    resetAnimatedNewDishes,
   } = props;
   const orderedMeals = meals.sort((mealFirst, mealSecond) => {
     if (mealFirst.order > mealSecond.order) {
@@ -33,7 +34,6 @@ const DayMenu = (props) => {
         {orderedMeals.map((meal) => {
           return (
             <Meal
-              animatedDishes={animatedDishes}
               day={day.dateString}
               id={meal.id}
               title={meal.title}
@@ -44,6 +44,8 @@ const DayMenu = (props) => {
               }}
               removeDish={removeDish}
               toggleDishIsDone={toggleDishIsDone}
+              animatedNewDishes={animatedNewDishes}
+              resetAnimatedNewDishes={resetAnimatedNewDishes}
             />
           );
         })}
@@ -58,7 +60,8 @@ DayMenu.propTypes = {
   addDish: PropTypes.func.isRequired,
   removeDish: PropTypes.func.isRequired,
   toggleDishIsDone: PropTypes.func.isRequired,
-  animatedDishes: PropTypes.object.isRequired,
+  animatedNewDishes: PropTypes.object.isRequired,
+  resetAnimatedNewDishes: PropTypes.func.isRequired,
 };
 
 const StyledDayMenu = styled.div`

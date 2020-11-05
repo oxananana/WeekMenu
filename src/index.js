@@ -58,15 +58,15 @@ const RecipesProvider = (props) => {
 };
 
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      {/* <NotContProvider> */}
-      <RecipesProvider>
-        <App />
-      </RecipesProvider>
-      {/*</NotContProvider> */}
-    </BrowserRouter>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <BrowserRouter>
+    {/* <NotContProvider> */}
+    <RecipesProvider>
+      <App />
+    </RecipesProvider>
+    {/*</NotContProvider> */}
+  </BrowserRouter>,
+  // </React.StrictMode>
   document.getElementById("root")
 );
 

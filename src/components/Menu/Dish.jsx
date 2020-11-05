@@ -15,6 +15,7 @@ const Dish = (props) => {
     removeDish,
     toggleDishIsDone,
     isNew,
+    resetAnimatedNewDishes,
   } = props;
   const { id, title, imgSrc } = dish;
 
@@ -31,6 +32,9 @@ const Dish = (props) => {
   const onAnimationEnd = () => {
     if (isRemoved) {
       removeDish(day, mealId, id);
+    }
+    if (isNew) {
+      resetAnimatedNewDishes();
     }
   };
 
@@ -79,6 +83,7 @@ Dish.propTypes = {
   mealId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   removeDish: PropTypes.func.isRequired,
   toggleDishIsDone: PropTypes.func.isRequired,
+  resetAnimatedNewDishes: PropTypes.func.isRequired,
 };
 
 const CoockingStatus = styled.span`

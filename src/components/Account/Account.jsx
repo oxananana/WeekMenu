@@ -1,22 +1,24 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 import authAPI from "../../api/authAPI";
 
 const Account = (props) => {
-  const { isAuth, email } = props.user;
+  const { email } = props.user;
   const handleClick = () => {
     authAPI.logout().catch((error) => console.log("error" + error));
   };
 
-  return isAuth ? (
+  return (
     <>
       <h2>Здравствуйте, товарищ {email}!</h2>
       <SignOutBtn onClick={handleClick}>Выйти</SignOutBtn>
     </>
-  ) : (
-    <Redirect to="/login" />
   );
+};
+
+Account.propTypes = {
+  user: PropTypes.object.isRequired,
 };
 
 const SignOutBtn = styled.div`

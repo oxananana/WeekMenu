@@ -4,40 +4,24 @@ import menuAPI from "./menuAPI";
 
 const api = {
   getInitialData() {
-    let newData = { categories: null, recipes: null, menu: null };
-
-    const categoriesPromise = categoriesAPI.getCategories().then((response) => {
-      newData.categories = response;
+    return Promise.all([
+      menuAPI.getMenu(),
+      categoriesAPI.getCategories(),
+      recipesAPI.getRecipes(),
+    ]).then((response) => {
+      return {
+        menu: response[0],
+        categories: response[1],
+        recipes: response[2],
+      };
     });
-
-    const recipesPromise = recipesAPI.getRecipes().then((response) => {
-      newData.recipes = response;
-    });
-
-    const menuPromise = menuAPI.getMenu().then((response) => {
-      newData.menu = response;
-    });
-
-    return Promise.all([categoriesPromise, recipesPromise, menuPromise]).then(
-      () => {
-        return newData;
-      }
-    );
   },
   getMenuAndRecipes() {
-    let newData = { menu: null, recipes: null };
-
-    const menuPromise = menuAPI.getMenu().then((response) => {
-      newData.menu = response;
-    });
-
-    const recipesPromise = recipesAPI.getRecipes().then((response) => {
-      newData.recipes = response;
-    });
-
-    return Promise.all([recipesPromise, menuPromise]).then(() => {
-      return newData;
-    });
+    return Promise.all([menuAPI.getMenu(), recipesAPI.getRecipes()]).then(
+      (response) => {
+        return { menu: response[0], recipes: response[1] };
+      }
+    );
   },
 };
 

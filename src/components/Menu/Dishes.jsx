@@ -10,15 +10,16 @@ const Dishes = React.memo((props) => {
     mealId,
     removeDish,
     toggleDishIsDone,
-    animatedDishes,
+    animatedNewDishes,
+    resetAnimatedNewDishes,
   } = props;
 
   return (
     <StyledDishes>
       {dishes.map((dish, index) => {
         let isNew;
-        if (animatedDishes.new) {
-          isNew = animatedDishes.new.some((id) => id === mealId + dish.id);
+        if (animatedNewDishes.new) {
+          isNew = animatedNewDishes.new.some((id) => id === mealId + dish.id);
         }
 
         return (
@@ -32,7 +33,8 @@ const Dishes = React.memo((props) => {
             removeDish={removeDish}
             toggleDishIsDone={toggleDishIsDone}
             isNew={isNew}
-            animatedDishes={animatedDishes}
+            animatedNewDishes={animatedNewDishes}
+            resetAnimatedNewDishes={resetAnimatedNewDishes}
           />
         );
       })}
@@ -46,7 +48,8 @@ Dishes.propTypes = {
   mealId: PropTypes.string.isRequired,
   removeDish: PropTypes.func.isRequired,
   toggleDishIsDone: PropTypes.func.isRequired,
-  animatedDishes: PropTypes.object.isRequired,
+  animatedNewDishes: PropTypes.object.isRequired,
+  resetAnimatedNewDishes: PropTypes.func.isRequired,
 };
 
 const StyledDishes = styled.div``;

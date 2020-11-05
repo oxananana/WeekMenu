@@ -29,7 +29,11 @@ const AuthenticatedApp = (props) => {
     setMenu(data.menu);
     setCategories(data.categories);
     setRecipes(data.recipes);
-  }, [data, setRecipes, setCategories]);
+  }, [data, setRecipes]);
+
+  const changeMenu = (newMenu) => {
+    setMenu(newMenu);
+  };
   return (
     <>
       {isLoading ? (
@@ -48,7 +52,11 @@ const AuthenticatedApp = (props) => {
             </Route>
             <Route path="/menu">
               {menu ? (
-                <Menu menu={menu} categories={categories} setMenu={setMenu} />
+                <Menu
+                  menu={menu}
+                  categories={categories}
+                  changeMenu={changeMenu}
+                />
               ) : (
                 <InnerPage>Меню пустое</InnerPage>
               )}
