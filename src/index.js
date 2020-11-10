@@ -49,9 +49,12 @@ const RecipesProvider = (props) => {
   //   }
   // }
   const [recipes, setRecipes] = useState();
+  const [recipeSlugs, setRecipeSlugs] = useState();
 
   return (
-    <RecipesContext.Provider value={{ recipes, setRecipes }}>
+    <RecipesContext.Provider
+      value={{ recipes, recipeSlugs, setRecipes, setRecipeSlugs }}
+    >
       {props.children}
     </RecipesContext.Provider>
   );

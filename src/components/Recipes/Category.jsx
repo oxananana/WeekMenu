@@ -8,19 +8,19 @@ import { RecipesContext } from "../../index";
 
 const Category = (props) => {
   const { title, categoryId } = props;
-  const allRecipes = useContext(RecipesContext).recipes;
-  const [recipes, setRecipes] = useState([]);
+  const recipes = useContext(RecipesContext).recipes;
+  const [categoryRecipes, setCategoryRecipes] = useState([]);
 
   useEffect(() => {
-    setRecipes(getCategoryRecipes(allRecipes, categoryId));
-  }, [allRecipes, categoryId]);
+    setCategoryRecipes(getCategoryRecipes(recipes, categoryId));
+  }, [recipes, categoryId]);
 
   return (
     <StyledCategory>
       <CategoryTitle>{title}</CategoryTitle>
-      {recipes.length > 0 ? (
+      {categoryRecipes.length > 0 ? (
         <RecipeList>
-          {recipes.map((recipe, index) => {
+          {categoryRecipes.map((recipe, index) => {
             return (
               <RecipeContainer key={index}>
                 <Recipe recipe={recipe} />

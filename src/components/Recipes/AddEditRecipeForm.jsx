@@ -6,7 +6,11 @@ import "firebase/storage";
 import PropTypes from "prop-types";
 import { categoriesPropTypes } from "../../prop-types";
 import mediaQuery from "../../theme/mediaQuery";
-import { arrayToEnumString, stringToArray } from "../../helpers/helpers";
+import {
+  arrayToEnumString,
+  cyrillicToTranslitUrl,
+  stringToArray,
+} from "../../helpers/helpers";
 import { defaultCategoryId } from "../../constants";
 import { required } from "../../helpers/validate";
 import { getCategoryValues } from "../../selectors/selectors";
@@ -73,13 +77,18 @@ const AddEditRecipeForm = (props) => {
 
   const handleSubmit = (formData) => {
     let formattedData = { ...formData };
+
     Object.entries(formattedData).forEach(([key, value]) => {
       formattedData[key] = value.trim();
     });
+
+    const translitUrl = cyrillicToTranslitUrl(formattedData.title);
+
     onSubmit({
       ...formattedData,
       ingredients: stringToArray(formattedData.ingredients),
       imgSrc: imgSrc,
+      slug: translitUrl,
     });
   };
 

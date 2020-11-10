@@ -1,138 +1,4 @@
 {
-  "2020-11-05": {
-    "meals": {
-      "2020-11-05-breakfast": {
-        "id": "2020-11-05-breakfast",
-        "order": 1,
-        "title": "Завтрак",
-        "type": "breakfast"
-      },
-      "2020-11-05-dinner": {
-        "id": "2020-11-05-dinner",
-        "order": 3,
-        "title": "Ужин",
-        "type": "dinner"
-      },
-      "2020-11-05-lunch": {
-        "id": "2020-11-05-lunch",
-        "order": 2,
-        "title": "Обед",
-        "type": "lunch"
-      }
-    }
-  },
-  "2020-11-06": {
-    "meals": {
-      "2020-11-06-breakfast": {
-        "id": "2020-11-06-breakfast",
-        "order": 1,
-        "title": "Завтрак",
-        "type": "breakfast"
-      },
-      "2020-11-06-dinner": {
-        "id": "2020-11-06-dinner",
-        "order": 3,
-        "title": "Ужин",
-        "type": "dinner"
-      },
-      "2020-11-06-lunch": {
-        "id": "2020-11-06-lunch",
-        "order": 2,
-        "title": "Обед",
-        "type": "lunch"
-      }
-    }
-  },
-  "2020-11-07": {
-    "meals": {
-      "2020-11-07-breakfast": {
-        "id": "2020-11-07-breakfast",
-        "order": 1,
-        "title": "Завтрак",
-        "type": "breakfast"
-      },
-      "2020-11-07-dinner": {
-        "id": "2020-11-07-dinner",
-        "order": 3,
-        "title": "Ужин",
-        "type": "dinner"
-      },
-      "2020-11-07-lunch": {
-        "dishes": [
-          {
-            "id": "-MKVJZQ0m2fY5l3BJyhT",
-            "isDone": false
-          }
-        ],
-        "id": "2020-11-07-lunch",
-        "order": 2,
-        "title": "Обед",
-        "type": "lunch"
-      }
-    }
-  },
-  "2020-11-08": {
-    "meals": {
-      "2020-11-08-breakfast": {
-        "id": "2020-11-08-breakfast",
-        "order": 1,
-        "title": "Завтрак",
-        "type": "breakfast"
-      },
-      "2020-11-08-dinner": {
-        "id": "2020-11-08-dinner",
-        "order": 3,
-        "title": "Ужин",
-        "type": "dinner"
-      },
-      "2020-11-08-lunch": {
-        "id": "2020-11-08-lunch",
-        "order": 2,
-        "title": "Обед",
-        "type": "lunch"
-      }
-    }
-  },
-  "2020-11-09": {
-    "meals": {
-      "2020-11-09-breakfast": {
-        "dishes": [
-          {
-            "id": "-MKVWW0DCQISK_Ngw7fh",
-            "isDone": false
-          }
-        ],
-        "id": "2020-11-09-breakfast",
-        "order": 1,
-        "title": "Завтрак",
-        "type": "breakfast"
-      },
-      "2020-11-09-dinner": {
-        "dishes": [
-          {
-            "id": "-MK_F0OZl8Jy2P49WnMZ",
-            "isDone": false
-          }
-        ],
-        "id": "2020-11-09-dinner",
-        "order": 3,
-        "title": "Ужин",
-        "type": "dinner"
-      },
-      "2020-11-09-lunch": {
-        "dishes": [
-          {
-            "id": "-MK_CuTrdejR-ErG7YjC",
-            "isDone": false
-          }
-        ],
-        "id": "2020-11-09-lunch",
-        "order": 2,
-        "title": "Обед",
-        "type": "lunch"
-      }
-    }
-  },
   "2020-11-10": {
     "meals": {
       "2020-11-10-breakfast": {
@@ -339,6 +205,140 @@
       },
       "2020-11-15-lunch": {
         "id": "2020-11-15-lunch",
+        "order": 2,
+        "title": "Обед",
+        "type": "lunch"
+      }
+    }
+  },
+  "2020-11-16": {
+    "meals": {
+      "2020-11-16-breakfast": {
+        "id": "2020-11-16-breakfast",
+        "order": 1,
+        "title": "Завтрак",
+        "type": "breakfast"
+      },
+      "2020-11-16-dinner": {
+        "id": "2020-11-16-dinner",
+        "order": 3,
+        "title": "Ужин",
+        "type": "dinner"
+      },
+      "2020-11-16-lunch": {
+        "id": "2020-11-16-lunch",
+        "order": 2,
+        "title": "Обед",
+        "type": "lunch"
+      }
+    }
+  },
+  "2020-11-17": {
+    "meals": {
+      "2020-11-17-breakfast": {
+        "id": "2020-11-17-breakfast",
+        "order": 1,
+        "title": "Завтрак",
+        "type": "breakfast"
+      },
+      "2020-11-17-dinner": {
+        "id": "2020-11-17-dinner",
+        "order": 3,
+        "title": "Ужин",
+        "type": "dinner"
+      },
+      "2020-11-17-lunch": {
+        "id": "2020-11-17-lunch",
+        "order": 2,
+        "title": "Обед",
+        "type": "lunch"
+      }
+    }
+  },
+  "2020-11-18": {
+    "meals": {
+      "2020-11-18-breakfast": {
+        "id": "2020-11-18-breakfast",
+        "order": 1,
+        "title": "Завтрак",
+        "type": "breakfast"
+      },
+      "2020-11-18-dinner": {
+        "id": "2020-11-18-dinner",
+        "order": 3,
+        "title": "Ужин",
+        "type": "dinner"
+      },
+      "2020-11-18-lunch": {
+        "dishes": [
+          {
+            "id": "-MKVJZQ0m2fY5l3BJyhT",
+            "isDone": false
+          }
+        ],
+        "id": "2020-11-18-lunch",
+        "order": 2,
+        "title": "Обед",
+        "type": "lunch"
+      }
+    }
+  },
+  "2020-11-19": {
+    "meals": {
+      "2020-11-19-breakfast": {
+        "id": "2020-11-19-breakfast",
+        "order": 1,
+        "title": "Завтрак",
+        "type": "breakfast"
+      },
+      "2020-11-19-dinner": {
+        "id": "2020-11-19-dinner",
+        "order": 3,
+        "title": "Ужин",
+        "type": "dinner"
+      },
+      "2020-11-19-lunch": {
+        "id": "2020-11-19-lunch",
+        "order": 2,
+        "title": "Обед",
+        "type": "lunch"
+      }
+    }
+  },
+  "2020-11-20": {
+    "meals": {
+      "2020-11-20-breakfast": {
+        "dishes": [
+          {
+            "id": "-MKVWW0DCQISK_Ngw7fh",
+            "isDone": false
+          }
+        ],
+        "id": "2020-11-20-breakfast",
+        "order": 1,
+        "title": "Завтрак",
+        "type": "breakfast"
+      },
+      "2020-11-20-dinner": {
+        "dishes": [
+          {
+            "id": "-MK_F0OZl8Jy2P49WnMZ",
+            "isDone": false
+          }
+        ],
+        "id": "2020-11-20-dinner",
+        "order": 3,
+        "title": "Ужин",
+        "type": "dinner"
+      },
+      "2020-11-20-lunch": {
+        "dishes": [
+          {
+            "id": "-MK_CuTrdejR-ErG7YjC",
+            "isDone": false
+          }
+        ],
+        "id": "2020-11-20-lunch",
         "order": 2,
         "title": "Обед",
         "type": "lunch"

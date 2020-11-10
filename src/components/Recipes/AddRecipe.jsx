@@ -12,17 +12,31 @@ const AddRecipe = (props) => {
   let history = useHistory();
   const { categories } = props;
 
-  const { recipes, setRecipes } = useContext(RecipesContext);
+  const { recipes, recipeSlugs, setRecipes, setRecipeSlugs } = useContext(
+    RecipesContext
+  );
   const recipeTitles = getRecipeTitles(recipes);
 
-  const handleSubmit = async (recipe) => {
-    const recipeId = await recipesAPI.getNewKey();
+  const handleSubmit = async (formData) => {
+    const newRecipeId = await recipesAPI.getNewKey();
+    const newRecipe = { id: newRecipeId, ...formData };
 
-    setRecipes({ ...recipes, [recipeId]: { ...recipe, id: recipeId } });
-    recipesAPI.setRecipe({ ...recipe, id: recipeId }).catch((error) => {
+    setRecipes({ ...recipes, [newRecipe.id]: newRecipe });
+
+    const newSlug = {
+      slug: newRecipe.slug,
+      id: newRecipe.id,
+    };
+    setRecipeSlugs({ ...recipeSlugs, [newRecipe.slug]: newSlug });
+
+    let updates = {};
+    updates[`recipes/${newRecipe.id}`] = newRecipe;
+    updates[`recipeSlugs/${newRecipe.slug}`] = newSlug;
+
+    recipesAPI.updateRecipeAndSlug(updates).catch((error) => {
       console.log(error);
     });
-    history.push(`/recipes/${recipe.categoryId}/${recipeId}`);
+    history.push(`/recipes/${newRecipe.categoryId}/${newRecipe.slug}`);
   };
 
   return (

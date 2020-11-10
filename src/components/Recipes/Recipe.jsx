@@ -11,6 +11,7 @@ import Icon from "../Common/Icon";
 const Recipe = (props) => {
   const {
     id,
+    slug,
     title,
     imgSrc,
     categoryId,
@@ -19,7 +20,7 @@ const Recipe = (props) => {
   } = props.recipe;
 
   return (
-    <RecipeLink to={`/recipes/${categoryId}/${id}`}>
+    <RecipeLink to={`/recipes/${categoryId}/${slug}`}>
       {imgSrc ? (
         <RecipeImg style={{ backgroundImage: `url(${imgSrc})` }} />
       ) : (

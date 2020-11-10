@@ -13,14 +13,14 @@ import Button from "../Common/Button";
 import Icon from "../Common/Icon";
 import PageNotFound from "../Common/PageNotFound";
 import EditRecipe from "./EditRecipe";
-import {} from "react";
 import { RecipesContext } from "../..";
 
 const RecipePage = (props) => {
   const pathParams = useParams();
   const categories = props.categories;
-  const recipes = useContext(RecipesContext).recipes;
-  const recipe = getRecipeById(recipes, pathParams.recipeId);
+  const { recipes, recipeSlugs } = useContext(RecipesContext);
+  const recipe = getRecipeById(recipes, recipeSlugs[pathParams.recipeSlug].id);
+
   const { categoryId, title, imgSrc, schedule, ingredients, description } = {
     ...recipe,
   };

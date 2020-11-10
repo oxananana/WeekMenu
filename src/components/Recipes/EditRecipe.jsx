@@ -12,17 +12,35 @@ const EditRecipe = (props) => {
   const { recipe, categories, toggleEditMode } = props;
   const history = useHistory();
 
-  const { recipes, setRecipes } = useContext(RecipesContext);
+  const { recipes, recipeSlugs, setRecipes, setRecipeSlugs } = useContext(
+    RecipesContext
+  );
   const recipeTitles = getRecipeTitles(recipes);
 
   const handleSubmit = (formData) => {
     const updatedRecipe = { ...recipe, ...formData };
 
     setRecipes({ ...recipes, [recipe.id]: updatedRecipe });
-    recipesAPI.setRecipe(updatedRecipe).catch((error) => {
+
+    let updates = {};
+    updates[`recipes/${recipe.id}`] = updatedRecipe;
+
+    if (recipe.slug !== updatedRecipe.slug) {
+      const newSlug = {
+        slug: updatedRecipe.slug,
+        id: updatedRecipe.id,
+      };
+
+      delete recipeSlugs[recipe.slug];
+      setRecipeSlugs({ ...recipeSlugs, [updatedRecipe.slug]: newSlug });
+
+      updates[`recipeSlugs/${recipe.slug}`] = null;
+      updates[`recipeSlugs/${updatedRecipe.slug}`] = newSlug;
+    }
+    recipesAPI.updateRecipeAndSlug(updates).catch((error) => {
       console.log(error);
     });
-    history.push(`/recipes/${updatedRecipe.categoryId}/${updatedRecipe.id}`);
+    history.push(`/recipes/${updatedRecipe.categoryId}/${updatedRecipe.slug}`);
     toggleEditMode();
   };
 
