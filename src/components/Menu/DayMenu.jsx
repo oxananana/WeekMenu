@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import cn from "classnames";
 import PropTypes from "prop-types";
 import mediaQuery from "../../theme/mediaQuery";
 import Meal from "./Meal";
@@ -25,9 +24,8 @@ const DayMenu = (props) => {
 
   return (
     <StyledDayMenu>
-      <DayDate className={cn({ weekend: day.isWeekend, today: day.isToday })}>
+      <DayDate isWeekend={day.isWeekend}>
         {day.weekDayName}, {day.date}
-        {day.isToday && " — Сегодня"}
       </DayDate>
 
       <Meals>
@@ -96,14 +94,7 @@ const StyledDayMenu = styled.div`
 const DayDate = styled.div`
   font-weight: bold;
   margin-bottom: 12px;
-
-  &.weekend {
-    color: ${({ theme }) => theme.text.error};
-  }
-
-  &.today {
-    color: ${({ theme }) => theme.text.primary};
-  }
+  color: ${({ theme, isWeekend }) => isWeekend && theme.text.error};
 `;
 
 const Meals = styled.div`

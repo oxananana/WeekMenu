@@ -7,15 +7,7 @@ import { arrayToEnumString } from "../../helpers/recipeFormatting";
 import Icon from "../Common/Icon";
 
 const Recipe = (props) => {
-  const {
-    id,
-    slug,
-    title,
-    imgSrc,
-    categoryId,
-    schedule,
-    ingredients = [],
-  } = props.recipe;
+  const { slug, title, imgSrc, categoryId, ingredients = [] } = props.recipe;
 
   return (
     <RecipeLink to={`/recipes/${categoryId}/${slug}`}>
@@ -28,20 +20,6 @@ const Recipe = (props) => {
       )}
       <RecipeInfo>
         <RecipeTitle>{title}</RecipeTitle>
-        {/* <RecipeSchedule>
-          {weekDaysNamesRU.map((day, index) => {
-            const isActive = schedule && schedule[day];
-
-            return (
-              <RecipeScheduleItem
-                key={index}
-                className={cn({ active: isActive })}
-              >
-                {day}
-              </RecipeScheduleItem>
-            );
-          })}
-        </RecipeSchedule> */}
         <RecipeIngredients>
           {ingredients.length > 0
             ? arrayToEnumString(ingredients)
@@ -129,20 +107,6 @@ const RecipeTitle = styled.div`
   font-size: 16px;
   margin-bottom: 12px;
 `;
-
-// const RecipeSchedule = styled.ul`
-//   display: flex;
-//   margin: 12px -4px;
-// `;
-
-// const RecipeScheduleItem = styled.li`
-//   margin: 0 4px;
-//   color: ${({ theme }) => theme.text.gray};
-
-//   &.active {
-//     color: ${({ theme }) => theme.text.base};
-//   }
-// `;
 
 const RecipeIngredients = styled.div`
   color: ${({ theme }) => theme.text.gray};

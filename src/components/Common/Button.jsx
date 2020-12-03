@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { NavLink } from "react-router-dom";
-import cn from "classnames";
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
 const Button = (props) => {
   const { children, onClick, disabled, active, invert, ...attrs } = props;
@@ -13,11 +12,11 @@ const Button = (props) => {
       return onClick(e);
     }
   };
-  const classes = cn({ active }, { invert });
 
   return attrs.to ? (
     <StyledLink
-      className={classes}
+      active={active}
+      invert={invert}
       disabled={disabled}
       onClick={handleOnClick}
       {...attrs}
@@ -26,7 +25,8 @@ const Button = (props) => {
     </StyledLink>
   ) : (
     <StyledButton
-      className={classes}
+      active={active}
+      invert={invert}
       disabled={disabled}
       onClick={handleOnClick}
       {...attrs}
@@ -41,6 +41,7 @@ Button.propTypes = {
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
   active: PropTypes.bool,
+  invert: PropTypes.bool,
   full: PropTypes.bool,
 };
 
@@ -49,6 +50,7 @@ Button.defaultProps = {
   onClick: () => {},
   disabled: false,
   active: false,
+  invert: false,
 };
 
 const buttonCss = `
@@ -56,38 +58,35 @@ const buttonCss = `
   border-radius: 4px;
   height: 40px;
   line-height: 38px;
- 
 
   &:hover {
     opacity: 0.8;
   }
 
-  &.invert {
-    background-color: transparent;
-  }
-`;
+  `;
 
 const StyledButton = styled.button`
   ${buttonCss}
-  color: ${({ theme }) => theme.text.baseInvert};
-  background-color: ${({ theme }) => theme.bg.primary};
+  color: ${({ theme, invert }) =>
+    invert ? theme.text.primary : theme.text.baseInvert};
+  background-color: ${({ theme, invert }) =>
+    invert ? "transparent" : theme.bg.primary};
+  width: ${({ full }) => full && "100%"};
   border: 1px solid ${({ theme }) => theme.bg.primary};
-  width: ${(props) => props.full && "100%"};
-
-  &.invert {
-    color: ${({ theme }) => theme.text.primary};
-  }
 `;
 
-const StyledLink = styled(NavLink)`
-  ${buttonCss}
-  color: ${({ theme }) => theme.text.baseInvert};
-  background-color: ${({ theme }) => theme.bg.primary};
-  border: 1px solid ${({ theme }) => theme.bg.primary};
+const StyledLink = styled((props) => {
+  const { children, invert, active, ...rest } = props;
 
-  &.invert {
-    color: ${({ theme }) => theme.text.primary};
-  }
+  return <NavLink {...rest}>{children}</NavLink>;
+})`
+  ${buttonCss}
+  color: ${({ theme, invert }) =>
+    invert ? theme.text.primary : theme.text.baseInvert};
+  background-color: ${({ theme, invert }) =>
+    invert ? "transparent" : theme.bg.primary};
+  border: 1px solid ${({ theme }) => theme.bg.primary};
+  display: inline-block;
 `;
 
 export default Button;

@@ -3,7 +3,6 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { DragDropContext } from "react-beautiful-dnd";
 import mediaQuery from "../../theme/mediaQuery";
-// import { getWeekDayName } from "../../helpers/helpers";
 import { categoriesPropTypes } from "../../prop-types";
 import { getMealsByDay } from "../../selectors/selectors";
 import { weekDaysNames } from "../../constants";
@@ -257,7 +256,6 @@ Menu.propTypes = {
   menu: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.object])
     .isRequired,
   changeMenu: PropTypes.func.isRequired,
-  // setRecipes: PropTypes.func.isRequired,
 };
 
 const returnNextDays = () => {

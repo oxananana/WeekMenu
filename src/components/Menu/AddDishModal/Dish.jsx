@@ -1,15 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import cn from "classnames";
-// import { weekDaysNamesRU } from "../../../constants";
 import Icon from "../../Common/Icon";
 
 const Dish = (props) => {
-  const { id, title, imgSrc, schedule, isActive, selectDish } = props;
+  const { id, title, imgSrc, isActive, selectDish } = props;
 
   return (
     <StyledDish
-      className={cn({ active: isActive })}
+      isActive={isActive}
       onClick={() => {
         selectDish(id);
       }}
@@ -23,19 +21,6 @@ const Dish = (props) => {
       )}
       <div>
         <DishTitle>{title}</DishTitle>
-        {/* <RecipeSchedule>
-          {weekDaysNamesRU.map((day, index) => {
-            const isActive = schedule && schedule[day];
-            return (
-              <RecipeScheduleItem
-                key={index}
-                className={cn({ active: isActive })}
-              >
-                {day}
-              </RecipeScheduleItem>
-            );
-          })}
-        </RecipeSchedule> */}
       </div>
       {isActive && (
         <CheckedIcon>
@@ -53,6 +38,7 @@ const StyledDish = styled.div`
   position: relative;
   padding-right: 48px;
   border-radius: 4px;
+  color: ${({ theme, isActive }) => isActive && theme.text.primary};
 
   & + & {
     margin-top: 12px;
@@ -61,11 +47,6 @@ const StyledDish = styled.div`
   &:hover {
     cursor: pointer;
     box-shadow: ${({ theme }) => theme.shadow.base};
-  }
-
-  &.active {
-    color: ${({ theme }) => theme.text.primary};
-    /* outline: 2px solid ${({ theme }) => theme.bg.primary}; */
   }
 `;
 
@@ -104,21 +85,6 @@ const DishTitle = styled.div`
   -webkit-box-orient: vertical;
   overflow: hidden;
 `;
-
-// const RecipeSchedule = styled.ul`
-//   display: flex;
-//   margin: 8px -4px 0;
-//   font-size: 12px;
-// `;
-
-// const RecipeScheduleItem = styled.li`
-//   margin: 0 4px;
-//   color: ${({ theme }) => theme.text.gray};
-
-//   &.active {
-//     color: ${({ theme }) => theme.text.base};
-//   }
-// `;
 
 const CheckedIcon = styled.div`
   position: absolute;

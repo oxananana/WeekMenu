@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import cn from "classnames";
 import PropTypes from "prop-types";
 import { categoriesPropTypes } from "../../../prop-types";
 import mediaQuery from "../../../theme/mediaQuery";
@@ -17,7 +16,7 @@ const CategoryFilter = (props) => {
               changeFilter(category.id);
             }}
             key={category.id}
-            className={cn({ active: category.id === activeCategoryId })}
+            isActive={category.id === activeCategoryId}
           >
             {category.title}
           </FilterNavItem>
@@ -56,23 +55,21 @@ const FilterNavItem = styled.li`
   margin: 0 12px;
   display: block;
   border-bottom: 2px solid transparent;
+  color: ${({ theme, isActive }) => isActive && theme.text.primary};
+  border-color: ${({ theme, isActive }) =>
+    isActive ? theme.border.primary : "transparent"};
 
   ${mediaQuery.greaterThen("medium")`
     padding: 12px 16px;
     border-bottom: 0;
-    border-left: 2px solid transparent;
+    border-left-width: 2px;
+    border-left-style: solid;
     margin: 0;
   `}
 
-  &:hover, &:focus,
-  &.active {
+  &:hover, &:focus {
     cursor: pointer;
     color: ${({ theme }) => theme.text.primaryHover};
-  }
-
-  &.active {
-    color: ${({ theme }) => theme.text.primary};
-    border-color: ${({ theme }) => theme.border.primary};
   }
 `;
 

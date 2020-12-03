@@ -19,14 +19,7 @@ const RecipePage = (props) => {
   const { recipes, recipeSlugs } = useContext(RecipesContext);
   const recipe = getRecipeById(recipes, recipeSlugs[pathParams.recipeSlug].id);
 
-  const {
-    categoryId,
-    title,
-    imgSrc,
-    schedule,
-    ingredients,
-    description,
-  } = recipe;
+  const { categoryId, title, imgSrc, ingredients, description } = recipe;
   const [editMode, setEditMode] = useState(false);
 
   useDocumentTitle(title);
@@ -56,22 +49,6 @@ const RecipePage = (props) => {
       <ResipeDescription>
         <RecipeTitle>{title}</RecipeTitle>
         <Dl>
-          {/* <dt>Наличие в расписании:</dt>
-          <dd>
-            <RecipeSchedule>
-              {weekDaysNamesRU.map((day, index) => {
-                const isActive = schedule && schedule[day];
-                return (
-                  <RecipeScheduleItem
-                    key={index}
-                    className={cn({ active: isActive })}
-                  >
-                    {day}
-                  </RecipeScheduleItem>
-                );
-              })}
-            </RecipeSchedule>
-          </dd> */}
           <dt>Категория:</dt>
           <dd>{categories[categoryId].title}</dd>
           <dt>Ингредиенты:</dt>
@@ -181,20 +158,6 @@ const Dl = styled.dl`
     }
   }
 `;
-
-// const RecipeSchedule = styled.ul`
-//   display: flex;
-//   margin: 0 -4px;
-// `;
-
-// const RecipeScheduleItem = styled.li`
-//   margin: 0 4px;
-//   color: ${({ theme }) => theme.text.gray};
-
-//   &.active {
-//     color: ${({ theme }) => theme.text.base};
-//   }
-// `;
 
 const RecipeIngredients = styled.div`
   margin: 12px 0;

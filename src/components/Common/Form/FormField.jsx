@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import cn from "classnames";
 import { iconForBg } from "../Icon";
 import Control from "./Control";
 import { FormContext } from "./Form";
@@ -22,7 +21,7 @@ const FormField = (props) => {
   return (
     <Field>
       {label && <Label htmlFor={props.name}>{label}</Label>}
-      <Control {...rest} className={cn({ error: error })}>
+      <Control {...rest} className={error && "error"}>
         {children}
       </Control>
       {error && <ErrorMessage>{error}</ErrorMessage>}
@@ -61,9 +60,6 @@ const Field = styled.div`
 
     &.error {
       border-color: ${({ theme }) => theme.text.error};
-    }
-
-    &:-webkit-autofill {
     }
   }
 
