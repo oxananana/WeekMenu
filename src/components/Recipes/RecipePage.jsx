@@ -5,26 +5,28 @@ import PropTypes from "prop-types";
 import DOMPurify from "dompurify";
 import mediaQuery from "../../theme/mediaQuery";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
-// import { weekDaysNamesRU } from "../../constants";
 import { getRecipeById } from "../../selectors/selectors";
-import { arrayToEnumString } from "../../helpers/helpers";
+import { arrayToEnumString } from "../../helpers/recipeFormatting";
 import { recipePropTypes, categoriesPropTypes } from "../../prop-types";
 import Button from "../Common/Button";
 import Icon from "../Common/Icon";
-import PageNotFound from "../Common/PageNotFound";
 import EditRecipe from "./EditRecipe";
-import {} from "react";
 import { RecipesContext } from "../..";
 
 const RecipePage = (props) => {
   const pathParams = useParams();
   const categories = props.categories;
-  const recipes = useContext(RecipesContext).recipes;
-  const recipe = getRecipeById(recipes, pathParams.recipeId);
-  const { categoryId, title, imgSrc, schedule, ingredients, description } = {
-    // TODO: Деструктуризация не нужна
-    ...recipe,
-  };
+  const { recipes, recipeSlugs } = useContext(RecipesContext);
+  const recipe = getRecipeById(recipes, recipeSlugs[pathParams.recipeSlug].id);
+
+  const {
+    categoryId,
+    title,
+    imgSrc,
+    schedule,
+    ingredients,
+    description,
+  } = recipe;
   const [editMode, setEditMode] = useState(false);
 
   useDocumentTitle(title);
@@ -33,16 +35,16 @@ const RecipePage = (props) => {
     setEditMode(!editMode);
   };
 
-  // TODO: Убрать вложенный тернарник, выглядит как срулет
-  return editMode ? (
-    <EditRecipe
-      recipe={recipe}
-      categories={categories}
-      toggleEditMode={toggleEditMode}
-    />
-  ) : !title || pathParams.categoryId !== categoryId ? (
-    <PageNotFound />
-  ) : (
+  if (editMode) {
+    return (
+      <EditRecipe
+        recipe={recipe}
+        categories={categories}
+        toggleEditMode={toggleEditMode}
+      />
+    );
+  }
+  return (
     <StyledRecipe>
       {imgSrc ? (
         <RecipeImg image={imgSrc} />

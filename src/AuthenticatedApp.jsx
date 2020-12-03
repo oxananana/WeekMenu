@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
 import PropTypes from "prop-types";
+import { defaultCategoryId } from "./constants";
 import InnerPage from "./components/Common/InnerPage";
 import PageNotFound from "./components/Common/PageNotFound";
+import Notification from "./components/Common/Notification";
 import Navbar from "./components/Navbar/Navbar";
 import Loader from "./components/Common/Loader";
 import Menu from "./components/Menu/Menu";
@@ -13,10 +15,13 @@ import AddRecipe from "./components/Recipes/AddRecipe";
 import useQuery from "./hooks/useQuery";
 import api from "./api/api";
 import { RecipesContext } from "./index";
+import CheckPathContainer from "./components/Common/CheckPathContainer";
 
 const AuthenticatedApp = (props) => {
   const { theme, toggleTheme, user } = props;
-  const { setRecipes } = useContext(RecipesContext);
+  const { recipeSlugs, setRecipes, setRecipeSlugs } = useContext(
+    RecipesContext
+  );
   const [categories, setCategories] = useState();
 
   const [data, isLoading] = useQuery(() => {
@@ -29,7 +34,8 @@ const AuthenticatedApp = (props) => {
     setMenu(data.menu);
     setCategories(data.categories);
     setRecipes(data.recipes);
-  }, [data, setRecipes]);
+    setRecipeSlugs(data.recipeSlugs);
+  }, [data, setRecipes, setRecipeSlugs]);
 
   const changeMenu = (newMenu) => {
     setMenu(newMenu);
@@ -66,22 +72,32 @@ const AuthenticatedApp = (props) => {
                 <AddRecipe categories={categories} />
               </InnerPage>
             </Route>
-            <Route path="/recipes/:categoryId/:recipeId">
+            <Route path="/recipes/:categoryId/:recipeSlug">
               <InnerPage>
-                <RecipePage categories={categories} />
+                <CheckPathContainer slug="recipeSlug" controlList={recipeSlugs}>
+                  <RecipePage categories={categories} />
+                </CheckPathContainer>
               </InnerPage>
             </Route>
             <Route path="/recipes/:categoryId">
               <InnerPage>
                 {categories ? (
-                  <Recipes categories={categories} />
+                  <CheckPathContainer
+                    slug="categoryId"
+                    controlList={categories}
+                  >
+                    <Recipes categories={categories} />
+                  </CheckPathContainer>
                 ) : (
-                  <div>Нет рецептов или категорий</div>
+                  <Notification type="warning">
+                    Что-то пошло не так. Попробуйте обновить страницу или зайти
+                    позже.
+                  </Notification>
                 )}
               </InnerPage>
             </Route>
             <Route path="/recipes/">
-              <Redirect to="/recipes/soups" />
+              <Redirect to={`/recipes/${defaultCategoryId}`} />
             </Route>
             <Route path="*">
               <InnerPage>

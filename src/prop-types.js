@@ -31,6 +31,7 @@ export const categoriesPropTypes = PropTypes.oneOfType([
 
 export const recipePropTypes = {
   id: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
   categoryId: PropTypes.string.isRequired,
   imgSrc: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.string]),
   title: PropTypes.string.isRequired,

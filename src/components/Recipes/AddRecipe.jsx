@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { categoriesPropTypes } from "../../prop-types";
 import { RecipesContext } from "../../index";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 import { getRecipeTitles } from "../../selectors/selectors";
 import recipesAPI from "../../api/recipesAPI";
 import Button from "../Common/Button";
@@ -10,9 +11,12 @@ import AddEditRecipeForm from "./AddEditRecipeForm";
 
 const AddRecipe = (props) => {
   let history = useHistory();
+  useDocumentTitle("Добавление нового рецепта");
   const { categories } = props;
 
-  const { recipes, setRecipes } = useContext(RecipesContext);
+  const { recipes, recipeSlugs, setRecipes, setRecipeSlugs } = useContext(
+    RecipesContext
+  );
   const recipeTitles = getRecipeTitles(recipes);
 
   const handleSubmit = async (formData) => {
@@ -36,38 +40,29 @@ const AddRecipe = (props) => {
     history.push(`/recipes/${newRecipe.categoryId}/${newRecipe.slug}`);
   };
 
-  // TODO: Удалить срулеты для отладки
   return (
     <AddRecipeContainer>
       <Heading>Добавление нового рецепта</Heading>
-      {categories ? (
-        <AddEditRecipeForm
-          action="add"
-          onSubmit={handleSubmit}
-          categories={categories}
-          recipeTitles={recipeTitles}
-          buttons={
-            <>
-              <Button invert to="/recipes">
-                Отмена
-              </Button>
-              <Button type="submit">Добавить</Button>
-            </>
-          }
-        />
-      ) : (
-        <div>Нет категорий - нет формы</div>
-      )}
+      <AddEditRecipeForm
+        action="add"
+        onSubmit={handleSubmit}
+        categories={categories}
+        recipeTitles={recipeTitles}
+        buttons={
+          <>
+            <Button invert to="/recipes">
+              Отмена
+            </Button>
+            <Button type="submit">Добавить</Button>
+          </>
+        }
+      />
     </AddRecipeContainer>
   );
 };
 
 AddRecipe.propTypes = {
   categories: categoriesPropTypes,
-};
-
-AddRecipe.defaultProps = {
-  categories: null,
 };
 
 const AddRecipeContainer = styled.div`

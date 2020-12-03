@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import mediaQuery from "../../theme/mediaQuery";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 import authAPI from "../../api/authAPI";
 import { required } from "../../helpers/validate";
 import Button from "../Common/Button";
@@ -10,8 +11,7 @@ import Loader from "../Common/Loader";
 
 const Login = (props) => {
   const [isLoading, setIsLoading] = useState(false);
-
-  console.log("render login");
+  useDocumentTitle("Войти в приложение");
 
   const [errors, setErrors] = useState({
     fieldErrors: null,

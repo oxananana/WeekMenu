@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 import authAPI from "../../api/authAPI";
 
 const Account = (props) => {
@@ -8,6 +9,7 @@ const Account = (props) => {
   const handleClick = () => {
     authAPI.logout().catch((error) => console.log("error" + error));
   };
+  useDocumentTitle("Аккаунт");
 
   return (
     <>

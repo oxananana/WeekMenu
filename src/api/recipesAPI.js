@@ -12,14 +12,24 @@ const recipesAPI = {
         return snapshot.val();
       });
   },
-  setRecipe(recipe) {
+  getRecipeSlugs() {
     const db = firebase.database();
 
-    return db.ref(`recipes/${recipe.id}`).set(recipe);
+    return db
+      .ref("recipeSlugs")
+      .once("value")
+      .then((snapshot) => {
+        return snapshot.val();
+      });
   },
   getNewKey() {
     const db = firebase.database();
     return db.ref().child("recipes").push().key;
+  },
+  updateRecipeAndSlug(updates) {
+    const db = firebase.database();
+
+    return db.ref().update(updates);
   },
 };
 

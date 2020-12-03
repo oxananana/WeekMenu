@@ -1,6 +1,3 @@
-// TODO: Разбить этот срулет на разные файлы в папке helpers
-import { weekDaysNames } from "../constants";
-
 export const arrayToEnumString = (arr) => {
   if (!arr.length) {
     return "";
@@ -18,9 +15,4 @@ export const stringToArray = (str) => {
   }
   let arr = str.split(",").map((item) => item.trim());
   return arr;
-};
-
-export const getWeekDayName = (day) => {
-  const date = new Date(day);
-  return weekDaysNames[date.getDay()];
 };

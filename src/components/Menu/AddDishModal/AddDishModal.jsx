@@ -3,7 +3,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { categoriesPropTypes } from "../../../prop-types";
 import mediaQuery from "../../../theme/mediaQuery";
-import { arrayToEnumString } from "../../../helpers/helpers";
+import { arrayToEnumString } from "../../../helpers/recipeFormatting";
 import { defaultCategoryId, weekDaysNames } from "../../../constants";
 import { RecipesContext } from "../../../index";
 import Modal from "../../Common/Modal";

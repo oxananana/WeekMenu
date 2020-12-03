@@ -1,11 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  Route,
-  Redirect,
-  Switch,
-  useHistory,
-  useLocation,
-} from "react-router-dom";
+import { Route, useHistory, useLocation } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import * as firebase from "firebase/app";
 import "firebase/auth";
@@ -20,8 +14,7 @@ import Loader from "./components/Common/Loader";
 const App = () => {
   const [theme, setTheme] = useState("light");
   const [user, setUser] = useState({ isAuth: false });
-  // TODO: Я бы назвал переменную isUserLoading, т.е мы загружаем пользователя, а не авторизацию
-  const [isAuthLoading, setIsAuthLoading] = useState(true);
+  const [isUserLoading, setIsUserLoading] = useState(true);
   const history = useHistory();
   const location = useLocation();
 
@@ -40,7 +33,7 @@ const App = () => {
         setUser({ isAuth: false });
         history.push("/login");
       }
-      setIsAuthLoading(false);
+      setIsUserLoading(false);
     });
   }, [history]);
 
@@ -63,27 +56,21 @@ const App = () => {
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <GlobalStyle />
       <ErrorBoundary>
-        {isAuthLoading ? (
+        {isUserLoading ? (
           <Loader />
         ) : (
-          <Switch>
+          <>
             <Route path="/login">
               <Login />
             </Route>
-            {/* TODO: Тут не нужен Route, у тебя он уже есть внутри AuthenticatedApp */}
-            <Route path="/">
-              {/* TODO: Тебе не нужна эта логика тут, у нас же в хуке есть редирект на login */}
-              {user.isAuth ? (
-                <AuthenticatedApp
-                  theme={theme}
-                  toggleTheme={toggleTheme}
-                  user={user}
-                />
-              ) : (
-                <Redirect to="/login" />
-              )}
-            </Route>
-          </Switch>
+            {user.isAuth && (
+              <AuthenticatedApp
+                theme={theme}
+                toggleTheme={toggleTheme}
+                user={user}
+              />
+            )}
+          </>
         )}
       </ErrorBoundary>
     </ThemeProvider>
