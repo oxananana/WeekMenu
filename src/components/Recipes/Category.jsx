@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext, useMemo } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import mediaQuery from "../../theme/mediaQuery";
@@ -8,19 +8,18 @@ import { RecipesContext } from "../../index";
 
 const Category = (props) => {
   const { title, categoryId } = props;
-  const allRecipes = useContext(RecipesContext).recipes;
-  const [recipes, setRecipes] = useState([]);
 
-  useEffect(() => {
-    setRecipes(getCategoryRecipes(allRecipes, categoryId));
-  }, [allRecipes, categoryId]);
+  const recipes = useContext(RecipesContext).recipes;
+  const categoryRecipes = useMemo(() => {
+    return getCategoryRecipes(recipes, categoryId);
+  }, [recipes, categoryId]);
 
   return (
     <StyledCategory>
       <CategoryTitle>{title}</CategoryTitle>
-      {recipes.length > 0 ? (
+      {categoryRecipes.length > 0 ? (
         <RecipeList>
-          {recipes.map((recipe, index) => {
+          {categoryRecipes.map((recipe, index) => {
             return (
               <RecipeContainer key={index}>
                 <Recipe recipe={recipe} />

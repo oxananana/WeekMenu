@@ -20,6 +20,7 @@ import Loader from "./components/Common/Loader";
 const App = () => {
   const [theme, setTheme] = useState("light");
   const [user, setUser] = useState({ isAuth: false });
+  // TODO: Я бы назвал переменную isUserLoading, т.е мы загружаем пользователя, а не авторизацию
   const [isAuthLoading, setIsAuthLoading] = useState(true);
   const history = useHistory();
   const location = useLocation();
@@ -69,7 +70,9 @@ const App = () => {
             <Route path="/login">
               <Login />
             </Route>
+            {/* TODO: Тут не нужен Route, у тебя он уже есть внутри AuthenticatedApp */}
             <Route path="/">
+              {/* TODO: Тебе не нужна эта логика тут, у нас же в хуке есть редирект на login */}
               {user.isAuth ? (
                 <AuthenticatedApp
                   theme={theme}

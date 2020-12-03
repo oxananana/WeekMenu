@@ -22,6 +22,7 @@ const RecipePage = (props) => {
   const recipes = useContext(RecipesContext).recipes;
   const recipe = getRecipeById(recipes, pathParams.recipeId);
   const { categoryId, title, imgSrc, schedule, ingredients, description } = {
+    // TODO: Деструктуризация не нужна
     ...recipe,
   };
   const [editMode, setEditMode] = useState(false);
@@ -32,6 +33,7 @@ const RecipePage = (props) => {
     setEditMode(!editMode);
   };
 
+  // TODO: Убрать вложенный тернарник, выглядит как срулет
   return editMode ? (
     <EditRecipe
       recipe={recipe}
@@ -43,10 +45,10 @@ const RecipePage = (props) => {
   ) : (
     <StyledRecipe>
       {imgSrc ? (
-        <RecipeImg style={{ backgroundImage: `url(${imgSrc})` }} />
+        <RecipeImg image={imgSrc} />
       ) : (
         <RecipeImgPlaceholder>
-          <Icon name="camera"></Icon>
+          <Icon name="camera" />
         </RecipeImgPlaceholder>
       )}
       <ResipeDescription>
@@ -81,7 +83,9 @@ const RecipePage = (props) => {
           <dt>Рецепт:</dt>
           {description ? (
             <dd
-              dangerouslySetInnerHTML={formattingRecipeText(description)}
+              dangerouslySetInnerHTML={{
+                __html: formattingRecipeText(description),
+              }}
             ></dd>
           ) : (
             <dd>Не заполнено</dd>
@@ -97,9 +101,7 @@ const RecipePage = (props) => {
 
 const formattingRecipeText = (text) => {
   const cleanText = DOMPurify.sanitize(text);
-  return {
-    __html: `<p>${cleanText.replace(/(?:\r\n|\r|\n)/g, "</p><p>")}</p>`,
-  };
+  return `<p>${cleanText.replace(/(?:\r\n|\r|\n)/g, "</p><p>")}</p>`;
 };
 
 RecipePage.propTypes = {
@@ -146,6 +148,7 @@ const RecipeImg = styled.div`
   ${imgContainerCss};
   background-size: cover;
   background-position: center;
+  background-image: url(${(props) => props.image});
 `;
 
 const RecipeImgPlaceholder = styled.div`

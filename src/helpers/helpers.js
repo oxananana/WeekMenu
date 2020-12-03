@@ -1,3 +1,4 @@
+// TODO: Разбить этот срулет на разные файлы в папке helpers
 import { weekDaysNames } from "../constants";
 
 export const arrayToEnumString = (arr) => {
