@@ -14,6 +14,7 @@ import RecipePage from "./components/Recipes/RecipePage";
 import AddRecipe from "./components/Recipes/AddRecipe";
 import useQuery from "./hooks/useQuery";
 import api from "./api/api";
+import menuAPI from "./api/menuAPI";
 import { RecipesContext } from "./index";
 import CheckPathContainer from "./components/Common/CheckPathContainer";
 
@@ -37,9 +38,40 @@ const AuthenticatedApp = (props) => {
     setRecipeSlugs(data.recipeSlugs);
   }, [data, setRecipes, setRecipeSlugs]);
 
-  const changeMenu = (newMenu) => {
-    setMenu(newMenu);
+  const changeMenu = (...updates) => {
+    let menuUpdates = {};
+    let apiUpdates = {};
+
+    updates.forEach((update) => {
+      const currentMeals = menu[update.day].meals;
+      const currentMeal = currentMeals[update.mealId];
+
+      menuUpdates[update.day] = {
+        meals: {
+          ...currentMeals,
+          [update.mealId]: { ...currentMeal, dishes: update.newDishes },
+        },
+      };
+
+      apiUpdates[`menu/${update.day}/meals/${update.mealId}/dishes`] =
+        update.newDishes;
+    });
+
+    setMenu({
+      ...menu,
+      ...menuUpdates,
+    });
+
+    menuAPI
+      .updateDishes(apiUpdates)
+      .then(() => {
+        console.log("success update dishes");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
+
   return (
     <>
       {isLoading ? (

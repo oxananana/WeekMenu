@@ -4,15 +4,13 @@ import PropTypes from "prop-types";
 import { DragDropContext } from "react-beautiful-dnd";
 import mediaQuery from "../../theme/mediaQuery";
 import { categoriesPropTypes } from "../../prop-types";
-import { getMealsByDay } from "../../selectors/selectors";
 import { weekDaysNames } from "../../constants";
-import menuAPI from "../../api/menuAPI";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import DayMenu from "./DayMenu";
 import AddDishModal from "./AddDishModal/AddDishModal";
 
 const Menu = (props) => {
-  useDocumentTitle(props.docTitle);
+  useDocumentTitle();
   const { menu, changeMenu, categories } = props;
   const weekDays = returnNextDays();
 
@@ -23,48 +21,18 @@ const Menu = (props) => {
   const [editableMeal, setEditableMeal] = useState("");
   const [editableMealTitle, setEditableMealTitle] = useState("");
 
-  const updateDishes = (day, mealId, newDishes) => {
-    let updates = {};
-    updates[`menu/${day}/meals/${mealId}/dishes`] = newDishes;
-    // updates[`recipes/${dishId}/schedule/${getWeekDayName(day)}`] = false;
-
-    menuAPI
-      .updateDishes(updates)
-      .then(() => {
-        console.log("success update dishes");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
   const removeDish = (day, mealId, dishId) => {
-    const currentMeals = getMealsByDay(menu, day);
-    const currentMeal = currentMeals[mealId];
-    const currentDishes = currentMeal.dishes || [];
+    const currentDishes = menu[day].meals[mealId].dishes;
 
     const newDishes = currentDishes.filter((dish) => {
       return dish.id !== dishId;
     });
 
-    changeMenu({
-      ...menu,
-      [day]: {
-        meals: {
-          ...currentMeals,
-          [mealId]: { ...currentMeal, dishes: newDishes },
-        },
-      },
-    });
-    // setRecipes(response.recipes);
-
-    updateDishes(day, mealId, newDishes);
+    changeMenu({ day, mealId, newDishes });
   };
 
   const toggleDishIsDone = (day, mealId, dishId) => {
-    const currentMeals = getMealsByDay(menu, day);
-    const currentMeal = currentMeals[mealId];
-    const currentDishes = currentMeal.dishes || [];
+    const currentDishes = menu[day].meals[mealId].dishes;
 
     const newDishes = currentDishes.map((dish) => {
       if (dish.id === dishId) {
@@ -73,17 +41,7 @@ const Menu = (props) => {
       return dish;
     });
 
-    changeMenu({
-      ...menu,
-      [day]: {
-        meals: {
-          ...currentMeals,
-          [mealId]: { ...currentMeal, dishes: newDishes },
-        },
-      },
-    });
-
-    updateDishes(day, mealId, newDishes);
+    changeMenu({ day, mealId, newDishes });
   };
 
   const addDish = (day, mealId, mealTitle) => {
@@ -100,9 +58,7 @@ const Menu = (props) => {
   const handleSubmit = (day, mealId, selectedDishesIds) => {
     setAnimatedNewDishes({ new: selectedDishesIds.map((id) => mealId + id) });
 
-    const currentMeals = getMealsByDay(menu, day);
-    const currentMeal = currentMeals[mealId];
-    const currentDishes = currentMeal.dishes || [];
+    const currentDishes = menu[day].meals[mealId].dishes || [];
 
     const uniqueSelectedDishesIds = selectedDishesIds.filter((id) => {
       return !currentDishes.some((dish) => {
@@ -120,20 +76,10 @@ const Menu = (props) => {
       }),
     ];
 
-    changeMenu({
-      ...menu,
-      [day]: {
-        meals: {
-          ...currentMeals,
-          [mealId]: { ...currentMeal, dishes: newDishes },
-        },
-      },
-    });
-
-    updateDishes(day, mealId, newDishes);
+    changeMenu({ day, mealId, newDishes });
   };
 
-  const onDragEnd = useCallback(
+  const handleDragEnd = useCallback(
     (result) => {
       const { destination, source } = result;
 
@@ -157,54 +103,23 @@ const Menu = (props) => {
       const newDay = destinationParams.day;
 
       if (prevMealId === newMealId) {
-        const currentMeals = getMealsByDay(menu, prevDay);
-        const currentMeal = currentMeals[prevMealId];
-        const mealDishes = currentMeal.dishes;
+        const mealDishes = menu[prevDay].meals[prevMealId].dishes;
 
         const [removed] = mealDishes.splice(oldIndex, 1);
         mealDishes.splice(newIndex, 0, removed);
 
-        changeMenu({
-          ...menu,
-          [prevDay]: {
-            meals: {
-              ...currentMeals,
-              [prevMealId]: { ...currentMeal, dishes: mealDishes },
-            },
-          },
-        });
-
-        updateDishes(newDay, newMealId, mealDishes);
+        changeMenu({ day: prevDay, mealId: prevMealId, newDishes: mealDishes });
       } else {
-        const currentMealsPrevDay = getMealsByDay(menu, prevDay);
-        const currentMealPrevDay = currentMealsPrevDay[prevMealId];
-        const prevMealDishes = currentMealPrevDay.dishes;
-
-        const currentMealsNewDay = getMealsByDay(menu, newDay);
-        const currentMealNewDay = currentMealsNewDay[newMealId];
-        const newMealDishes = currentMealNewDay.dishes || [];
+        const prevMealDishes = menu[prevDay].meals[prevMealId].dishes;
+        const newMealDishes = menu[newDay].meals[newMealId].dishes || [];
 
         const [removed] = prevMealDishes.splice(oldIndex, 1);
         newMealDishes.splice(newIndex, 0, removed);
 
-        changeMenu({
-          ...menu,
-          [prevDay]: {
-            meals: {
-              ...currentMealsPrevDay,
-              [prevMealId]: { ...currentMealPrevDay, dishes: prevMealDishes },
-            },
-          },
-          [newDay]: {
-            meals: {
-              ...currentMealsNewDay,
-              [newMealId]: { ...currentMealNewDay, dishes: newMealDishes },
-            },
-          },
-        });
-
-        updateDishes(prevDay, prevMealId, prevMealDishes);
-        updateDishes(newDay, newMealId, newMealDishes);
+        changeMenu(
+          { day: prevDay, mealId: prevMealId, newDishes: prevMealDishes },
+          { day: newDay, mealId: newMealId, newDishes: newMealDishes }
+        );
       }
     },
     [changeMenu, menu]
@@ -226,7 +141,7 @@ const Menu = (props) => {
         categories={categories}
       />
 
-      <DragDropContext onDragEnd={onDragEnd}>
+      <DragDropContext onDragEnd={handleDragEnd}>
         <MenuBoard>
           {weekDays.map((day, index) => {
             const meals = Object.values(menu[day.dateString].meals);
