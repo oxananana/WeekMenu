@@ -6,15 +6,21 @@ import { validate } from "../../../helpers/validate";
 export const FormContext = createContext();
 
 const Form = (props) => {
-  const { children, onSubmit, commonError, fieldErrors, initialValues } = props;
+  const {
+    children,
+    onSubmit,
+    commonError,
+    fieldErrors = {},
+    initialValues,
+  } = props;
 
   const [values, setValues] = useState(initialValues || {});
-  const [errors, setErrors] = useState(null);
+  const [errors, setErrors] = useState({});
   const [validators, setValidators] = useState(null);
   const [wasFirstSubmit, setWasFirstSubmit] = useState(false);
 
   useEffect(() => {
-    setErrors(fieldErrors);
+    setErrors(fieldErrors || {});
   }, [fieldErrors]);
 
   const handleSubmit = (e) => {
@@ -24,7 +30,7 @@ const Form = (props) => {
       setWasFirstSubmit(true);
     }
 
-    let errors;
+    let errors = {};
     if (validators) {
       Object.entries(validators).forEach(([name, fieldValidators]) => {
         if (fieldValidators) {
@@ -37,7 +43,7 @@ const Form = (props) => {
       setErrors(errors);
     }
 
-    if (!errors) {
+    if (Object.keys(errors).length === 0) {
       onSubmit(values);
     }
   };

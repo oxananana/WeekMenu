@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { iconForBg } from "../Icon";
@@ -7,16 +7,8 @@ import { FormContext } from "./Form";
 
 const FormField = (props) => {
   const { label, children, ...rest } = props;
-  const state = useContext(FormContext);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    if (state.errors && state.errors[props.name]) {
-      setError(state.errors[props.name]);
-    } else {
-      setError(null);
-    }
-  }, [state.errors, props.name]);
+  const formContext = useContext(FormContext);
+  const error = formContext.errors[props.name];
 
   return (
     <Field>
