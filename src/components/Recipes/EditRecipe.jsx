@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import recipesAPI from "../../api/recipesAPI";
 import { RecipesContext } from "../../index";
 import { getRecipeTitles } from "../../selectors/selectors";
+import { noop } from "../../helpers/noop";
 import { recipePropTypes, categoriesPropTypes } from "../../prop-types";
 import Button from "../Common/Button";
 import AddEditRecipeForm from "./AddEditRecipeForm";
@@ -37,9 +38,7 @@ const EditRecipe = (props) => {
       updates[`recipeSlugs/${recipe.slug}`] = null;
       updates[`recipeSlugs/${updatedRecipe.slug}`] = newSlug;
     }
-    recipesAPI.updateRecipeAndSlug(updates).catch((error) => {
-      console.log(error);
-    });
+    recipesAPI.updateRecipeAndSlug(updates).catch(noop);
     history.push(`/recipes/${updatedRecipe.categoryId}/${updatedRecipe.slug}`);
     toggleEditMode();
   };

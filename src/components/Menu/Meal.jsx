@@ -13,11 +13,11 @@ const Meal = (props) => {
     id,
     title,
     dishes,
-    removeDish,
-    addDish,
-    toggleDishIsDone,
+    onRemoveDish,
+    onOpenAddDishModal,
+    onToggleDishIsDone,
     animatedNewDishes,
-    resetAnimatedNewDishes,
+    onResetAnimatedNewDishes,
   } = props;
 
   const { recipes } = useContext(RecipesContext);
@@ -27,7 +27,7 @@ const Meal = (props) => {
     <StyledMeal>
       <MealTitle>
         {title}
-        <AddIcon onClick={addDish}>
+        <AddIcon onClick={onOpenAddDishModal}>
           <Icon name="plus" />
         </AddIcon>
       </MealTitle>
@@ -52,10 +52,10 @@ const Meal = (props) => {
                     day={day}
                     mealId={id}
                     dishes={dishesFull}
-                    removeDish={removeDish}
-                    toggleDishIsDone={toggleDishIsDone}
+                    onRemoveDish={onRemoveDish}
+                    onToggleDishIsDone={onToggleDishIsDone}
                     animatedNewDishes={animatedNewDishes}
-                    resetAnimatedNewDishes={resetAnimatedNewDishes}
+                    onResetAnimatedNewDishes={onResetAnimatedNewDishes}
                   />
                   {provided.placeholder}
                 </>
@@ -79,11 +79,11 @@ Meal.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   dishes: PropTypes.array,
-  removeDish: PropTypes.func.isRequired,
-  addDish: PropTypes.func.isRequired,
-  toggleDishIsDone: PropTypes.func.isRequired,
+  onRemoveDish: PropTypes.func.isRequired,
+  onOpenAddDishModal: PropTypes.func.isRequired,
+  onToggleDishIsDone: PropTypes.func.isRequired,
   animatedNewDishes: PropTypes.object.isRequired,
-  resetAnimatedNewDishes: PropTypes.func.isRequired,
+  onResetAnimatedNewDishes: PropTypes.func.isRequired,
 };
 
 const StyledMeal = styled.div`

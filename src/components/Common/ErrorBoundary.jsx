@@ -5,18 +5,15 @@ import Notification from "./Notification";
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { error: null, errorInfo: null };
+    this.state = { hasError: false };
   }
 
-  componentDidCatch(error, errorInfo) {
-    this.setState({
-      error: error,
-      errorInfo: errorInfo,
-    });
+  static getDerivedStateFromError() {
+    return { hasError: true };
   }
 
   render() {
-    if (this.state.errorInfo) {
+    if (this.state.hasError) {
       return (
         <InnerPage>
           <Notification type="warning">

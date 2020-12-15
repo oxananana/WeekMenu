@@ -8,18 +8,15 @@ const DayMenu = (props) => {
   const {
     day,
     meals,
-    addDish,
-    removeDish,
-    toggleDishIsDone,
+    onOpenAddDishModal,
+    onRemoveDish,
+    onToggleDishIsDone,
     animatedNewDishes,
-    resetAnimatedNewDishes,
+    onResetAnimatedNewDishes,
   } = props;
-  const orderedMeals = meals.sort((mealFirst, mealSecond) => {
-    if (mealFirst.order > mealSecond.order) {
-      return 1;
-    } else {
-      return -1;
-    }
+
+  const orderedMeals = [...meals].sort((mealFirst, mealSecond) => {
+    return mealFirst.order - mealSecond.order;
   });
 
   return (
@@ -37,13 +34,13 @@ const DayMenu = (props) => {
               title={meal.title}
               dishes={meal.dishes}
               key={meal.id}
-              addDish={() => {
-                addDish(day.dateString, meal.id, meal.title);
+              onOpenAddDishModal={() => {
+                onOpenAddDishModal(day.dateString, meal.id, meal.title);
               }}
-              removeDish={removeDish}
-              toggleDishIsDone={toggleDishIsDone}
+              onRemoveDish={onRemoveDish}
+              onToggleDishIsDone={onToggleDishIsDone}
               animatedNewDishes={animatedNewDishes}
-              resetAnimatedNewDishes={resetAnimatedNewDishes}
+              onResetAnimatedNewDishes={onResetAnimatedNewDishes}
             />
           );
         })}
@@ -55,11 +52,11 @@ const DayMenu = (props) => {
 DayMenu.propTypes = {
   day: PropTypes.object.isRequired,
   meals: PropTypes.array.isRequired,
-  addDish: PropTypes.func.isRequired,
-  removeDish: PropTypes.func.isRequired,
-  toggleDishIsDone: PropTypes.func.isRequired,
+  onOpenAddDishModal: PropTypes.func.isRequired,
+  onRemoveDish: PropTypes.func.isRequired,
+  onToggleDishIsDone: PropTypes.func.isRequired,
   animatedNewDishes: PropTypes.object.isRequired,
-  resetAnimatedNewDishes: PropTypes.func.isRequired,
+  onResetAnimatedNewDishes: PropTypes.func.isRequired,
 };
 
 const StyledDayMenu = styled.div`

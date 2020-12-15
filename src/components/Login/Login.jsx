@@ -3,7 +3,7 @@ import styled from "styled-components";
 import mediaQuery from "../../theme/mediaQuery";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import authAPI from "../../api/authAPI";
-import { required } from "../../helpers/validate";
+import { required } from "../../helpers/validators";
 import Button from "../Common/Button";
 import FormField from "../Common/Form/FormField";
 import Form from "../Common/Form/Form";

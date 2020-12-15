@@ -53,8 +53,8 @@ const AddDishModal = (props) => {
 
   return (
     <Modal
-      isOpen={isOpen}
       title={`Добавление блюда — ${mealTitle}, ${formattingDay(day)}`}
+      isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
     >
@@ -62,12 +62,12 @@ const AddDishModal = (props) => {
         <CategoryFilter
           categories={categories}
           activeCategoryId={activeCategoryId}
-          changeFilter={handleChangeFilter}
+          onChangeFilter={handleChangeFilter}
         />
         <Category
           categoryId={activeCategoryId}
           dishes={dishes}
-          selectDish={handleSelectDish}
+          onSelectDish={handleSelectDish}
           selectedDishesIds={selectedDishesIds}
         />
       </Dishes>

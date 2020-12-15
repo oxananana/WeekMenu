@@ -6,7 +6,7 @@ export const arrayToEnumString = (arr) => {
   return str.charAt(0).toUpperCase() + str.slice(1) + ".";
 };
 
-export const stringToArray = (str) => {
+export const separateByCommas = (str) => {
   if (!str.length) {
     return [];
   }

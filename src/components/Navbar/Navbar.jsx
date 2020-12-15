@@ -3,14 +3,14 @@ import { NavLink } from "react-router-dom";
 import styled, { css } from "styled-components";
 import PropTypes from "prop-types";
 import mediaQuery from "../../theme/mediaQuery";
-import { Container } from "../Common/Container";
+import { ContentContainer } from "../Common/ContentContainer";
 import Logo from "./Logo";
 import Icon from "../Common/Icon";
 
 const Navbar = (props) => {
   return (
     <NavbarContainer>
-      <Container>
+      <ContentContainer>
         <StyledNavbar>
           <NavbarLeft>
             <NavLink to="/">
@@ -36,7 +36,7 @@ const Navbar = (props) => {
             </ThemeSwitch>
           </NavbarRight>
         </StyledNavbar>
-      </Container>
+      </ContentContainer>
     </NavbarContainer>
   );
 };

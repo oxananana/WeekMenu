@@ -5,6 +5,7 @@ import { categoriesPropTypes } from "../../prop-types";
 import { RecipesContext } from "../../index";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import { getRecipeTitles } from "../../selectors/selectors";
+import { noop } from "../../helpers/noop";
 import recipesAPI from "../../api/recipesAPI";
 import Button from "../Common/Button";
 import AddEditRecipeForm from "./AddEditRecipeForm";
@@ -36,7 +37,7 @@ const AddRecipe = (props) => {
       [`recipeSlugs/${newRecipe.slug}`]: newSlug,
     };
 
-    recipesAPI.updateRecipeAndSlug(updates).catch(console.log);
+    recipesAPI.updateRecipeAndSlug(updates).catch(noop);
     history.push(`/recipes/${newRecipe.categoryId}/${newRecipe.slug}`);
   };
 

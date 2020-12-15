@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { noop } from "../../helpers/noop";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import authAPI from "../../api/authAPI";
 
 const Account = (props) => {
   const { email } = props.user;
   const handleClick = () => {
-    authAPI.logout().catch((error) => console.log("error" + error));
+    authAPI.logout().catch(noop);
   };
   useDocumentTitle("Аккаунт");
 

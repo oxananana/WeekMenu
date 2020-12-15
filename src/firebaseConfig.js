@@ -1,4 +1,5 @@
 const firebaseConfig = {
+  // Подобные вещи лучше не публиковать в репозиторий и использовать ENV переменные https://yarnpkg.com/package/dotenv-cli
   apiKey: "AIzaSyC9JAOcrsM4B_M2ya44yb2gv97Rv9Kt-zg",
   authDomain: "weekmenu-715a1.firebaseapp.com",
   databaseURL: "https://weekmenu-715a1.firebaseio.com",

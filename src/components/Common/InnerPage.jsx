@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { Container } from "./Container";
+import { ContentContainer } from "./ContentContainer";
 import mediaQuery from "../../theme/mediaQuery";
 
 const InnerPage = (props) => {
   return (
     <Inner>
-      <Container>{props.children}</Container>
+      <ContentContainer>{props.children}</ContentContainer>
     </Inner>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { dishPropTypes } from "../../prop-types";
 import { Draggable } from "react-beautiful-dnd";
@@ -12,29 +12,25 @@ const Dish = (props) => {
     mealId,
     dish,
     isDone,
-    removeDish,
-    toggleDishIsDone,
+    onRemoveDish,
+    onToggleDishIsDone,
     isNew,
-    resetAnimatedNewDishes,
+    onResetAnimatedNewDishes,
   } = props;
   const { id, title, imgSrc } = dish;
 
   const [isRemoved, setIsRemoved] = useState(false);
 
-  useEffect(() => {
-    return () => {};
-  }, []);
-
-  const handleRemoveDish = () => {
+  const handleSetDishIsRemoved = () => {
     setIsRemoved(true);
   };
 
-  const onAnimationEnd = () => {
+  const handleAnimationEnd = () => {
     if (isRemoved) {
-      removeDish(day, mealId, id);
+      onRemoveDish(day, mealId, id);
     }
     if (isNew) {
-      resetAnimatedNewDishes();
+      onResetAnimatedNewDishes();
     }
   };
 
@@ -49,14 +45,14 @@ const Dish = (props) => {
             {...provided.dragHandleProps}
             isNew={isNew}
             isRemoved={isRemoved}
-            onAnimationEnd={onAnimationEnd}
+            onAnimationEnd={handleAnimationEnd}
           >
-            <RemoveIcon onClick={handleRemoveDish}>
+            <RemoveIcon onClick={handleSetDishIsRemoved}>
               <Icon name="delete" />
             </RemoveIcon>
             <CoockingStatus
               isDone={isDone}
-              onClick={() => toggleDishIsDone(day, mealId, id)}
+              onClick={() => onToggleDishIsDone(day, mealId, id)}
             >
               <Icon name="check" />
             </CoockingStatus>
@@ -81,9 +77,9 @@ Dish.propTypes = {
   isDone: PropTypes.bool.isRequired,
   day: PropTypes.string.isRequired,
   mealId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  removeDish: PropTypes.func.isRequired,
-  toggleDishIsDone: PropTypes.func.isRequired,
-  resetAnimatedNewDishes: PropTypes.func.isRequired,
+  onRemoveDish: PropTypes.func.isRequired,
+  onToggleDishIsDone: PropTypes.func.isRequired,
+  onResetAnimatedNewDishes: PropTypes.func.isRequired,
 };
 
 const CoockingStatus = styled.span`

@@ -8,11 +8,11 @@ import { categoriesPropTypes } from "../../prop-types";
 import mediaQuery from "../../theme/mediaQuery";
 import {
   arrayToEnumString,
-  stringToArray,
+  separateByCommas,
 } from "../../helpers/recipeFormatting";
 import { cyrillicToTranslitUrl } from "../../helpers/cyrillicToTranslitUrl";
 import { defaultCategoryId } from "../../constants";
-import { required } from "../../helpers/validate";
+import { required } from "../../helpers/validators";
 import { getCategoryValues } from "../../selectors/selectors";
 import Form from "../Common/Form/Form";
 import FormField from "../Common/Form/FormField";
@@ -62,7 +62,6 @@ const AddEditRecipeForm = (props) => {
           setIsUploadError(true);
         },
         () => {
-          console.log("успешно загружено изображение");
           uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
             setImgSrc(downloadURL);
             setImgIsLoading(false);
@@ -86,7 +85,7 @@ const AddEditRecipeForm = (props) => {
 
     onSubmit({
       ...formattedData,
-      ingredients: stringToArray(formattedData.ingredients),
+      ingredients: separateByCommas(formattedData.ingredients),
       imgSrc: imgSrc,
       slug: translitUrl,
     });

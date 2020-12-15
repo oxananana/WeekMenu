@@ -8,10 +8,10 @@ const Dishes = React.memo((props) => {
     day,
     dishes,
     mealId,
-    removeDish,
-    toggleDishIsDone,
+    onRemoveDish,
+    onToggleDishIsDone,
     animatedNewDishes,
-    resetAnimatedNewDishes,
+    onResetAnimatedNewDishes,
   } = props;
 
   return (
@@ -30,11 +30,11 @@ const Dishes = React.memo((props) => {
             mealId={mealId}
             dish={dish}
             isDone={dish.isDone}
-            removeDish={removeDish}
-            toggleDishIsDone={toggleDishIsDone}
+            onRemoveDish={onRemoveDish}
+            onToggleDishIsDone={onToggleDishIsDone}
             isNew={isNew}
             animatedNewDishes={animatedNewDishes}
-            resetAnimatedNewDishes={resetAnimatedNewDishes}
+            onResetAnimatedNewDishes={onResetAnimatedNewDishes}
           />
         );
       })}
@@ -46,10 +46,10 @@ Dishes.propTypes = {
   dishes: PropTypes.array.isRequired,
   day: PropTypes.string.isRequired,
   mealId: PropTypes.string.isRequired,
-  removeDish: PropTypes.func.isRequired,
-  toggleDishIsDone: PropTypes.func.isRequired,
+  onRemoveDish: PropTypes.func.isRequired,
+  onToggleDishIsDone: PropTypes.func.isRequired,
   animatedNewDishes: PropTypes.object.isRequired,
-  resetAnimatedNewDishes: PropTypes.func.isRequired,
+  onResetAnimatedNewDishes: PropTypes.func.isRequired,
 };
 
 const StyledDishes = styled.div``;

@@ -5,7 +5,7 @@ import { getCategoryDishes } from "../../../selectors/selectors";
 import Dish from "./Dish";
 
 const Category = (props) => {
-  const { categoryId, selectDish, selectedDishesIds } = props;
+  const { categoryId, onSelectDish, selectedDishesIds } = props;
   const [dishes, setDishes] = useState([]);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const Category = (props) => {
                 title={dish.title}
                 imgSrc={dish.imgSrc}
                 schedule={dish.schedule}
-                selectDish={selectDish}
+                onSelectDish={onSelectDish}
                 isActive={selectedDishesIds.includes(dish.id)}
               />
             );

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import mediaQuery from "../../theme/mediaQuery";
 
-export const Container = styled.div`
+export const ContentContainer = styled.div`
   padding: 0 16px;
   margin: 0 auto;
   max-width: calc((260px * 5) + (264px * 2) + (32px * 2) - 16px);

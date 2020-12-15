@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createContext } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { validate } from "../../../helpers/validate";
+import { validate } from "../../../helpers/validators";
 
 export const FormContext = createContext();
 

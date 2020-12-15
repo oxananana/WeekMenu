@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
 import PropTypes from "prop-types";
 import { defaultCategoryId } from "./constants";
+import { noop } from "./helpers/noop";
 import InnerPage from "./components/Common/InnerPage";
 import PageNotFound from "./components/Common/PageNotFound";
 import Notification from "./components/Common/Notification";
@@ -12,11 +13,11 @@ import Account from "./components/Account/Account";
 import Recipes from "./components/Recipes/Recipes.jsx";
 import RecipePage from "./components/Recipes/RecipePage";
 import AddRecipe from "./components/Recipes/AddRecipe";
+import CheckSlugContainer from "./components/Common/CheckSlugContainer";
 import useQuery from "./hooks/useQuery";
 import api from "./api/api";
 import menuAPI from "./api/menuAPI";
 import { RecipesContext } from "./index";
-import CheckPathContainer from "./components/Common/CheckPathContainer";
 
 const AuthenticatedApp = (props) => {
   const { theme, toggleTheme, user } = props;
@@ -62,85 +63,89 @@ const AuthenticatedApp = (props) => {
       ...menuUpdates,
     });
 
-    menuAPI
-      .updateDishes(apiUpdates)
-      .then(() => {
-        console.log("success update dishes");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    menuAPI.updateDishes(apiUpdates).catch(noop);
   };
 
-  return (
-    <>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <>
-          <Navbar toggleTheme={toggleTheme} theme={theme} />
-          <Switch>
-            <Route path="/" exact>
-              <Redirect to="/menu" />
-            </Route>
-            <Route path="/account">
-              <InnerPage>
-                <Account user={user} />
-              </InnerPage>
-            </Route>
-            <Route path="/menu">
-              {menu ? (
-                <Menu
-                  menu={menu}
-                  categories={categories}
-                  changeMenu={changeMenu}
-                />
-              ) : (
-                <InnerPage>Меню пустое</InnerPage>
-              )}
-            </Route>
-            <Route path="/recipes/new-recipe" exact>
-              <InnerPage>
-                <AddRecipe categories={categories} />
-              </InnerPage>
-            </Route>
-            <Route path="/recipes/:categoryId/:recipeSlug">
-              <InnerPage>
-                <CheckPathContainer slug="recipeSlug" controlList={recipeSlugs}>
-                  <RecipePage categories={categories} />
-                </CheckPathContainer>
-              </InnerPage>
-            </Route>
-            <Route path="/recipes/:categoryId">
-              <InnerPage>
-                {categories ? (
-                  <CheckPathContainer
-                    slug="categoryId"
-                    controlList={categories}
-                  >
-                    <Recipes categories={categories} />
-                  </CheckPathContainer>
-                ) : (
-                  <Notification type="warning">
-                    Что-то пошло не так. Попробуйте обновить страницу или зайти
-                    позже.
-                  </Notification>
-                )}
-              </InnerPage>
-            </Route>
-            <Route path="/recipes/">
-              <Redirect to={`/recipes/${defaultCategoryId}`} />
-            </Route>
-            <Route path="*">
-              <InnerPage>
-                <PageNotFound />
-              </InnerPage>
-            </Route>
-          </Switch>
-        </>
-      )}
-    </>
-  );
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (menu && categories) {
+    return (
+      <>
+        <Navbar toggleTheme={toggleTheme} theme={theme} />
+        <Switch>
+          <Route path="/" exact>
+            <Redirect to="/menu" />
+          </Route>
+          <Route path="/account">
+            <InnerPage>
+              <Account user={user} />
+            </InnerPage>
+          </Route>
+          <Route path="/menu" exact>
+            {menu ? (
+              <Menu
+                menu={menu}
+                categories={categories}
+                changeMenu={changeMenu}
+              />
+            ) : (
+              <InnerPage>Меню пустое</InnerPage>
+            )}
+          </Route>
+          <Route path="/recipes/new-recipe" exact>
+            <InnerPage>
+              <AddRecipe categories={categories} />
+            </InnerPage>
+          </Route>
+          <Route path="/recipes/:categoryId/:recipeSlug">
+            <InnerPage>
+              <CheckSlugContainer slug="recipeSlug" controlList={recipeSlugs}>
+                <RecipePage categories={categories} />
+              </CheckSlugContainer>
+            </InnerPage>
+          </Route>
+          <Route path="/recipes/:categoryId">
+            <InnerPage>
+              <CheckSlugContainer slug="categoryId" controlList={categories}>
+                <Recipes categories={categories} />
+              </CheckSlugContainer>
+            </InnerPage>
+          </Route>
+          <Route path="/recipes/">
+            <Redirect to={`/recipes/${defaultCategoryId}`} />
+          </Route>
+          <Route path="*">
+            <InnerPage>
+              <PageNotFound />
+            </InnerPage>
+          </Route>
+        </Switch>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <Navbar toggleTheme={toggleTheme} theme={theme} />
+        <Switch>
+          <Route path="/account">
+            <InnerPage>
+              <Account user={user} />
+            </InnerPage>
+          </Route>
+          <Route path="/">
+            <InnerPage>
+              <Notification type="warning">
+                Что-то пошло не так. Попробуйте обновить страницу или зайти
+                позже.
+              </Notification>
+            </InnerPage>
+          </Route>
+        </Switch>
+      </>
+    );
+  }
 };
 
 AuthenticatedApp.propTypes = {

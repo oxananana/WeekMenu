@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 
 const Button = (props) => {
   const { children, onClick, disabled, active, invert, ...attrs } = props;
-  const handleOnClick = (e) => {
+  const handleClick = (e) => {
     if (disabled) {
       e.preventDefault();
     } else {
@@ -18,7 +18,7 @@ const Button = (props) => {
       active={active}
       invert={invert}
       disabled={disabled}
-      onClick={handleOnClick}
+      onClick={handleClick}
       {...attrs}
     >
       {children}
@@ -28,7 +28,7 @@ const Button = (props) => {
       active={active}
       invert={invert}
       disabled={disabled}
-      onClick={handleOnClick}
+      onClick={handleClick}
       {...attrs}
     >
       {children}

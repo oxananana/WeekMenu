@@ -1,15 +1,16 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 import Icon from "../../Common/Icon";
 
 const Dish = (props) => {
-  const { id, title, imgSrc, isActive, selectDish } = props;
+  const { id, title, imgSrc, isActive, onSelectDish } = props;
 
   return (
     <StyledDish
       isActive={isActive}
       onClick={() => {
-        selectDish(id);
+        onSelectDish(id);
       }}
     >
       {imgSrc ? (
@@ -29,6 +30,14 @@ const Dish = (props) => {
       )}
     </StyledDish>
   );
+};
+
+Dish.propTypes = {
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  imgSrc: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.string]),
+  isActive: PropTypes.bool.isRequired,
+  onSelectDish: PropTypes.func.isRequired,
 };
 
 const StyledDish = styled.div`

@@ -8,46 +8,9 @@ import * as serviceWorker from "./serviceWorker";
 
 firebase.initializeApp(firebaseConfig);
 
-// const NotContext = Reac.createContext();
-
-// function NotContProvider() {
-//   const [not, setNot] = React.useState([]),
-
-//   function success(message) {
-//     setNot([...not, { type: 'success', message }])
-//   }
-
-//   function error(message) {
-//     setNot([...not, { type: 'error', message }])
-//   }
-
-//   return <NotContext.Provider value={{}}>{props.children}</NotContext.Provider>;
-// }
-
-// function useNot() {
-//   const ctx = React.useContext(NotCont);
-
-//   if (ctx === undefined) {
-//     throw new Error('Нужен провайдер')
-//   }
-
-//   return ctx;
-// }
 export const RecipesContext = createContext();
 
 const RecipesProvider = (props) => {
-  // const not = useNot()
-  // const [] = React.useState({})
-
-  // function update() {
-  //   // apicall
-
-  //   try {
-  //     not.success('!')
-  //   } catch(e) {
-  //     not.error('!')
-  //   }
-  // }
   const [recipes, setRecipes] = useState();
   const [recipeSlugs, setRecipeSlugs] = useState();
 

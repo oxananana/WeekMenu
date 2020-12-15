@@ -4,15 +4,11 @@ import PropTypes from "prop-types";
 import Icon from "./Icon";
 
 const Notification = (props) => {
-  const { type, children } = props;
-
   return (
-    children && (
-      <NotificationContainer type={type}>
-        <Icon name={type} />
-        {children}
-      </NotificationContainer>
-    )
+    <NotificationContainer type={props.type}>
+      <Icon name={props.type} />
+      {props.children}
+    </NotificationContainer>
   );
 };
 

@@ -5,7 +5,7 @@ import { categoriesPropTypes } from "../../../prop-types";
 import mediaQuery from "../../../theme/mediaQuery";
 
 const CategoryFilter = (props) => {
-  const { categories, activeCategoryId, changeFilter } = props;
+  const { categories, activeCategoryId, onChangeFilter } = props;
 
   return (
     <FilterNav>
@@ -13,7 +13,7 @@ const CategoryFilter = (props) => {
         return (
           <FilterNavItem
             onClick={() => {
-              changeFilter(category.id);
+              onChangeFilter(category.id);
             }}
             key={category.id}
             isActive={category.id === activeCategoryId}
@@ -28,8 +28,8 @@ const CategoryFilter = (props) => {
 
 CategoryFilter.propTypes = {
   categories: categoriesPropTypes,
-  activeCategoryId: PropTypes.string,
-  changeFilter: PropTypes.func,
+  activeCategoryId: PropTypes.string.isRequired,
+  onChangeFilter: PropTypes.func.isRequired,
 };
 
 const FilterNav = styled.ul`

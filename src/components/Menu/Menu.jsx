@@ -21,7 +21,7 @@ const Menu = (props) => {
   const [editableMeal, setEditableMeal] = useState("");
   const [editableMealTitle, setEditableMealTitle] = useState("");
 
-  const removeDish = (day, mealId, dishId) => {
+  const handleRemoveDish = (day, mealId, dishId) => {
     const currentDishes = menu[day].meals[mealId].dishes;
 
     const newDishes = currentDishes.filter((dish) => {
@@ -31,7 +31,7 @@ const Menu = (props) => {
     changeMenu({ day, mealId, newDishes });
   };
 
-  const toggleDishIsDone = (day, mealId, dishId) => {
+  const handleToggleDishIsDone = (day, mealId, dishId) => {
     const currentDishes = menu[day].meals[mealId].dishes;
 
     const newDishes = currentDishes.map((dish) => {
@@ -44,7 +44,7 @@ const Menu = (props) => {
     changeMenu({ day, mealId, newDishes });
   };
 
-  const addDish = (day, mealId, mealTitle) => {
+  const handleOpenAddDishModal = (day, mealId, mealTitle) => {
     setModalIsOpen(true);
     setEditableDay(day);
     setEditableMeal(mealId);
@@ -148,14 +148,14 @@ const Menu = (props) => {
 
             return (
               <DayMenu
-                animatedNewDishes={animatedNewDishes}
-                resetAnimatedNewDishes={handleResetAnimatedNewDishes}
                 key={index}
                 day={day}
                 meals={meals}
-                toggleDishIsDone={toggleDishIsDone}
-                addDish={addDish}
-                removeDish={removeDish}
+                onOpenAddDishModal={handleOpenAddDishModal}
+                onRemoveDish={handleRemoveDish}
+                onToggleDishIsDone={handleToggleDishIsDone}
+                animatedNewDishes={animatedNewDishes}
+                onResetAnimatedNewDishes={handleResetAnimatedNewDishes}
               />
             );
           })}

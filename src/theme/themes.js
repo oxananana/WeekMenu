@@ -1,5 +1,3 @@
-// const primary = "#481380";
-
 const light = {
   primary: "#4d37c1",
   primaryRgba: "93,74,198",

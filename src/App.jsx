@@ -41,17 +41,6 @@ const App = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
 
-  // const not = useNot()
-
-  // const update = async () ={
-  //   try {
-  //     /// api call
-  //     not.success('213')
-  //   } catch(E) {
-  //     not.error('123')
-  //   }
-  // }
-
   return (
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <GlobalStyle />

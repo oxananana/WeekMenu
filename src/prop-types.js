@@ -23,20 +23,10 @@ export const recipePropTypes = {
   ingredients: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.array]),
 };
 
-export const dishDefaultProps = {
-  dish: {
-    id: "",
-    title: "",
-    isDone: false,
-    imgSrc: "",
-    ingredients: [],
-    categoryId: "",
-    schedule: [],
-    description: "",
-  },
-};
-
-export const categoriesPropTypes = PropTypes.oneOfType([
-  PropTypes.oneOf([null]),
-  PropTypes.object,
-]).isRequired;
+export const categoriesPropTypes = PropTypes.objectOf(
+  PropTypes.exact({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    priority: PropTypes.number.isRequired,
+  })
+);

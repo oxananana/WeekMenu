@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import PropTypes from "prop-types";
-import { validate } from "../../../helpers/validate";
+import { validate } from "../../../helpers/validators";
 import { FormContext } from "./Form";
 
 const Control = (props) => {

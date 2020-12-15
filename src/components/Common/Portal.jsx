@@ -1,22 +1,18 @@
-import { Component } from "react";
+import { useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 
-class Portal extends Component {
-  el = document.createElement("div");
+const Portal = (props) => {
+  const portalElemRef = useRef(document.createElement("div"));
 
-  componentDidMount() {
-    document.body.appendChild(this.el);
-  }
+  useEffect(() => {
+    const portalElem = portalElemRef.current;
+    document.body.appendChild(portalElem);
+    return () => {
+      portalElem.remove();
+    };
+  }, []);
 
-  componentWillUnmount() {
-    document.body.removeChild(this.el);
-  }
-
-  render() {
-    const { children } = this.props;
-
-    return ReactDOM.createPortal(children, this.el);
-  }
-}
+  return ReactDOM.createPortal(props.children, portalElemRef.current);
+};
 
 export default Portal;

@@ -5,19 +5,17 @@ import PropTypes from "prop-types";
 import DOMPurify from "dompurify";
 import mediaQuery from "../../theme/mediaQuery";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
-import { getRecipeById } from "../../selectors/selectors";
 import { arrayToEnumString } from "../../helpers/recipeFormatting";
 import { recipePropTypes, categoriesPropTypes } from "../../prop-types";
+import { RecipesContext } from "../../index";
 import Button from "../Common/Button";
 import Icon from "../Common/Icon";
 import EditRecipe from "./EditRecipe";
-import { RecipesContext } from "../..";
 
 const RecipePage = (props) => {
-  const pathParams = useParams();
   const categories = props.categories;
   const { recipes, recipeSlugs } = useContext(RecipesContext);
-  const recipe = getRecipeById(recipes, recipeSlugs[pathParams.recipeSlug].id);
+  const recipe = recipes[recipeSlugs[useParams()["recipeSlug"]].id];
 
   const { categoryId, title, imgSrc, ingredients, description } = recipe;
   const [editMode, setEditMode] = useState(false);

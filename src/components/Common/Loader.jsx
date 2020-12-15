@@ -25,7 +25,7 @@ const LoaderBarContainer = styled.div`
   background-color: ${({ theme }) => theme.bg.loader};
 `;
 
-const bar = keyframes`
+const barAnimation = keyframes`
  0% {
     width: 0;
   }
@@ -41,7 +41,7 @@ const LoaderBar = styled.div`
   height: 2px;
   width: 0;
   background-color: ${({ theme }) => theme.bg.primary};
-  animation: ${bar} 3s ease-out;
+  animation: ${barAnimation} 3s ease-out;
 `;
 
 const LoaderCircle = styled.span`

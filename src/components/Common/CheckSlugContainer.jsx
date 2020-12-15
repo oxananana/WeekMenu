@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import PageNotFound from "./PageNotFound";
 
-const CheckPathContainer = (props) => {
+const CheckSlugContainer = (props) => {
   const { controlList, slug, children } = props;
   const currentSlug = useParams()[slug];
 
@@ -13,4 +13,4 @@ const CheckPathContainer = (props) => {
   return <PageNotFound />;
 };
 
-export default CheckPathContainer;
+export default CheckSlugContainer;

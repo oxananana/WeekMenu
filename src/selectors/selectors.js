@@ -1,5 +1,3 @@
-// import memoize from "memoizee";
-
 export const getDishesFromRecipes = (recipes, dishes) => {
   if (!dishes) {
     return [];
@@ -21,10 +19,6 @@ export const getCategoryDishes = (dishes, categoryId) => {
   return Object.values(dishes).filter((dish) => {
     return dish.categoryId === categoryId;
   });
-};
-
-export const getRecipeById = (recipes, recipeId) => {
-  return recipes[recipeId];
 };
 
 export const getRecipeTitles = (recipes) => {
