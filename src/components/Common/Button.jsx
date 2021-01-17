@@ -63,6 +63,11 @@ const buttonCss = `
     opacity: 0.8;
   }
 
+  &:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+  }
+
   `;
 
 const StyledButton = styled.button`

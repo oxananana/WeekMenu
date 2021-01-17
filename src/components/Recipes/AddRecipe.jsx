@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 import { categoriesPropTypes } from "../../prop-types";
 import { RecipesContext } from "../../index";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
@@ -49,14 +50,16 @@ const AddRecipe = (props) => {
         onSubmit={handleSubmit}
         categories={categories}
         recipeTitles={recipeTitles}
-        buttons={
+        buttons={(isButtonsDisabled) => (
           <>
-            <Button invert to="/recipes">
+            <Button invert to="/recipes" disabled={isButtonsDisabled}>
               Отмена
             </Button>
-            <Button type="submit">Добавить</Button>
+            <Button type="submit" disabled={isButtonsDisabled}>
+              Добавить
+            </Button>
           </>
-        }
+        )}
       />
     </AddRecipeContainer>
   );
@@ -64,6 +67,7 @@ const AddRecipe = (props) => {
 
 AddRecipe.propTypes = {
   categories: categoriesPropTypes,
+  isButtonsDisabled: PropTypes.bool,
 };
 
 const AddRecipeContainer = styled.div`

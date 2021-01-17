@@ -50,14 +50,16 @@ const EditRecipe = (props) => {
       action="edit"
       categories={categories}
       recipeTitles={recipeTitles}
-      buttons={
+      buttons={(isButtonsDisabled) => (
         <>
-          <Button invert onClick={toggleEditMode}>
+          <Button invert onClick={toggleEditMode} disabled={isButtonsDisabled}>
             Отмена
           </Button>
-          <Button type="submit">Сохранить</Button>
+          <Button type="submit" disabled={isButtonsDisabled}>
+            Сохранить
+          </Button>
         </>
-      }
+      )}
     />
   );
 };

@@ -152,7 +152,7 @@ const AddEditRecipeForm = (props) => {
           type="textarea"
           label="Рецепт"
         />
-        <ButtonContainer>{props.buttons}</ButtonContainer>
+        <ButtonContainer>{props.buttons(imgIsLoading)}</ButtonContainer>
       </Fields>
     </FormContainer>
   );
@@ -169,7 +169,7 @@ AddEditRecipeForm.propTypes = {
   ingredients: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.array]),
   recipeTitles: PropTypes.array.isRequired,
   imgSrc: PropTypes.oneOfType([PropTypes.oneOf([null]), PropTypes.string]),
-  buttons: PropTypes.node,
+  buttons: PropTypes.func,
   onSubmit: PropTypes.func.isRequired,
   action: PropTypes.string.isRequired,
 };

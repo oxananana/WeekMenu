@@ -1,6 +1,5 @@
 const firebaseConfig = {
-  // Подобные вещи лучше не публиковать в репозиторий и использовать ENV переменные https://yarnpkg.com/package/dotenv-cli
-  apiKey: "AIzaSyC9JAOcrsM4B_M2ya44yb2gv97Rv9Kt-zg",
+  apiKey: process.env.REACT_APP_WEEKMENU_API_KEY,
   authDomain: "weekmenu-715a1.firebaseapp.com",
   databaseURL: "https://weekmenu-715a1.firebaseio.com",
   projectId: "weekmenu-715a1",
@@ -8,5 +7,4 @@ const firebaseConfig = {
   messagingSenderId: "642275803469",
   appId: "1:642275803469:web:13394dd5374eca8d6db704",
 };
-
 export default firebaseConfig;

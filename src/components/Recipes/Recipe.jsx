@@ -79,7 +79,7 @@ const fade = keyframes`
 const RecipeImg = styled.div`
   ${imgContainerCss};
   border-bottom: 1px solid ${({ theme }) => theme.bg.baseLight};
-  animation: ${fade} 0.2s ease-out;
+  /* animation: ${fade} 0.5s ease-out; */
   background-size: cover;
   background-position: center;
 `;

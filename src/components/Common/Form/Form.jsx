@@ -6,13 +6,7 @@ import { validate } from "../../../helpers/validators";
 export const FormContext = createContext();
 
 const Form = (props) => {
-  const {
-    children,
-    onSubmit,
-    commonError,
-    fieldErrors = {},
-    initialValues,
-  } = props;
+  const { children, onSubmit, commonError, fieldErrors, initialValues } = props;
 
   const [values, setValues] = useState(initialValues || {});
   const [errors, setErrors] = useState({});
